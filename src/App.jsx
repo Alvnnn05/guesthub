@@ -1,14 +1,14 @@
 import { useState, useEffect } from 'react';
 import { supabase } from './lib/supabaseClient';
-import Login from './components/Login/Login';
-import FormInput from './components/FormInput/FormInput';
+import Login from "./components/Login/Login";
+import FormGuest from "./components/FormGuest/FormGuest";
+import GuestTable from "./components/GuestTable/GuestTable";
 import ProfileModal from './components/ProfileModal/ProfileModal';
+
 import adminIcon from './assets/admin.png'; 
 import receptionistIcon from './assets/custservice.png';
-import './App.css';
-
-// Import file logo (sesuaikan path dan nama filenya dengan lokasi logomu)
 import logoApp from './assets/guesthub.png'; 
+import './App.css';
 
 const ADMIN_EMAILS = [
   'vinandrian05@gmail.com'
@@ -18,6 +18,7 @@ export default function App() {
   const [session, setSession] = useState(null);
   const [loading, setLoading] = useState(true);
   const [showProfile, setShowProfile] = useState(false);
+  const [activeTab, setActiveTab] = useState('form');
 
   useEffect(() => {
     supabase.auth.getSession().then(({ data: { session } }) => {
@@ -32,6 +33,33 @@ export default function App() {
 
     return () => subscription.unsubscribe();
   }, []);
+
+  // Idle Timer 20 Menit
+  useEffect(() => {
+    if (!session) return;
+    let idleTimer;
+    const TIMEOUT_DURATION = 20 * 60 * 1000;
+
+    const executeAutoLogout = async () => {
+      await supabase.auth.signOut();
+      alert('Sesi Anda telah berakhir karena tidak ada aktivitas selama 20 menit.');
+      window.location.reload();
+    };
+
+    const resetIdleTimer = () => {
+      if (idleTimer) clearTimeout(idleTimer);
+      idleTimer = setTimeout(executeAutoLogout, TIMEOUT_DURATION);
+    };
+
+    const activityEvents = ['mousemove', 'keydown', 'click', 'scroll', 'touchstart'];
+    activityEvents.forEach((event) => window.addEventListener(event, resetIdleTimer));
+    resetIdleTimer();
+
+    return () => {
+      if (idleTimer) clearTimeout(idleTimer);
+      activityEvents.forEach((event) => window.removeEventListener(event, resetIdleTimer));
+    };
+  }, [session]);
 
   const handleLogout = async () => {
     await supabase.auth.signOut();
@@ -55,7 +83,6 @@ export default function App() {
       <header className="main-header">
         <div className="header-brand">
           <img src={logoApp} alt="Logo GuestHub" className="header-logo-img" />
-          
           <div>
             <h1 className="header-title">GuestHub</h1>
             <p className="header-subtitle">Sistem Buku Tamu Digital Dinas Perhubungan</p>
@@ -76,18 +103,51 @@ export default function App() {
           </span>
 
           <button className="btn-header-profile" onClick={() => setShowProfile(true)}>
-            ⚙️ Profil ({userName})
+            ⚙ Profil ({userName})
           </button>
 
           <button className="btn-header-logout" onClick={handleLogout}>
-             Logout
+            Logout
           </button>
         </div>
       </header>
 
-      {/* TAMPILAN UTAMA */}
-      <main className="main-content">
-        <FormInput userSession={session} isAdmin={isAdmin} />
+      {/* JIKA ADMIN: TAMPILKAN TAB NAVIGASI UNTUK PISAH HALAMAN */}
+      {isAdmin && (
+        <nav className="tab-navigation">
+          <button 
+            className={`tab-button ${activeTab === 'form' ? 'active' : ''}`}
+            onClick={() => setActiveTab('form')}
+          >
+             Input Buku Tamu
+          </button>
+          <button 
+            className={`tab-button ${activeTab === 'dashboard' ? 'active' : ''}`}
+            onClick={() => setActiveTab('dashboard')}
+          >
+             Dashboard & Riwayat Tamu
+          </button>
+        </nav>
+      )}
+
+      {/* KONTEN UTAMA */}
+      <main className="main-content" style={{ maxWidth: '1400px', margin: '0 auto', padding: '24px' }}>
+        {isAdmin ? (
+          /* TAMPILAN ADMIN (DIPISAH SESUAI TAB) */
+          activeTab === 'form' ? (
+            <div style={{ display: 'flex', justifyContent: 'center' }}>
+              <FormGuest isCentered={true} />
+            </div>
+          ) : (
+            <GuestTable isAdmin={true} showSummaryCards={true} />
+          )
+        ) : (
+          /* TAMPILAN RESEPSIONIS / USER BIASA (SIDE-BY-SIDE SIDEBAR) */
+          <div className="form-input-container" style={{ padding: 0 }}>
+            <FormGuest isCentered={false} />
+            <GuestTable isAdmin={false} showSummaryCards={false} />
+          </div>
+        )}
       </main>
 
       {/* MODAL PROFIL */}

@@ -1,0 +1,487 @@
+/* ==========================================
+   1. SUMMARY CARDS
+   ========================================== */
+.summary-cards-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 16px;
+  margin-bottom: 24px;
+}
+
+.summary-card {
+  background: #ffffff;
+  padding: 16px 20px;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+  border-left: 5px solid #cbd5e1;
+}
+
+.card-yellow-border { border-left-color: #f59e0b; }
+.card-orange-border { border-left-color: #f97316; }
+.card-green-border { border-left-color: #10b981; }
+.card-blue-border { border-left-color: #3b82f6; }
+
+.card-header-content {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.card-title {
+  font-size: 0.8rem;
+  color: #64748b;
+  font-weight: 600;
+}
+
+.card-value {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: #0f172a;
+  margin: 4px 0 0 0;
+}
+
+.card-icon-badge {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.2rem;
+}
+
+.bg-badge-orange { background: #fef3c7; }
+.bg-badge-yellow { background: #ffedd5; }
+.bg-badge-blue { background: #dbeafe; }
+
+/* ==========================================
+   2. TABEL CONTAINER & FILTER
+   ========================================== */
+.table-card-right {
+  background: #ffffff;
+  padding: 24px;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+  width: 100%;
+}
+
+.table-card-fullwidth {
+  width: 100% !important;
+}
+
+.table-card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 16px;
+}
+
+.btn-export-excel-small {
+  background: #10b981;
+  color: white;
+  border: none;
+  padding: 8px 14px;
+  border-radius: 6px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.btn-export-excel-small:hover {
+  background: #059669;
+}
+
+.filter-container-wrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-bottom: 20px;
+  background: #f8fafc;
+  padding: 12px;
+  border-radius: 8px;
+}
+
+.filter-row-top, .filter-row-bottom {
+  display: flex;
+  gap: 10px;
+}
+
+.search-input-right, .filter-select-right, .filter-date-right, .filter-select-bidang-full {
+  padding: 8px 12px;
+  border: 1px solid #cbd5e1;
+  border-radius: 6px;
+  font-size: 0.85rem;
+  outline: none;
+  background: #ffffff;
+}
+
+.search-input-right { flex: 2; }
+.filter-select-bidang-full { flex: 1; }
+
+.btn-reset-filter {
+  background: #64748b;
+  color: white;
+  border: none;
+  padding: 8px 16px;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.btn-reset-filter:hover {
+  background: #475569;
+}
+
+/* ==========================================
+   3. TABEL GUEST
+   ========================================== */
+.table-responsive-right {
+  overflow-x: auto;
+}
+
+.guest-table-right {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.875rem;
+}
+
+.guest-table-right th, .guest-table-right td {
+  padding: 12px;
+  border-bottom: 1px solid #f1f5f9;
+  text-align: left;
+  vertical-align: middle;
+}
+
+.guest-table-right th {
+  background: #f8fafc;
+  color: #475569;
+  font-weight: 700;
+}
+
+.table-avatar {
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  object-fit: cover;
+  cursor: pointer;
+  transition: transform 0.2s;
+}
+
+.table-avatar:hover {
+  transform: scale(1.08);
+}
+
+.status-pill {
+  display: inline-block !important;
+  padding: 4px 10px;
+  border-radius: 12px;
+  font-size: 0.75rem;
+  font-weight: 700;
+  text-align: center !important;
+  white-space: nowrap !important;
+}
+
+.status-pill.active { background: #f59e0b; color: #ffffff; }
+.status-pill.completed { background: #07a842; color: #ffffff; }
+
+/* FIX TAMPILAN WAKTU KUNJUNGAN */
+.time-details {
+  display: flex !important;
+  flex-direction: column !important;
+  gap: 4px !important;
+  font-size: 0.825rem !important;
+  line-height: 1.4 !important;
+}
+
+.time-item {
+  color: #1e293b !important;
+  white-space: nowrap !important;
+}
+
+.time-out-text {
+  color: #059669 !important;;
+}
+
+/* FIX TOMBOL AKSI TABEL */
+.action-buttons-cell {
+  display: flex !important;
+  align-items: center !important;
+  gap: 6px !important;
+}
+
+.btn-checkout-table,
+.btn-edit-table,
+.btn-delete-table {
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  height: 32px !important;
+  padding: 0 12px !important;
+  border-radius: 6px !important;
+  font-size: 0.8rem !important;
+  font-weight: 600 !important;
+  border: none !important;
+  cursor: pointer !important;
+  white-space: nowrap !important;
+  transition: opacity 0.2s ease !important;
+}
+
+.btn-checkout-table { background: #10b981; color: white; }
+.btn-edit-table { background: #f59e0b; color: white; }
+.btn-delete-table { background: #ef4444; color: white; }
+
+.btn-checkout-table:hover,
+.btn-edit-table:hover,
+.btn-delete-table:hover {
+  opacity: 0.88;
+}
+
+/* Pagination */
+.pagination-container-right {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 16px;
+}
+
+.pagination-buttons-right {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+}
+
+.pagination-buttons-right button {
+  padding: 6px 12px;
+  border: 1px solid #cbd5e1;
+  background: white;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+/* ==========================================
+   4. MODALS (OVERLAY, EDIT, DELETE, PREVIEW, SUKSES)
+   ========================================== */
+
+/* Background Overlay Hitam Transparan */
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(15, 23, 42, 0.75) !important;
+  backdrop-filter: blur(4px);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 9999 !important;
+  padding: 20px;
+}
+
+/* Card Modal Base (Hapus & Sukses) */
+.delete-modal-card,
+.success-modal-card {
+  background: #ffffff !important;
+  color: #1e293b !important;
+  padding: 24px;
+  border-radius: 12px;
+  width: 100%;
+  max-width: 460px;
+  box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.25);
+  box-sizing: border-box;
+}
+
+/* Card Modal Edit */
+.edit-modal-card {
+  background: #ffffff !important;
+  color: #1e293b !important;
+  padding: 24px !important;
+  border-radius: 12px !important;
+  width: 100% !important;
+  max-width: 540px !important;
+  box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.25) !important;
+  position: relative !important;
+  max-height: 85vh !important;
+  overflow-y: auto !important;
+  box-sizing: border-box !important;
+}
+
+.edit-modal-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 16px;
+  border-bottom: 1px solid #e2e8f0;
+  padding-bottom: 12px;
+}
+
+.edit-modal-header h3 {
+  margin: 0;
+  color: #1e3a8a;
+  font-size: 1.2rem;
+  font-weight: 700;
+}
+
+.edit-modal-close {
+  background: transparent;
+  border: none;
+  font-size: 1.5rem;
+  color: #64748b;
+  cursor: pointer;
+  line-height: 1;
+}
+
+/* Form Isolasi Dalam Modal Edit */
+.edit-modal-card .guest-form {
+  display: flex !important;
+  flex-direction: column !important;
+  gap: 12px !important;
+  width: 100% !important;
+}
+
+.edit-modal-card .form-group {
+  display: flex !important;
+  flex-direction: column !important;
+  margin-bottom: 12px !important;
+  width: 100% !important;
+}
+
+.edit-modal-card label {
+  font-size: 0.85rem !important;
+  font-weight: 600 !important;
+  color: #334155 !important;
+  margin-bottom: 4px !important;
+}
+
+.edit-modal-card input[type="text"],
+.edit-modal-card select,
+.edit-modal-card textarea {
+  width: 100% !important;
+  padding: 10px 12px !important;
+  border: 1px solid #cbd5e1 !important;
+  border-radius: 8px !important;
+  font-size: 0.9rem !important;
+  box-sizing: border-box !important;
+  background: #ffffff !important;
+  color: #0f172a !important;
+}
+
+.edit-modal-card .image-preview-container {
+  margin-top: 10px !important;
+  max-width: 100% !important;
+  max-height: 180px !important;
+  overflow: hidden !important;
+  border-radius: 8px !important;
+}
+
+.edit-modal-card .image-preview {
+  width: 100% !important;
+  height: 180px !important;
+  object-fit: cover !important;
+  border-radius: 8px !important;
+}
+
+/* Tombol Aksi Modal */
+.delete-modal-actions,
+.success-modal-actions {
+  display: flex !important;
+  justify-content: flex-end !important;
+  align-items: center !important;
+  gap: 10px !important;
+  margin-top: 20px !important;
+}
+
+.btn-cancel {
+  background: #e2e8f0;
+  color: #334155;
+  border: none;
+  padding: 10px 18px;
+  border-radius: 8px;
+  font-weight: 600;
+  font-size: 0.9rem;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.btn-cancel:hover {
+  background: #cbd5e1;
+}
+
+.btn-confirm-delete {
+  background: #ef4444;
+  color: #ffffff;
+  border: none;
+  padding: 10px 18px;
+  border-radius: 8px;
+  font-weight: 600;
+  font-size: 0.9rem;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.btn-confirm-delete:hover {
+  background: #dc2626;
+}
+
+.btn-success-close {
+  background: #10b981 !important;
+  color: #ffffff !important;
+  border: none !important;
+  padding: 10px 22px !important;
+  border-radius: 8px !important;
+  font-weight: 700 !important;
+  font-size: 0.9rem !important;
+  cursor: pointer !important;
+  transition: background 0.2s ease !important;
+}
+
+.btn-success-close:hover {
+  background: #059669 !important;
+}
+
+/* Modal Preview Gambar Fullscreen */
+.image-preview-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.85);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 10000;
+  padding: 20px;
+}
+
+.image-preview-content {
+  position: relative;
+  max-width: 90vw;
+  max-height: 90vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.preview-full-img {
+  max-width: 100%;
+  max-height: 85vh;
+  object-fit: contain;
+  border-radius: 8px;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+}
+
+.preview-close-btn {
+  position: absolute;
+  top: -40px;
+  right: 0;
+  background: white;
+  color: #000;
+  border: none;
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  font-size: 1.2rem;
+  font-weight: bold;
+  cursor: pointer;
+}

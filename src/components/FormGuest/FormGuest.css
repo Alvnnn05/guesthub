@@ -1,0 +1,361 @@
+/* Container Form */
+.form-card {
+  background: #ffffff;
+  padding: 24px;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+  width: 100%;
+}
+
+.form-card-centered {
+  max-width: 580px !important;
+  width: 100% !important;
+}
+
+.form-title {
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: #1e3a8a;
+  margin-bottom: 20px;
+}
+
+.guest-form .form-group {
+  margin-bottom: 16px;
+  display: flex;
+  flex-direction: column;
+}
+
+/* PERBAIKAN: Gunakan :not(.custom-file-upload) agar label tombol upload tidak kena margin-bottom 6px */
+.guest-form label:not(.custom-file-upload) {
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: #334155;
+  margin-bottom: 6px;
+}
+
+.guest-form input,
+.guest-form select,
+.guest-form textarea {
+  padding: 10px 12px;
+  border: 1px solid #cbd5e1;
+  border-radius: 8px;
+  font-size: 0.9rem;
+  outline: none;
+  transition: border-color 0.2s;
+}
+
+.guest-form input:focus,
+.guest-form select:focus,
+.guest-form textarea:focus {
+  border-color: #2563eb;
+}
+
+/* Opsi Input Foto */
+.photo-input-options {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.btn-webcam-trigger,
+.custom-file-upload {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  height: 42px; /* Kunci tinggi presisi sama persis */
+  padding: 0 16px;
+  margin: 0 !important; /* Paksa reset margin agar label tidak terpengaruh */
+  border-radius: 8px;
+  font-weight: 600;
+  font-size: 0.9rem;
+  line-height: 1;
+  box-sizing: border-box;
+  cursor: pointer;
+  transition: all 0.2s ease-in-out;
+  user-select: none;
+}
+
+.btn-webcam-trigger {
+  background-color: #2563eb;
+  color: #fff;
+  border: 1px solid #2563eb; /* Samakan ada border 1px agar tinggi identik */
+}
+
+.btn-webcam-trigger:hover {
+  background-color: #1d4ed8;
+  border-color: #1d4ed8;
+  transform: translateY(-1px);
+  box-shadow: 0 4px 10px rgba(37, 99, 235, 0.25);
+}
+
+.btn-webcam-trigger:active {
+  transform: translateY(0);
+}
+
+.custom-file-upload {
+  background-color: #f1f5f9;
+  color: #334155;
+  border: 1px solid #cbd5e1;
+}
+
+.custom-file-upload:hover {
+  background-color: #e2e8f0;
+  color: #1e293b;
+  border-color: #94a3b8;
+  transform: translateY(-1px);
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+}
+
+.custom-file-upload:active {
+  transform: translateY(0);
+}
+
+.hidden-file-input {
+  display: none;
+}
+
+.photo-preview-box {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.form-photo-thumbnail {
+  width: 60px;
+  height: 60px;
+  object-fit: cover;
+  border-radius: 8px;
+}
+
+.btn-remove-photo {
+  background: #ef4444;
+  color: white;
+  border: none;
+  padding: 6px 12px;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+/* Styling Utama Tombol Simpan Data Tamu */
+.btn-submit {
+  width: 100%;
+  background-color: #1e3a8a;
+  color: #ffffff;
+  padding: 12px;
+  border: none;
+  border-radius: 8px;
+  font-weight: 700;
+  font-size: 0.95rem;
+  cursor: pointer;
+  margin-top: 10px;
+  transition: all 0.2s ease-in-out; /* Transisi halus saat kursor diarahkan */
+}
+
+/* Efek Hover (Berubah ke warna #f59e0b) */
+.btn-submit:hover:not(:disabled) {
+  background-color: #f59e0b !important; /* Warna Amber/Kuning Emas */
+  color: #ffffff !important;
+  transform: translateY(-1px); /* Tombol sedikit terangkat */
+}
+
+/* Efek saat tombol diklik */
+.btn-submit:active:not(:disabled) {
+  transform: translateY(0);
+  box-shadow: none;
+}
+
+/* Saat Loading (Disabled) */
+.btn-submit:disabled {
+  background-color: #94a3b8;
+  cursor: not-allowed;
+  opacity: 0.7;
+}
+/* Modal Styling */
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(15, 23, 42, 0.75) !important;
+  backdrop-filter: blur(4px);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 9999 !important;
+  padding: 20px;
+}
+
+.camera-modal-card {
+  background: #ffffff !important;
+  color: #1e293b !important;
+  padding: 24px !important;
+  border-radius: 12px !important;
+  width: 90% !important;
+  max-width: 480px !important;
+  box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.25) !important;
+  position: relative !important;
+  box-sizing: border-box !important;
+}
+
+.camera-modal-header {
+  display: flex !important;
+  justify-content: space-between !important;
+  align-items: center !important;
+  margin-bottom: 12px !important;
+}
+
+.camera-modal-header h3 {
+  margin: 0 !important;
+  font-size: 1.2rem !important;
+  font-weight: 700 !important;
+  color: #1e3a8a !important;
+}
+
+.camera-modal-close {
+  background: transparent !important;
+  border: none !important;
+  font-size: 1.5rem !important;
+  color: #64748b !important;
+  cursor: pointer !important;
+  line-height: 1 !important;
+}
+
+.camera-viewport-box {
+  width: 100% !important;
+  height: 280px !important;
+  background: #000000 !important;
+  border-radius: 8px !important;
+  overflow: hidden !important;
+  margin: 12px 0 20px 0 !important;
+}
+
+.webcam-live-view, .camera-captured-img {
+  width: 100% !important;
+  height: 100% !important;
+  object-fit: cover !important;
+}
+
+.camera-modal-actions {
+  display: flex !important;
+  justify-content: flex-end !important;
+  align-items: center !important;
+  gap: 10px !important;
+}
+
+.camera-modal-actions button {
+  padding: 10px 18px !important;
+  border-radius: 8px !important;
+  font-weight: 600 !important;
+  font-size: 0.9rem !important;
+  cursor: pointer !important;
+  border: none !important;
+  transition: all 0.2s ease !important;
+}
+
+/* Tombol Batal pada Modal Kamera */
+.camera-modal-actions button:first-child,
+.camera-modal-actions .btn-cancel {
+  background-color: #e2e8f0 !important;
+  color: #334155 !important;
+}
+
+.camera-modal-actions button:first-child:hover,
+.camera-modal-actions .btn-cancel:hover {
+  background-color: #cbd5e1 !important;
+}
+
+/* Tombol Tangkap Foto pada Modal Kamera */
+.camera-modal-actions button:last-child,
+.camera-modal-actions .btn-capture-photo {
+  background-color: #2563eb !important;
+  color: #ffffff !important;
+  font-weight: 700 !important;
+}
+
+.camera-modal-actions button:last-child:hover,
+.camera-modal-actions .btn-capture-photo:hover {
+  background-color: #1d4ed8 !important;
+}
+
+/* ==========================================
+   FIX PREVIEW FOTO & MODAL SUKSES (FORM GUEST)
+   ========================================== */
+
+/* 1. Fix Preview Foto Horizontal Rapi */
+.photo-preview-box {
+  display: flex !important;
+  align-items: center !important;
+  gap: 12px !important;
+  margin-top: 8px !important;
+}
+
+.form-photo-thumbnail {
+  width: 60px !important;
+  height: 60px !important;
+  object-fit: cover !important;
+  border-radius: 8px !important;
+  border: 1px solid #cbd5e1 !important;
+  flex-shrink: 0 !important;
+}
+
+.photo-status-text {
+  font-size: 0.9rem !important;
+  font-weight: 600 !important;
+  color: #10b981 !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  white-space: nowrap !important;
+}
+
+.btn-remove-photo {
+  background-color: #ef4444 !important;
+  color: #ffffff !important;
+  border: none !important;
+  padding: 8px 14px !important;
+  border-radius: 8px !important;
+  font-weight: 600 !important;
+  font-size: 0.85rem !important;
+  cursor: pointer !important;
+  transition: background-color 0.2s ease !important;
+  margin: 0 !important;
+}
+
+.btn-remove-photo:hover {
+  background-color: #dc2626 !important;
+}
+
+/* 2. Fix Modal Sukses & Tombol Selesai */
+.success-modal-card {
+  background: #ffffff !important;
+  color: #1e293b !important;
+  padding: 24px !important;
+  border-radius: 12px !important;
+  width: 100% !important;
+  max-width: 440px !important;
+  box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.25) !important;
+  box-sizing: border-box !important;
+}
+
+.success-modal-actions {
+  display: flex !important;
+  justify-content: flex-end !important;
+  align-items: center !important;
+  margin-top: 20px !important;
+}
+
+.btn-success-close {
+  background-color: #10b981 !important;
+  color: #ffffff !important;
+  border: none !important;
+  padding: 10px 22px !important;
+  border-radius: 8px !important;
+  font-weight: 700 !important;
+  font-size: 0.9rem !important;
+  cursor: pointer !important;
+  transition: background-color 0.2s ease !important;
+}
+
+.btn-success-close:hover {
+  background-color: #059669 !important;
+}

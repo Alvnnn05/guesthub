@@ -8,7 +8,7 @@
 }
 
 body {
-font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
   
   /* Path ke gambar background */
   background: url('./assets/blue2.jpg') no-repeat center center fixed;
@@ -29,7 +29,9 @@ font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI',
   background-color: transparent !important;
 }
 
-/* HEADER / NAVBAR UTAMA */
+/* ==========================================
+   HEADER / NAVBAR UTAMA
+   ========================================== */
 .main-header {
   background: rgba(15, 23, 42, 0.65) !important; /* Biru gelap transparan */
   backdrop-filter: blur(12px);                   /* Efek blur kaca */
@@ -59,10 +61,10 @@ font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI',
 
 /* Styling Logo di Header Navbar */
 .header-logo-img {
-  width: 52px;         
-  height: 52px;        
+  width: 52px;          
+  height: 52px;         
   object-fit: contain;  
-  border-radius: 6px;   
+  border-radius: 6px;    
 }
 
 .header-title {
@@ -87,33 +89,26 @@ font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI',
   gap: 12px;
 }
 
-/* Styling Badge Role Kapsul (KODE ASLI KAMU) */
+/* Styling Badge Role Kapsul */
 .role-badge {
   display: inline-flex;
   align-items: center;
-  gap: 8px;                         
-  background-color: #f1f5f9;        
-  color: #2563eb;                  
-  padding: 6px 18px;                
-  border-radius: 50px;              
-  font-weight: 700;                 
-  font-size: 0.95rem;               
+  gap: 8px;                          
+  background-color: #f1f5f9;         
+  color: #2563eb;                    
+  padding: 6px 18px;                 
+  border-radius: 50px;               
+  font-weight: 700;                  
+  font-size: 0.95rem;                
   border: 1px solid #cbd5e1;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
 }
 
-/* Ukuran Dasar Ikon di Badge */
-.badge-icon {
-  height: 22px;
-  width: auto;
-  object-fit: contain;  
-}
-
-/* Penyesuaian Ukuran Khusus Ikon Resepsionis Agar Seimbang */
+.badge-icon,
 .badge-icon-resepsionis {
   height: 22px;
   width: auto;
-  object-fit: contain;
+  object-fit: contain;  
 }
 
 .role-badge.admin,
@@ -170,7 +165,69 @@ font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI',
   transform: translateY(-1px);
 }
 
-/* MAIN CONTENT AREA */
+/* ==========================================
+   STYLING TAB NAVIGASI ADMIN (GUESTHUB)
+   ========================================== */
+.tab-navigation {
+  display: flex;
+  gap: 12px;
+  max-width: 1400px;
+  margin: 20px auto 10px auto;
+  padding: 0 24px;
+  width: 100%;
+}
+
+.tab-button {
+  background-color: rgba(255, 255, 255, 0.15);
+  color: #ffffff;
+  border: 1px solid rgba(255, 255, 255, 0.25);
+  padding: 10px 22px;
+  border-radius: 8px;
+  font-weight: 600;
+  font-size: 0.95rem;
+  cursor: pointer;
+  transition: all 0.25s ease-in-out;
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.tab-button:hover {
+  background-color: rgba(255, 255, 255, 0.3);
+  color: #ffffff;
+  transform: translateY(-1px);
+}
+
+.tab-button.active {
+  background-color: #ffffff;
+  color: #1e3a8a;
+  border-color: #ffffff;
+  font-weight: 700;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+/* ==========================================
+   LAYOUT KHUSUS RESEPSIONIS (SIDE-BY-SIDE)
+   ========================================== */
+.form-input-container {
+  display: grid !important;
+  grid-template-columns: 460px 1fr !important; /* Form di kiri (460px), Tabel di kanan mengisi sisa area */
+  gap: 24px !important;                       /* Jarak antar kartu */
+  align-items: start !important;
+  width: 100% !important;
+}
+
+.form-input-container .form-card,
+.form-input-container .table-card-right {
+  width: 100% !important;
+  box-sizing: border-box !important;
+}
+
+/* ==========================================
+   MAIN CONTENT AREA
+   ========================================== */
 .main-content {
   flex: 1;
   padding: 24px 28px;
@@ -187,10 +244,19 @@ font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI',
   min-height: 100vh;
   font-size: 1.1rem;
   font-weight: 600;
-  color: #1E3A8A;
+  color: #ffffff;
 }
 
-/* RESPONSIVE HEADER MOBILE */
+/* ==========================================
+   RESPONSIVE LAYOUT (HP & TABLET)
+   ========================================== */
+@media (max-width: 1024px) {
+  .form-input-container {
+    grid-template-columns: 1fr !important; /* Otomatis tumpuk vertikal di layar tablet/HP */
+    gap: 20px !important;
+  }
+}
+
 @media (max-width: 768px) {
   .main-header {
     flex-direction: column;
@@ -202,14 +268,15 @@ font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI',
 
   .header-brand {
     flex-direction: column;
-    gap: 1px;
+    gap: 4px;
   }
 
   .header-actions {
     display: flex;
     align-items: center;
-    gap: 12px;
-    margin-left: auto;
+    justify-content: center;
+    gap: 8px;
+    width: 100%;
   }
 
   .role-badge,
@@ -217,6 +284,19 @@ font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI',
   .btn-header-logout {
     font-size: 0.8rem;
     padding: 6px 12px;
+  }
+
+  .tab-navigation {
+    padding: 0 16px;
+    gap: 8px;
+  }
+  
+  .tab-button {
+    flex: 1;
+    padding: 10px 8px;
+    font-size: 0.8rem;
+    justify-content: center;
+    text-align: center;
   }
 
   .main-content {
