@@ -20,7 +20,15 @@ export default function FormGuest({ isCentered = false, onSuccess }) {
   const [capturedImg, setCapturedImg] = useState(null);
   const [showSuccessModal, setShowSuccessModal] = useState(false);
 
+  // State mode kamera (default: 'environment' / kamera belakang di HP)
+  const [facingMode, setFacingMode] = useState('environment');
+
   const webcamRef = useRef(null);
+
+  // Fungsi toggle kamera depan/belakang
+  const toggleCamera = () => {
+    setFacingMode((prevMode) => (prevMode === 'user' ? 'environment' : 'user'));
+  };
 
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -252,13 +260,26 @@ export default function FormGuest({ isCentered = false, onSuccess }) {
           <div className="camera-modal-card" onClick={(e) => e.stopPropagation()}>
             <div className="camera-modal-header">
               <h3>Ambil Foto</h3>
-              <button
-                type="button"
-                className="camera-modal-close"
-                onClick={() => setShowCameraModal(false)}
-              >
-                ✕
-              </button>
+              <div style={{ display: 'flex', gap: '8px', alignItems: 'center' }}>
+                {/* Tombol Switch Kamera Depan / Belakang */}
+                {!capturedImg && (
+                  <button
+                    type="button"
+                    className="btn-switch-camera"
+                    onClick={toggleCamera}
+                    title="Ganti Kamera Depan/Belakang"
+                  >
+                    🔄 {facingMode === 'environment' ? 'Kamera Depan' : 'Kamera Belakang'}
+                  </button>
+                )}
+                <button
+                  type="button"
+                  className="camera-modal-close"
+                  onClick={() => setShowCameraModal(false)}
+                >
+                  ✕
+                </button>
+              </div>
             </div>
 
             <div className="camera-viewport-box">
@@ -268,7 +289,7 @@ export default function FormGuest({ isCentered = false, onSuccess }) {
                   ref={webcamRef}
                   screenshotFormat="image/jpeg"
                   className="webcam-live-view"
-                  videoConstraints={{ facingMode: 'user' }}
+                  videoConstraints={{ facingMode: facingMode }}
                 />
               ) : (
                 <img src={capturedImg} alt="Hasil Ambil Foto" className="camera-captured-img" />

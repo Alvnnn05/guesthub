@@ -313,6 +313,27 @@
   background-color: #1d4ed8 !important;
 }
 
+/* Tombol Switch Kamera Depan/Belakang */
+.btn-switch-camera {
+  background-color: #f1f5f9 !important;
+  color: #1e3a8a !important;
+  border: 1px solid #cbd5e1 !important;
+  padding: 6px 12px !important;
+  border-radius: 6px !important;
+  font-size: 0.8rem !important;
+  font-weight: 600 !important;
+  cursor: pointer !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  gap: 4px !important;
+  transition: all 0.2s ease !important;
+}
+
+.btn-switch-camera:hover {
+  background-color: #e2e8f0 !important;
+  border-color: #94a3b8 !important;
+}
+
 /* Modal Sukses & Tombol Selesai */
 .success-modal-card {
   background: #ffffff !important;
