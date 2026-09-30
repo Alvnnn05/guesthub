@@ -19,6 +19,7 @@ body {
   
   min-height: 100vh;
   color: #1e293b;
+  overflow-x: hidden; /* Mencegah seluruh halaman bergeser miring ke kanan di HP */
 }
 
 /* App Layout Container */
@@ -209,20 +210,22 @@ body {
 }
 
 /* ==========================================
-   LAYOUT KHUSUS RESEPSIONIS (SIDE-BY-SIDE)
+   LAYOUT KHUSUS RESEPSIONIS (SIDE-BY-SIDE DESKTOP)
    ========================================== */
 .form-input-container {
-  display: grid !important;
-  grid-template-columns: 460px 1fr !important; /* Form di kiri (460px), Tabel di kanan mengisi sisa area */
-  gap: 24px !important;                       /* Jarak antar kartu */
-  align-items: start !important;
-  width: 100% !important;
+  display: grid;
+  grid-template-columns: minmax(0, 460px) minmax(0, 1fr); /* Fleksibel untuk desktop, aman di HP */
+  gap: 24px;
+  align-items: start;
+  width: 100%;
+  box-sizing: border-box;
 }
 
 .form-input-container .form-card,
 .form-input-container .table-card-right {
-  width: 100% !important;
-  box-sizing: border-box !important;
+  width: 100%;
+  max-width: 100%;
+  box-sizing: border-box;
 }
 
 /* ==========================================
@@ -252,8 +255,10 @@ body {
    ========================================== */
 @media (max-width: 1024px) {
   .form-input-container {
-    grid-template-columns: 1fr !important; /* Otomatis tumpuk vertikal di layar tablet/HP */
-    gap: 20px !important;
+    grid-template-columns: 1fr !important; /* Paksa tumpuk 1 kolom vertikal di HP & Tablet */
+    gap: 16px !important;
+    width: 100% !important;
+    max-width: 100% !important;
   }
 }
 
@@ -277,6 +282,7 @@ body {
     justify-content: center;
     gap: 8px;
     width: 100%;
+    flex-wrap: wrap; /* Agar badge & tombol profile/logout tidak gepeng di HP kecil */
   }
 
   .role-badge,
@@ -287,7 +293,7 @@ body {
   }
 
   .tab-navigation {
-    padding: 0 16px;
+    padding: 0 12px;
     gap: 8px;
   }
   
@@ -300,6 +306,41 @@ body {
   }
 
   .main-content {
-    padding: 12px;
+    padding: 12px 8px !important;
+    overflow-x: hidden !important;
+  }
+}
+
+/* ==========================================
+   FIX PEMUNGKAS: RESPONSIF RESEPSIONIS HP
+   ========================================== */
+@media (max-width: 1024px) {
+  /* 1. Paksa semua kontainer pembungkus di halaman resepsionis jadi 1 kolom vertikal */
+  .form-input-container,
+  .main-content > div,
+  .app-container > div {
+    display: flex !important;
+    flex-direction: column !important;
+    grid-template-columns: 1fr !important;
+    width: 100% !important;
+    max-width: 100% !important;
+    gap: 16px !important;
+  }
+
+  /* 2. Kunci kartu Form dan kartu Tabel agar lebarnya pas selayar HP */
+  .form-card,
+  .table-card-right,
+  .table-card-fullwidth {
+    width: 100% !important;
+    max-width: 100% !important;
+    min-width: 0 !important;
+    box-sizing: border-box !important;
+  }
+
+  /* 3. Atur area utama agar tidak ada jarak berlebih di HP */
+  .main-content {
+    padding: 12px 8px !important;
+    width: 100% !important;
+    overflow-x: hidden !important;
   }
 }

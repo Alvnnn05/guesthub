@@ -485,3 +485,71 @@
   font-weight: bold;
   cursor: pointer;
 }
+
+/* ==========================================
+   RESPONSIF MOBILE (GUESTTABLE)
+   ========================================== */
+@media (max-width: 768px) {
+  /* Card Container */
+  .table-card-right {
+    padding: 16px !important;
+  }
+
+  .table-card-header {
+    flex-direction: column !important;
+    align-items: flex-start !important;
+    gap: 12px !important;
+  }
+
+  .btn-export-excel-small {
+    width: 100% !important;
+    text-align: center !important;
+  }
+
+  /* Fix Filter Container agar Stack Rapi ke Bawah */
+  .filter-container-wrapper {
+    padding: 10px !important;
+  }
+
+  .filter-row-top, 
+  .filter-row-bottom {
+    flex-direction: column !important;
+    width: 100% !important;
+    gap: 8px !important;
+  }
+
+  .search-input-right, 
+  .filter-select-right, 
+  .filter-date-right, 
+  .filter-select-bidang-full,
+  .btn-reset-filter {
+    width: 100% !important;
+    flex: none !important;
+    box-sizing: border-box !important;
+  }
+
+  /* Fix Scroll Horizontal Tabel */
+  .table-responsive-right {
+    width: 100% !important;
+    overflow-x: auto !important;
+    -webkit-overflow-scrolling: touch;
+    margin-top: 8px !important;
+  }
+
+  .guest-table-right {
+    min-width: 650px !important; /* Paksa tabel memiliki lebar minimum agar bisa di-scroll horizontal tanpa gepeng */
+  }
+
+  /* Fix Pagination Stack */
+  .pagination-container-right {
+    flex-direction: column !important;
+    gap: 12px !important;
+    align-items: center !important;
+    text-align: center !important;
+  }
+
+  .pagination-buttons-right {
+    justify-content: center !important;
+    width: 100% !important;
+  }
+}
