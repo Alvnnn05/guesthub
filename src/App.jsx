@@ -20,6 +20,7 @@ export default function App() {
   const [showProfile, setShowProfile] = useState(false);
   const [activeTab, setActiveTab] = useState('form');
 
+  // Load Session & Listener Auth Supabase
   useEffect(() => {
     supabase.auth.getSession().then(({ data: { session } }) => {
       setSession(session);
@@ -34,11 +35,11 @@ export default function App() {
     return () => subscription.unsubscribe();
   }, []);
 
-  // Idle Timer 20 Menit
+  // Idle Timer Auto Logout (20 Menit)
   useEffect(() => {
     if (!session) return;
     let idleTimer;
-    const TIMEOUT_DURATION = 20 * 60 * 1000;
+    const TIMEOUT_DURATION = 20 * 60 * 1000; // 20 Menit
 
     const executeAutoLogout = async () => {
       await supabase.auth.signOut();
