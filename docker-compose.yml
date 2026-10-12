@@ -1,0 +1,74 @@
+services:
+  # ==============================================================
+  # 1. DATABASE POSTGRESQL
+  # ==============================================================
+  postgres:
+    image: postgres:17-alpine
+    container_name: guesthub_db
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB: ${DB_NAME:-guesthub_db}
+      POSTGRES_USER: ${DB_USER:-postgres}
+      POSTGRES_PASSWORD: ${DB_PASSWORD:-admin123}
+    ports:
+      # Port 5432 diekspos agar bisa diakses DBeaver dari laptop (jika diperlukan)
+      - "5432:5432"
+    volumes:
+      # Data persisten database disimpan di volume ini (tidak hilang saat restart)
+      - postgres_data:/var/lib/postgresql/data
+      # File SQL backup otomatis dieksekusi saat container pertama kali dibuat
+      - ./guesthub_backup.sql:/docker-entrypoint-initdb.d/init.sql:ro
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${DB_USER:-postgres} -d ${DB_NAME:-guesthub_db}"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+
+  # ==============================================================
+  # 2. BACKEND API (Express.js)
+  # ==============================================================
+  backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    container_name: guesthub_backend
+    restart: unless-stopped
+    depends_on:
+      postgres:
+        condition: service_healthy
+    environment:
+      PORT: 5000
+      DB_HOST: postgres
+      DB_PORT: 5432
+      DB_USER: ${DB_USER:-postgres}
+      DB_PASSWORD: ${DB_PASSWORD:-admin123}
+      DB_NAME: ${DB_NAME:-guesthub_db}
+      JWT_SECRET: ${JWT_SECRET:-guesthub_36bbea54d781cf3d183583e9d99f0fdc9913091d3e2e5b14d8de606cd519b4f9c456888e93a7d61ef1bc18b3a3779ca6}
+      ALLOWED_ORIGINS: "*"
+    volumes:
+      # Foto tamu disimpan langsung di folder backend/uploads pada server fisik
+      - ./backend/uploads:/app/uploads
+    expose:
+      - "5000"
+
+  # ==============================================================
+  # 3. FRONTEND (React Vite + Nginx Reverse Proxy)
+  # ==============================================================
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+      args:
+        VITE_API_BASE_URL: /api
+    container_name: guesthub_frontend
+    restart: unless-stopped
+    depends_on:
+      - backend
+    ports:
+      # Aplikasi dapat diakses lewat port 8080 pada IP server CentOS
+      # Tim IT Dishub tinggal mengarahkan subdomain .go.id ke port 8080 ini
+      - "8080:80"
+
+volumes:
+  postgres_data:
+    name: guesthub_postgres_data

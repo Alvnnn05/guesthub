@@ -1,0 +1,231 @@
+/* Container Utama */
+.um-container {
+  width: 100%;
+}
+
+/* Statistik Cards Grid */
+.um-stats-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 16px;
+  margin-bottom: 24px;
+}
+
+.um-stat-card {
+  background-color: #ffffff;
+  border-radius: 12px;
+  padding: 20px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.um-stat-card.card-blue {
+  border-left: 5px solid #2563eb;
+}
+
+.um-stat-card.card-green {
+  border-left: 5px solid #10b981;
+}
+
+.um-stat-card.card-orange {
+  border-left: 5px solid #f59e0b;
+}
+
+.um-stat-label {
+  margin: 0;
+  color: #64748b;
+  font-size: 0.875rem;
+  font-weight: bold;
+}
+
+.um-stat-value {
+  margin: 8px 0 0;
+  font-size: 1.8rem;
+  color: #1e293b;
+}
+
+.um-stat-icon {
+  font-size: 2.2rem;
+}
+
+/* Header Card & Tombol Tambah */
+.um-table-card {
+  border-radius: 12px;
+  padding: 24px;
+}
+
+.um-header-wrapper {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.um-subtitle {
+  margin: 4px 0 0;
+  color: #64748b;
+  font-size: 0.875rem;
+}
+
+.um-btn-add {
+  background-color: #10b981;
+  color: #ffffff;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: bold;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  box-shadow: 0 2px 6px rgba(16, 185, 129, 0.3);
+  transition: background-color 0.2s ease;
+}
+
+.um-btn-add:hover {
+  background-color: #059669;
+}
+
+/* Alignment Tabel */
+.text-center {
+  text-align: center;
+}
+
+.col-no {
+  width: 60px;
+}
+
+.col-action {
+  width: 220px; /* Diperlebar agar 2 tombol muat sejajar */
+}
+
+.table-margin-top {
+  margin-top: 20px;
+}
+
+/* Tombol Aksi Sejajar & Tanpa Teks Terlipat */
+.um-action-group {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+}
+
+.btn-reset-pass {
+  background-color: #f59e0b;
+  color: #ffffff;
+  border: none;
+  padding: 6px 12px;
+  border-radius: 6px;
+  cursor: pointer;
+  font-weight: bold;
+  font-size: 0.8rem;
+  white-space: nowrap; /* Mencegah teks terlipat ke bawah */
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  transition: background-color 0.2s ease;
+}
+
+.btn-reset-pass:hover {
+  background-color: #d97706;
+}
+
+.btn-delete-table {
+  background-color: #ef4444;
+  color: #ffffff;
+  border: none;
+  padding: 6px 12px;
+  border-radius: 6px;
+  cursor: pointer;
+  font-weight: bold;
+  font-size: 0.8rem;
+  white-space: nowrap; /* Mencegah teks terlipat ke bawah */
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  transition: background-color 0.2s ease;
+}
+
+.btn-delete-table:hover {
+  background-color: #dc2626;
+}
+
+/* Paksa SweetAlert2 berada di atas modal overlay */
+.swal2-container {
+  z-index: 99999 !important;
+}
+
+/* Custom Tampilan SweetAlert2 Reset Password */
+.swal-custom-popup {
+  border-radius: 16px !important;
+  padding: 28px 24px !important;
+  font-family: inherit !important;
+  box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04) !important;
+}
+
+.swal-custom-title {
+  font-size: 1.4rem !important;
+  font-weight: 700 !important;
+  color: #1e293b !important;
+  margin-bottom: 4px !important;
+}
+
+.swal-custom-input {
+  width: 90% !important;
+  height: 44px !important;
+  border-radius: 8px !important;
+  border: 1px solid #cbd5e1 !important;
+  padding: 0 14px !important;
+  font-size: 0.95rem !important;
+  margin: 16px auto 12px auto !important;
+  transition: all 0.2s ease !important;
+  box-shadow: none !important;
+}
+
+.swal-custom-input:focus {
+  border-color: #2563eb !important;
+  box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.15) !important;
+  outline: none !important;
+}
+
+.swal-custom-confirm {
+  background-color: #2563eb !important;
+  color: #ffffff !important;
+  padding: 10px 22px !important;
+  border-radius: 8px !important;
+  font-weight: 600 !important;
+  font-size: 0.9rem !important;
+  border: none !important;
+  cursor: pointer !important;
+  margin: 8px 4px 0 4px !important;
+  transition: background-color 0.2s ease !important;
+}
+
+.swal-custom-confirm:hover {
+  background-color: #1d4ed8 !important;
+}
+
+.swal-custom-cancel {
+  background-color: #64748b !important;
+  color: #ffffff !important;
+  padding: 10px 22px !important;
+  border-radius: 8px !important;
+  font-weight: 600 !important;
+  font-size: 0.9rem !important;
+  border: none !important;
+  cursor: pointer !important;
+  margin: 8px 4px 0 4px !important;
+  transition: background-color 0.2s ease !important;
+}
+
+.swal-custom-cancel:hover {
+  background-color: #475569 !important;
+}
+
+/* Mencegah halaman bergeser saat SweetAlert2 muncul */
+body.swal2-shown {
+  overflow-y: auto !important;
+  padding-right: 0 !important;
+}
