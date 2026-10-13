@@ -1,6 +1,8 @@
 import { useState, useEffect } from 'react';
 import Swal from 'sweetalert2';
 import { getAllUsers, deleteUser, registerUser, resetPassword } from '../../api';
+import adminIcon from '../../assets/admin.png';
+import receptionistIcon from '../../assets/custservice.png';
 import '../GuestTable/GuestTable.css';
 import './UserManagement.css';
 
@@ -179,7 +181,9 @@ export default function UserManagement() {
             <p className="um-stat-label">TOTAL USER</p>
             <h3 className="um-stat-value">{totalUsers}</h3>
           </div>
-          <div className="um-stat-icon">👥</div>
+          <div className="um-stat-icon-wrapper bg-blue-light">
+            <span className="um-stat-text-icon">👥</span>
+          </div>
         </div>
 
         <div className="um-stat-card card-green">
@@ -187,7 +191,9 @@ export default function UserManagement() {
             <p className="um-stat-label">ADMIN</p>
             <h3 className="um-stat-value">{totalAdmin}</h3>
           </div>
-          <div className="um-stat-icon">👨‍💼</div>
+          <div className="um-stat-icon-wrapper bg-green-light">
+            <img src={adminIcon} alt="Admin" className="um-stat-img-icon" />
+          </div>
         </div>
 
         <div className="um-stat-card card-orange">
@@ -195,7 +201,9 @@ export default function UserManagement() {
             <p className="um-stat-label">RESEPSIONIS</p>
             <h3 className="um-stat-value">{totalResepsionis}</h3>
           </div>
-          <div className="um-stat-icon">🎧</div>
+          <div className="um-stat-icon-wrapper bg-orange-light">
+            <img src={receptionistIcon} alt="Resepsionis" className="um-stat-img-icon" />
+          </div>
         </div>
       </div>
 
@@ -211,7 +219,7 @@ export default function UserManagement() {
             className="um-btn-add"
             onClick={() => setShowAddModal(true)}
           >
-            Tambah User Baru
+            + Tambah User Baru
           </button>
         </div>
 
@@ -238,16 +246,23 @@ export default function UserManagement() {
                   </td>
                 </tr>
               ) : (
-                users.map((u, idx) => (
-                  <tr key={u.id}>
-                    <td className="text-center">{idx + 1}</td>
-                    <td><strong>{u.username}</strong></td>
-                    <td>{u.full_name || '-'}</td>
-                    <td className="text-center">
-                      <span className={`status-pill ${u.role?.toLowerCase() === 'admin' ? 'completed' : 'active'}`}>
-                        {u.role?.toUpperCase()}
-                      </span>
-                    </td>
+                users.map((u, idx) => {
+                  const isAdminRole = u.role?.toLowerCase() === 'admin';
+                  return (
+                    <tr key={u.id}>
+                      <td className="text-center">{idx + 1}</td>
+                      <td><strong>{u.username}</strong></td>
+                      <td>{u.full_name || '-'}</td>
+                      <td className="text-center">
+                        <span className={`status-pill role-badge-pill ${isAdminRole ? 'completed' : 'active'}`}>
+                          <img 
+                            src={isAdminRole ? adminIcon : receptionistIcon} 
+                            alt={u.role} 
+                            className="role-badge-img" 
+                          />
+                          {isAdminRole ? 'ADMIN' : 'RESEPSIONIS'}
+                        </span>
+                      </td>
                     <td className="text-center">
                       <div className="um-action-group">
                         <button 
@@ -269,7 +284,8 @@ export default function UserManagement() {
                       </div>
                     </td>
                   </tr>
-                ))
+                );
+              })
               )}
             </tbody>
           </table>
@@ -281,7 +297,7 @@ export default function UserManagement() {
         <div className="pm-overlay">
           <div className="pm-card">
             <div className="pm-header">
-              <h3 className="pm-title">➕ Tambah Akun User Baru</h3>
+              <h3 className="pm-title">Tambah Akun User Baru</h3>
               <button type="button" className="pm-close-btn" onClick={() => setShowAddModal(false)}>
                 ✕
               </button>

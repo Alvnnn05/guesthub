@@ -46,8 +46,52 @@
   color: #1e293b;
 }
 
-.um-stat-icon {
-  font-size: 2.2rem;
+.um-stat-icon-wrapper {
+  width: 52px;
+  height: 52px;
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.um-stat-img-icon {
+  width: 32px;
+  height: 32px;
+  object-fit: contain;
+}
+
+.um-stat-text-icon {
+  font-size: 1.6rem;
+}
+
+.bg-blue-light {
+  background-color: #eff6ff;
+}
+
+.bg-green-light {
+  background-color: #ecfdf5;
+}
+
+.bg-orange-light {
+  background-color: #fffbeb;
+}
+
+/* Badge Role Akses Tabel */
+.role-badge-pill {
+  display: inline-flex !important;
+  align-items: center !important;
+  gap: 6px !important;
+  padding: 4px 10px !important;
+  font-weight: 600 !important;
+  font-size: 0.8rem !important;
+}
+
+.role-badge-img {
+  width: 16px;
+  height: 16px;
+  object-fit: contain;
 }
 
 /* Header Card & Tombol Tambah */
