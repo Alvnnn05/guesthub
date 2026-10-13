@@ -170,7 +170,7 @@ Jika tim IT menanyakan konfigurasinya, Anda bisa memberikan referensi ini:
 ```nginx
 server {
     listen 80;
-    server_name bukutamu.dishub.namadaerah.go.id;
+    server_name bukutamu.dishub.namadaerah.go.id; --> ini contoh
 
     # Redirect ke HTTPS jika SSL aktif
     # return 301 https://$host$request_uri;

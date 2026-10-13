@@ -2,13 +2,13 @@ import { useState, useEffect, useMemo, useCallback } from 'react';
 import React from 'react';
 import imageCompression from 'browser-image-compression';
 import Swal from 'sweetalert2';
-import { 
-  getTamuList, 
-  updateStatusTamu, 
-  updateTamuData, 
-  deleteTamu, 
-  uploadFotoTamu, 
-  getImageUrl 
+import {
+  getTamuList,
+  updateStatusTamu,
+  updateTamuData,
+  deleteTamu,
+  uploadFotoTamu,
+  getImageUrl
 } from '../../api';
 import * as XLSX from 'xlsx';
 import './GuestTable.css';
@@ -34,7 +34,7 @@ export default function GuestTable({ isAdmin, showSummaryCards = true }) {
 
   // State ticker untuk badge durasi realtime (update tiap 1 menit)
   const [now, setNow] = useState(Date.now());
-  
+
   // State Filter Rentang Tanggal
   const [startDate, setStartDate] = useState('');
   const [endDate, setEndDate] = useState('');
@@ -216,10 +216,10 @@ export default function GuestTable({ isAdmin, showSummaryCards = true }) {
     try {
       let new_foto_url = editingGuest.foto_url;
       if (editImageFile) {
-        const compressedFile = await imageCompression(editImageFile, { 
-          maxSizeMB: 0.2, 
-          maxWidthOrHeight: 1024, 
-          useWebWorker: true 
+        const compressedFile = await imageCompression(editImageFile, {
+          maxSizeMB: 0.2,
+          maxWidthOrHeight: 1024,
+          useWebWorker: true
         });
         const uploadRes = await uploadFotoTamu(compressedFile);
         if (uploadRes.error) throw new Error(uploadRes.error);
@@ -415,10 +415,10 @@ export default function GuestTable({ isAdmin, showSummaryCards = true }) {
 
       <div className="table-card-right table-card-fullwidth">
         <div className="table-card-header">
-          <h2 className="form-title">Daftar Tamu & Laporan Rekapitulasi</h2>
+          <h2 className="form-title">Daftar Tamu Aktif & Tamu Selesai</h2>
           {isAdmin && (
             <button className="btn-export-excel-small" onClick={handleExportExcel}>
-               Export Excel ({filteredGuests.length} Data)
+              Export Excel ({filteredGuests.length} Data)
             </button>
           )}
         </div>
@@ -444,20 +444,20 @@ export default function GuestTable({ isAdmin, showSummaryCards = true }) {
           <div className="filter-row-middle" style={{ display: 'flex', gap: '10px', alignItems: 'center', marginTop: '10px', flexWrap: 'wrap' }}>
             <div style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
               <span style={{ fontSize: '0.85rem', color: '#475569' }}>Dari:</span>
-              <input 
-                type="date" 
-                className="filter-date-right" 
-                value={startDate} 
-                onChange={(e) => setStartDate(e.target.value)} 
+              <input
+                type="date"
+                className="filter-date-right"
+                value={startDate}
+                onChange={(e) => setStartDate(e.target.value)}
               />
             </div>
             <div style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
               <span style={{ fontSize: '0.85rem', color: '#475569' }}>Sampai:</span>
-              <input 
-                type="date" 
-                className="filter-date-right" 
-                value={endDate} 
-                onChange={(e) => setEndDate(e.target.value)} 
+              <input
+                type="date"
+                className="filter-date-right"
+                value={endDate}
+                onChange={(e) => setEndDate(e.target.value)}
               />
             </div>
           </div>
@@ -508,8 +508,8 @@ export default function GuestTable({ isAdmin, showSummaryCards = true }) {
                         {isFiltered ? 'Tidak Ada Tamu yang Sesuai' : 'Belum Ada Kunjungan Tamu'}
                       </h4>
                       <p className="empty-state-desc">
-                        {isFiltered 
-                          ? 'Tidak ditemukan data tamu yang cocok dengan kata kunci atau filter yang Anda pilih.' 
+                        {isFiltered
+                          ? 'Tidak ditemukan data tamu yang cocok dengan kata kunci atau filter yang Anda pilih.'
                           : 'Buku tamu masih kosong saat ini. Tamu baru yang dicatat akan muncul di tabel ini.'}
                       </p>
                       {isFiltered && (
@@ -527,11 +527,11 @@ export default function GuestTable({ isAdmin, showSummaryCards = true }) {
                     <tr key={guest.id}>
                       <td>
                         {guest.foto_url ? (
-                          <img 
-                            src={fullPhotoUrl} 
-                            alt={guest.nama_tamu} 
-                            className="table-avatar clickable-avatar" 
-                            onClick={() => setPreviewImage(fullPhotoUrl)} 
+                          <img
+                            src={fullPhotoUrl}
+                            alt={guest.nama_tamu}
+                            className="table-avatar clickable-avatar"
+                            onClick={() => setPreviewImage(fullPhotoUrl)}
                           />
                         ) : (
                           <div className="no-avatar-cell">No Pic</div>
@@ -603,11 +603,11 @@ export default function GuestTable({ isAdmin, showSummaryCards = true }) {
                   <div className="gmc-header">
                     <div className="gmc-identity">
                       {guest.foto_url ? (
-                        <img 
-                          src={fullPhotoUrl} 
-                          alt={guest.nama_tamu} 
-                          className="gmc-avatar clickable-avatar" 
-                          onClick={() => setPreviewImage(fullPhotoUrl)} 
+                        <img
+                          src={fullPhotoUrl}
+                          alt={guest.nama_tamu}
+                          className="gmc-avatar clickable-avatar"
+                          onClick={() => setPreviewImage(fullPhotoUrl)}
                         />
                       ) : (
                         <div className="gmc-no-avatar">No Pic</div>
@@ -697,11 +697,11 @@ export default function GuestTable({ isAdmin, showSummaryCards = true }) {
             <form onSubmit={handleEditSubmit} className="guest-form">
               <div className="form-group">
                 <label>Nama Lengkap Tamu *</label>
-                <input type="text" name="nama_tamu" value={editFormData.nama_tamu} onChange={(e) => setEditFormData({...editFormData, nama_tamu: e.target.value})} required />
+                <input type="text" name="nama_tamu" value={editFormData.nama_tamu} onChange={(e) => setEditFormData({ ...editFormData, nama_tamu: e.target.value })} required />
               </div>
               <div className="form-group">
                 <label>Instansi Asal *</label>
-                <input type="text" name="instansi_asal" value={editFormData.instansi_asal} onChange={(e) => setEditFormData({...editFormData, instansi_asal: e.target.value})} required />
+                <input type="text" name="instansi_asal" value={editFormData.instansi_asal} onChange={(e) => setEditFormData({ ...editFormData, instansi_asal: e.target.value })} required />
               </div>
               <div className="form-group">
                 <label>No. HP *</label>
@@ -714,7 +714,7 @@ export default function GuestTable({ isAdmin, showSummaryCards = true }) {
               </div>
               <div className="form-group">
                 <label>Tujuan Bidang *</label>
-                <select name="tujuan_bidang" value={editFormData.tujuan_bidang} onChange={(e) => setEditFormData({...editFormData, tujuan_bidang: e.target.value})} required>
+                <select name="tujuan_bidang" value={editFormData.tujuan_bidang} onChange={(e) => setEditFormData({ ...editFormData, tujuan_bidang: e.target.value })} required>
                   <option value="Sekretariat">Sekretariat</option>
                   <option value="Sub Bagian Umum Dan Kepegawaian">Sub Bagian Umum Dan Kepegawaian</option>
                   <option value="Sub Bagian Keuangan Dan Penyusunan Program">Sub Bagian Keuangan Dan Penyusunan Program</option>
@@ -731,16 +731,16 @@ export default function GuestTable({ isAdmin, showSummaryCards = true }) {
               </div>
               <div className="form-group">
                 <label>Perihal *</label>
-                <textarea name="perihal" value={editFormData.perihal} onChange={(e) => setEditFormData({...editFormData, perihal: e.target.value})} rows="3" required />
+                <textarea name="perihal" value={editFormData.perihal} onChange={(e) => setEditFormData({ ...editFormData, perihal: e.target.value })} rows="3" required />
               </div>
               <div className="form-group">
                 <label>Ganti Foto (Opsional)</label>
-                <input 
-                  type="file" 
-                  accept="image/png, image/jpeg, image/jpg" 
-                  onChange={(e) => { 
-                    const file = e.target.files[0]; 
-                    if (file) { 
+                <input
+                  type="file"
+                  accept="image/png, image/jpeg, image/jpg"
+                  onChange={(e) => {
+                    const file = e.target.files[0];
+                    if (file) {
                       const allowedTypes = ['image/jpeg', 'image/jpg', 'image/png'];
                       if (!allowedTypes.includes(file.type)) {
                         Swal.fire({ icon: 'error', title: 'Format Tidak Sesuai', text: 'Gunakan format JPG, JPEG, atau PNG!' });
@@ -753,10 +753,10 @@ export default function GuestTable({ isAdmin, showSummaryCards = true }) {
                       if (editImagePreview && editImagePreview.startsWith('blob:')) {
                         URL.revokeObjectURL(editImagePreview);
                       }
-                      setEditImageFile(file); 
-                      setEditImagePreview(URL.createObjectURL(file)); 
-                    } 
-                  }} 
+                      setEditImageFile(file);
+                      setEditImagePreview(URL.createObjectURL(file));
+                    }
+                  }}
                 />
                 {editImagePreview && <div className="image-preview-container"><img src={editImagePreview} alt="Preview" className="image-preview" /></div>}
               </div>
