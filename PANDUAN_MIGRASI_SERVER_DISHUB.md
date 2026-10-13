@@ -153,7 +153,7 @@ Jika laptop Anda terhubung ke jaringan Wi-Fi/LAN kantor yang sama dengan server:
    http://IP_SERVER_DISHUB:8085
    ```
    *(Contoh: `http://192.168.1.50:8085`)*
-3. Halaman Login **GuestHub** akan langsung tampil! Cobalah login menggunakan akun Anda (`admin1` / password Anda).
+3. Halaman Login **GuestHub** akan langsung tampil! Cobalah login menggunakan akun Anda (`admin1` / password : admin123).
 
 ---
 
