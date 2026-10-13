@@ -65,9 +65,9 @@ services:
     depends_on:
       - backend
     ports:
-      # Aplikasi dapat diakses lewat port 8080 pada IP server CentOS
-      # Tim IT Dishub tinggal mengarahkan subdomain .go.id ke port 8080 ini
-      - "8080:80"
+      # Aplikasi dapat diakses lewat port 8085 pada IP server CentOS
+      # Tim IT Dishub tinggal mengarahkan subdomain .go.id ke port 8085 ini
+      - "8085:80"
 
 volumes:
   postgres_data:

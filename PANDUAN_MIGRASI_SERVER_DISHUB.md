@@ -136,12 +136,12 @@ docker compose ps
 Semua kontainer berstatus **`Up`** atau **`running`**:
 * `guesthub_db` (Port 5432)
 * `guesthub_backend` (Port 5000)
-* `guesthub_frontend` (Port 8080 -> 80)
+* `guesthub_frontend` (Port 8085 -> 80)
 
 ### Langkah 5.2: Uji Respon Lokal Server
 Ketik di terminal server:
 ```bash
-curl http://localhost:8080
+curl http://localhost:8085
 ```
 Jika keluar teks kode HTML React (`<!doctype html>...`), berarti web server Nginx sudah aktif sempurna!
 
@@ -150,20 +150,20 @@ Jika laptop Anda terhubung ke jaringan Wi-Fi/LAN kantor yang sama dengan server:
 1. Buka Google Chrome di laptop.
 2. Akses alamat:
    ```text
-   http://IP_SERVER_DISHUB:8080
+   http://IP_SERVER_DISHUB:8085
    ```
-   *(Contoh: `http://192.168.1.50:8080`)*
+   *(Contoh: `http://192.168.1.50:8085`)*
 3. Halaman Login **GuestHub** akan langsung tampil! Cobalah login menggunakan akun Anda (`admin1` / password Anda).
 
 ---
 
 ## 6. Koordinasi Subdomain .go.id dengan Tim IT
 
-Setelah GuestHub dipastikan aktif di port `8080`, Anda tinggal meminta bantuan tim IT Dishub untuk menyambungkannya ke subdomain resmi dinas.
+Setelah GuestHub dipastikan aktif di port `8085`, Anda tinggal meminta bantuan tim IT Dishub untuk menyambungkannya ke subdomain resmi dinas.
 
 ### Pesan yang Bisa Anda Kirim ke Tim IT:
-> *"Halo Pak/Mas Tim IT, aplikasi GuestHub (Buku Tamu Digital) sudah berhasil dijalankan di server menggunakan Docker pada port lokal **8080**.*  
-> *Mohon bantuannya untuk mengarahkan subdomain resmi (misal: **bukutamu.dishub.namadaerah.go.id**) sebagai **Reverse Proxy** ke port **http://127.0.0.1:8080** dan dipasangkan sertifikat SSL HTTPS. Terima kasih banyak!"*
+> *"Halo Pak/Mas Tim IT, aplikasi GuestHub (Buku Tamu Digital) sudah berhasil dijalankan di server menggunakan Docker pada port lokal **8085**.*  
+> *Mohon bantuannya untuk mengarahkan subdomain resmi (misal: **bukutamu.dishub.namadaerah.go.id**) sebagai **Reverse Proxy** ke port **http://127.0.0.1:8085** dan dipasangkan sertifikat SSL HTTPS. Terima kasih banyak!"*
 
 ### Referensi Konfigurasi untuk Tim IT (Nginx Utama Server Dishub):
 Jika tim IT menanyakan konfigurasinya, Anda bisa memberikan referensi ini:
@@ -176,7 +176,7 @@ server {
     # return 301 https://$host$request_uri;
 
     location / {
-        proxy_pass http://127.0.0.1:8080;
+        proxy_pass http://127.0.0.1:8085;
         proxy_http_version 1.1;
         proxy_set_header Host $host;
         proxy_set_header X-Real-IP $remote_addr;
