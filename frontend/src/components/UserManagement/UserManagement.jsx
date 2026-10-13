@@ -254,12 +254,7 @@ export default function UserManagement() {
                       <td><strong>{u.username}</strong></td>
                       <td>{u.full_name || '-'}</td>
                       <td className="text-center">
-                        <span className={`status-pill role-badge-pill ${isAdminRole ? 'completed' : 'active'}`}>
-                          <img 
-                            src={isAdminRole ? adminIcon : receptionistIcon} 
-                            alt={u.role} 
-                            className="role-badge-img" 
-                          />
+                        <span className={`status-pill ${isAdminRole ? 'completed' : 'active'}`}>
                           {isAdminRole ? 'ADMIN' : 'RESEPSIONIS'}
                         </span>
                       </td>

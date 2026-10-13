@@ -78,22 +78,6 @@
   background-color: #fffbeb;
 }
 
-/* Badge Role Akses Tabel */
-.role-badge-pill {
-  display: inline-flex !important;
-  align-items: center !important;
-  gap: 6px !important;
-  padding: 4px 10px !important;
-  font-weight: 600 !important;
-  font-size: 0.8rem !important;
-}
-
-.role-badge-img {
-  width: 16px;
-  height: 16px;
-  object-fit: contain;
-}
-
 /* Header Card & Tombol Tambah */
 .um-table-card {
   border-radius: 12px;
