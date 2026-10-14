@@ -73,7 +73,7 @@ export default function Login({ onLoginSuccess }) {
           <h2 className="login-title">GuestHub</h2>
           <p className="login-subtitle">Sistem Buku Tamu Digital Dinas Perhubungan</p>
           <div className="login-security-badge">
-            🔒 Portal Resmi Pelayanan Tamu Terenkripsi
+            Kabupaten Ponorogo
           </div>
 
         <form onSubmit={handleLogin} className="login-form">
@@ -107,7 +107,7 @@ export default function Login({ onLoginSuccess }) {
       </div>
 
       <div className="login-footer-text">
-        © {new Date().getFullYear()} GuestHub • Dinas Perhubungan
+        © {new Date().getFullYear()} GuestHub • Dinas Perhubungan Kabupaten Ponorogo
       </div>
     </div>
   );

@@ -5,9 +5,9 @@ import GuestTable from "./components/GuestTable/GuestTable";
 import ProfileModal from './components/ProfileModal/ProfileModal';
 import UserManagement from './components/UserManagement/UserManagement';
 
-import adminIcon from './assets/admin.png'; 
+import adminIcon from './assets/admin.png';
 import receptionistIcon from './assets/custservice.png';
-import logoApp from './assets/guesthub.png'; 
+import logoApp from './assets/guesthub.png';
 import './App.css';
 
 export default function App() {
@@ -132,26 +132,26 @@ export default function App() {
 
       {/* TAB NAVIGASI */}
       <nav className="tab-navigation">
-        <button 
+        <button
           className={`tab-button ${activeTab === 'form' ? 'active' : ''}`}
           onClick={() => setActiveTab('form')}
         >
-          📝 Input Buku Tamu
+          Form Buku Tamu
         </button>
-        <button 
+        <button
           className={`tab-button ${activeTab === 'dashboard' ? 'active' : ''}`}
           onClick={() => setActiveTab('dashboard')}
         >
-          📊 Dashboard & Riwayat Tamu
+          Dashboard & Riwayat Tamu
         </button>
 
         {/* TAB KHUSUS ADMIN UNTUK KELOLA USER */}
         {isAdmin && (
-          <button 
+          <button
             className={`tab-button ${activeTab === 'users' ? 'active' : ''}`}
             onClick={() => setActiveTab('users')}
           >
-            👥 Kelola User
+            Kelola User
           </button>
         )}
       </nav>
