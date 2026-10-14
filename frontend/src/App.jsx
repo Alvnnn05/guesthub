@@ -108,12 +108,12 @@ export default function App() {
         </div>
       </header>
 
-      {/* PAGE HEADER / BANNER SAPAAN RESMI */}
+      {/* PAGE HEADER / BANNER SAPAAN RESMI & TAB INTEGRATED */}
       <div className="page-header-wrapper">
         <div className="page-header-container">
           <div className="ph-left">
             <h2 className="ph-title">
-              {activeTab === 'form' && 'Pencatatan Tamu Baru'}
+              {activeTab === 'form' && 'Form Buku Tamu'}
               {activeTab === 'dashboard' && 'Dashboard & Riwayat Kunjungan Tamu'}
               {activeTab === 'users' && 'Manajemen Pengguna & Hak Akses'}
             </h2>
@@ -128,39 +128,122 @@ export default function App() {
             </span>
           </div>
         </div>
+
+        {/* TAB NAVIGASI MENYATU (SUB-NAVBAR) */}
+        <div className="tab-navigation-wrapper">
+          <nav className="tab-navigation">
+            <button
+              className={`tab-button ${activeTab === 'form' ? 'active' : ''}`}
+              onClick={() => setActiveTab('form')}
+            >
+              Form Buku Tamu
+            </button>
+            <button
+              className={`tab-button ${activeTab === 'dashboard' ? 'active' : ''}`}
+              onClick={() => setActiveTab('dashboard')}
+            >
+              Dashboard & Riwayat Tamu
+            </button>
+
+            {/* TAB KHUSUS ADMIN UNTUK KELOLA USER */}
+            {isAdmin && (
+              <button
+                className={`tab-button ${activeTab === 'users' ? 'active' : ''}`}
+                onClick={() => setActiveTab('users')}
+              >
+                Kelola User
+              </button>
+            )}
+          </nav>
+        </div>
       </div>
-
-      {/* TAB NAVIGASI */}
-      <nav className="tab-navigation">
-        <button
-          className={`tab-button ${activeTab === 'form' ? 'active' : ''}`}
-          onClick={() => setActiveTab('form')}
-        >
-          Form Buku Tamu
-        </button>
-        <button
-          className={`tab-button ${activeTab === 'dashboard' ? 'active' : ''}`}
-          onClick={() => setActiveTab('dashboard')}
-        >
-          Dashboard & Riwayat Tamu
-        </button>
-
-        {/* TAB KHUSUS ADMIN UNTUK KELOLA USER */}
-        {isAdmin && (
-          <button
-            className={`tab-button ${activeTab === 'users' ? 'active' : ''}`}
-            onClick={() => setActiveTab('users')}
-          >
-            Kelola User
-          </button>
-        )}
-      </nav>
 
       {/* KONTEN UTAMA */}
       <main className="main-content">
         {activeTab === 'form' && (
-          <div className="form-single-wrapper">
-            <FormGuest isCentered={true} onSuccess={() => setActiveTab('dashboard')} />
+          <div className="form-page-layout">
+            <div className="form-main-col">
+              <FormGuest isCentered={false} onSuccess={() => setActiveTab('dashboard')} />
+            </div>
+
+            <div className="form-info-col">
+              <div className="guide-card">
+                <div className="guide-card-header">
+                  <div className="guide-icon-badge">🏛️</div>
+                  <div>
+                    <h3 className="guide-title">Informasi & Tata Tertib</h3>
+                    <p className="guide-subtitle">Pelayanan Tamu Dinas Perhubungan Ponorogo</p>
+                  </div>
+                </div>
+
+                <div className="guide-block">
+                  <h4 className="guide-block-title">🕒 Jam Operasional Pelayanan</h4>
+                  <div className="guide-hours-table">
+                    <div className="guide-hours-row">
+                      <span>Senin – Kamis</span>
+                      <strong>07.30 – 15.30 WIB</strong>
+                    </div>
+                    <div className="guide-hours-row">
+                      <span>Jumat</span>
+                      <strong>07.30 – 14.30 WIB</strong>
+                    </div>
+                    <div className="guide-hours-row text-closed">
+                      <span>Sabtu, Minggu & Hari Libur</span>
+                      <span className="badge-closed">Tutup</span>
+                    </div>
+                  </div>
+                </div>
+
+                <div className="guide-block">
+                  <h4 className="guide-block-title">📋 Ketentuan & Tata Tertib Kunjungan</h4>
+                  <div className="guide-rules-list">
+                    <div className="guide-rule-item">
+                      <span className="rule-number">1</span>
+                      <div>
+                        <strong>Wajib Registrasi Digital</strong>
+                        <p>Mengisi data buku tamu secara lengkap dan jelas sesuai identitas diri.</p>
+                      </div>
+                    </div>
+                    <div className="guide-rule-item">
+                      <span className="rule-number">2</span>
+                      <div>
+                        <strong>Berpakaian Sopan & Rapi</strong>
+                        <p>Tidak mengenakan sandal jepit atau celana pendek saat berada di area kantor.</p>
+                      </div>
+                    </div>
+                    <div className="guide-rule-item">
+                      <span className="rule-number">3</span>
+                      <div>
+                        <strong>Membawa Identitas Resmi</strong>
+                        <p>Menyiapkan KTP/SIM atau tanda pengenal kedinasan bila diperlukan.</p>
+                      </div>
+                    </div>
+                    <div className="guide-rule-item">
+                      <span className="rule-number">4</span>
+                      <div>
+                        <strong>Menjaga Ketertiban</strong>
+                        <p>Menaati arahan petugas resepsionis dan menjaga kenyamanan lingkungan dinas.</p>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <div className="guide-block guide-contact-block">
+                  <h4 className="guide-block-title">📞 Layanan Kontak & Pengaduan</h4>
+                  <div className="guide-contact-list">
+                    <div className="guide-contact-item">
+                      <span>📍</span> Kantor Dishub: Jl. Aloon-Aloon Utara No. 1, Ponorogo
+                    </div>
+                    <div className="guide-contact-item">
+                      <span>☎️</span> Telepon: (0352) 481234
+                    </div>
+                    <div className="guide-contact-item">
+                      <span>✉️</span> Email: dishub@ponorogo.go.id
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
           </div>
         )}
 

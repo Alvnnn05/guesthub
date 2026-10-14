@@ -65,7 +65,7 @@ export default function GuestTable({ isAdmin, showSummaryCards = true }) {
     });
 
     const unitCounts = {};
-    monthGuests.forEach(g => {
+    guests.forEach(g => {
       const unit = g.tujuan_bidang || 'Lainnya';
       unitCounts[unit] = (unitCounts[unit] || 0) + 1;
     });
@@ -79,12 +79,21 @@ export default function GuestTable({ isAdmin, showSummaryCards = true }) {
       }
     });
 
+    const unitDistribution = Object.entries(unitCounts)
+      .map(([name, count]) => ({
+        name,
+        count,
+        percentage: guests.length > 0 ? Math.round((count / guests.length) * 100) : 0
+      }))
+      .sort((a, b) => b.count - a.count);
+
     return {
       todayCount: todayGuests.length,
       totalCount: guests.length,
       monthCount: monthGuests.length,
       topUnitName: topUnit,
-      topUnitCount: topUnitCount
+      topUnitCount: topUnitCount,
+      unitDistribution
     };
   }, [guests]);
 
@@ -302,52 +311,83 @@ export default function GuestTable({ isAdmin, showSummaryCards = true }) {
   return (
     <div style={{ width: '100%' }}>
       {showSummaryCards && (
-        <div className="summary-cards-grid">
-          <div className="summary-card card-yellow-border">
-            <div className="card-header-content">
-              <div>
-                <span className="card-title">Tamu Hari Ini</span>
-                <h3 className="card-value">{summaryStats.todayCount}</h3>
+        <>
+          <div className="summary-cards-grid">
+            <div className="summary-card card-yellow-border">
+              <div className="card-header-content">
+                <div>
+                  <span className="card-title">Tamu Hari Ini</span>
+                  <h3 className="card-value">{summaryStats.todayCount}</h3>
+                </div>
+                <div className="card-icon-badge bg-badge-orange">👥</div>
               </div>
-              <div className="card-icon-badge bg-badge-orange">👥</div>
+              <div className="card-footer-text text-green">▲ Hari ini</div>
             </div>
-            <div className="card-footer-text text-green">▲ Hari ini</div>
-          </div>
 
-          <div className="summary-card card-orange-border">
-            <div className="card-header-content">
-              <div>
-                <span className="card-title">Total Kunjungan</span>
-                <h3 className="card-value">{summaryStats.totalCount}</h3>
+            <div className="summary-card card-orange-border">
+              <div className="card-header-content">
+                <div>
+                  <span className="card-title">Total Kunjungan</span>
+                  <h3 className="card-value">{summaryStats.totalCount}</h3>
+                </div>
+                <div className="card-icon-badge bg-badge-yellow">📋</div>
               </div>
-              <div className="card-icon-badge bg-badge-yellow">📋</div>
+              <div className="card-footer-text text-sub">Keseluruhan data</div>
             </div>
-            <div className="card-footer-text text-sub">Keseluruhan data</div>
-          </div>
 
-          <div className="summary-card card-green-border">
-            <div className="card-header-content">
-              <div>
-                <span className="card-title">Total Bulan Ini</span>
-                <h3 className="card-value">{summaryStats.monthCount}</h3>
+            <div className="summary-card card-green-border">
+              <div className="card-header-content">
+                <div>
+                  <span className="card-title">Total Bulan Ini</span>
+                  <h3 className="card-value">{summaryStats.monthCount}</h3>
+                </div>
+                <div className="card-icon-badge bg-badge-blue">📅</div>
               </div>
               <div className="card-footer-text text-sub">
                 per {new Date().toLocaleDateString('id-ID', { month: 'short', year: 'numeric' })}
               </div>
             </div>
+
+            <div className="summary-card card-blue-border">
+              <div className="card-header-content">
+                <div>
+                  <span className="card-title">Bidang Terbanyak</span>
+                  <h3 className="card-value text-truncate">{summaryStats.topUnitName}</h3>
+                </div>
+                <div className="card-icon-badge bg-badge-blue">🏢</div>
+              </div>
+              <div className="card-footer-text text-sub">{summaryStats.topUnitCount} kunjungan bulan ini</div>
+            </div>
           </div>
 
-          <div className="summary-card card-blue-border">
-            <div className="card-header-content">
-              <div>
-                <span className="card-title">Bidang Terbanyak</span>
-                <h3 className="card-value text-truncate">{summaryStats.topUnitName}</h3>
+          {guests.length > 0 && summaryStats.unitDistribution?.length > 0 && (
+            <div className="bidang-distribution-card">
+              <div className="bdc-header">
+                <div>
+                  <h4 className="bdc-title">Distribusi Kunjungan per Bidang / Unit Kerja</h4>
+                  <p className="bdc-subtitle">Proporsi tujuan tamu dari total riwayat kunjungan Dishub</p>
+                </div>
+                <span className="bdc-total-badge">{summaryStats.totalCount} Tamu Tercatat</span>
               </div>
-              <div className="card-icon-badge bg-badge-blue">🏢</div>
+              <div className="bdc-grid">
+                {summaryStats.unitDistribution.slice(0, 4).map((item, idx) => (
+                  <div className="bdc-item" key={idx}>
+                    <div className="bdc-item-top">
+                      <span className="bdc-name">{item.name}</span>
+                      <span className="bdc-count"><strong>{item.count}</strong> tamu ({item.percentage}%)</span>
+                    </div>
+                    <div className="bdc-bar-bg">
+                      <div
+                        className={`bdc-bar-fill fill-${idx % 4}`}
+                        style={{ width: `${Math.max(item.percentage, 5)}%` }}
+                      ></div>
+                    </div>
+                  </div>
+                ))}
+              </div>
             </div>
-            <div className="card-footer-text text-sub">{summaryStats.topUnitCount} kunjungan bulan ini</div>
-          </div>
-        </div>
+          )}
+        </>
       )}
 
       <div className="table-card-right table-card-fullwidth">
