@@ -6,25 +6,20 @@
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  /* Menggunakan gambar background blue.jpg */
-  background: url('../../assets/blue2.jpg') no-repeat center center fixed !important;
-  background-size: cover !important;
-  -webkit-background-size: cover !important;
+  background-color: #f1f5f9 !important;
   padding: 20px 16px;
   box-sizing: border-box;
 }
 
 /* Card Login */
 .login-card {
-  background: rgba(255, 255, 255, 0.95); /* Putih bersih sedikit transparan */
-  backdrop-filter: blur(10px);
-  -webkit-backdrop-filter: blur(10px);
+  background: #ffffff;
   border-radius: 14px;
   padding: 35px 35px;
   width: 100%;
   max-width: 480px;
-  box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.2), 0 10px 10px -5px rgba(0, 0, 0, 0.1);
-  border: 1px solid rgba(255, 255, 255, 0.5);
+  box-shadow: 0 10px 25px -5px rgba(15, 23, 42, 0.08), 0 8px 10px -6px rgba(15, 23, 42, 0.04);
+  border: 1px solid #e2e8f0;
   text-align: center;
   box-sizing: border-box;
 }

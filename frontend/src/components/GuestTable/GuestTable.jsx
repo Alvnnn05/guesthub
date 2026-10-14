@@ -4,7 +4,6 @@ import imageCompression from 'browser-image-compression';
 import Swal from 'sweetalert2';
 import {
   getTamuList,
-  updateStatusTamu,
   updateTamuData,
   deleteTamu,
   uploadFotoTamu,
@@ -14,26 +13,11 @@ import * as XLSX from 'xlsx';
 import './GuestTable.css';
 import '../../App.css';
 
-// Helper: format durasi ms ke string "X Jam Y Menit" atau "Y Menit"
-function formatDuration(ms) {
-  if (ms < 0) return '< 1 Menit';
-  const totalMinutes = Math.floor(ms / 60000);
-  const hours = Math.floor(totalMinutes / 60);
-  const minutes = totalMinutes % 60;
-  if (hours > 0) return `${hours} Jam ${minutes} Menit`;
-  if (totalMinutes === 0) return '< 1 Menit';
-  return `${totalMinutes} Menit`;
-}
-
 export default function GuestTable({ isAdmin, showSummaryCards = true }) {
   const [guests, setGuests] = useState([]);
   const [filteredGuests, setFilteredGuests] = useState([]);
   const [searchTerm, setSearchTerm] = useState('');
-  const [statusFilter, setStatusFilter] = useState('all');
   const [bidangFilter, setBidangFilter] = useState('all');
-
-  // State ticker untuk badge durasi realtime (update tiap 1 menit)
-  const [now, setNow] = useState(Date.now());
 
   // State Filter Rentang Tanggal
   const [startDate, setStartDate] = useState('');
@@ -74,7 +58,6 @@ export default function GuestTable({ isAdmin, showSummaryCards = true }) {
     const currentYear = new Date().getFullYear();
 
     const todayGuests = guests.filter(g => g.waktu_masuk && g.waktu_masuk.startsWith(todayStr));
-    const activeGuests = guests.filter(g => g.status === 'BERKUNJUNG' || !g.waktu_keluar);
     const monthGuests = guests.filter(g => {
       if (!g.waktu_masuk) return false;
       const d = new Date(g.waktu_masuk);
@@ -98,7 +81,7 @@ export default function GuestTable({ isAdmin, showSummaryCards = true }) {
 
     return {
       todayCount: todayGuests.length,
-      activeCount: activeGuests.length,
+      totalCount: guests.length,
       monthCount: monthGuests.length,
       topUnitName: topUnit,
       topUnitCount: topUnitCount
@@ -111,14 +94,8 @@ export default function GuestTable({ isAdmin, showSummaryCards = true }) {
       fetchGuests();
     }, 10000);
 
-    // Ticker setiap 1 menit untuk update badge durasi tanpa refetch
-    const tickInterval = setInterval(() => {
-      setNow(Date.now());
-    }, 60000);
-
     return () => {
       clearInterval(dataInterval);
-      clearInterval(tickInterval);
     };
   }, []);
 
@@ -133,11 +110,6 @@ export default function GuestTable({ isAdmin, showSummaryCards = true }) {
           g.instansi_asal?.toLowerCase().includes(searchTerm.toLowerCase()) ||
           g.perihal?.toLowerCase().includes(searchTerm.toLowerCase())
       );
-    }
-
-    if (statusFilter !== 'all') {
-      const filterVal = statusFilter === 'active' ? 'BERKUNJUNG' : 'SELESAI';
-      result = result.filter((g) => g.status === filterVal);
     }
 
     if (bidangFilter !== 'all') {
@@ -160,11 +132,10 @@ export default function GuestTable({ isAdmin, showSummaryCards = true }) {
 
     setFilteredGuests(result);
     setCurrentPage(1);
-  }, [searchTerm, statusFilter, bidangFilter, startDate, endDate, guests]);
+  }, [searchTerm, bidangFilter, startDate, endDate, guests]);
 
   const handleResetFilter = () => {
     setSearchTerm('');
-    setStatusFilter('all');
     setBidangFilter('all');
     setStartDate('');
     setEndDate('');
@@ -172,7 +143,6 @@ export default function GuestTable({ isAdmin, showSummaryCards = true }) {
 
   const isFiltered = Boolean(
     searchTerm.trim() !== '' ||
-    statusFilter !== 'all' ||
     bidangFilter !== 'all' ||
     startDate !== '' ||
     endDate !== ''
@@ -251,37 +221,6 @@ export default function GuestTable({ isAdmin, showSummaryCards = true }) {
     }
   };
 
-  // Check-Out via SweetAlert2
-  const handleCheckout = (guest) => {
-    Swal.fire({
-      title: 'Konfirmasi Check-Out',
-      text: `Proses Check-Out untuk tamu "${guest.nama_tamu}"?`,
-      icon: 'question',
-      showCancelButton: true,
-      confirmButtonColor: '#10b981',
-      cancelButtonColor: '#6b7280',
-      confirmButtonText: 'Ya, Check-Out',
-      cancelButtonText: 'Batal'
-    }).then(async (result) => {
-      if (result.isConfirmed) {
-        const res = await updateStatusTamu(guest.id, 'SELESAI');
-
-        if (res.error) {
-          Swal.fire('Gagal!', 'Gagal check-out: ' + res.error, 'error');
-        } else {
-          Swal.fire({
-            icon: 'success',
-            title: 'Selesai!',
-            text: `Tamu "${guest.nama_tamu}" telah check-out.`,
-            timer: 2000,
-            showConfirmButton: false
-          });
-          fetchGuests();
-        }
-      }
-    });
-  };
-
   // Hapus Data via SweetAlert2
   const handleDelete = (guest) => {
     Swal.fire({
@@ -340,9 +279,7 @@ export default function GuestTable({ isAdmin, showSummaryCards = true }) {
       'No. HP': sanitizeCell(g.no_hp),
       'Tujuan Bidang': sanitizeCell(g.tujuan_bidang),
       'Perihal': sanitizeCell(g.perihal),
-      'Waktu Masuk': g.waktu_masuk ? new Date(g.waktu_masuk).toLocaleString('id-ID') : '-',
-      'Waktu Keluar': g.waktu_keluar ? new Date(g.waktu_keluar).toLocaleString('id-ID') : '-',
-      Status: g.status === 'BERKUNJUNG' ? 'Berkunjung' : 'Selesai'
+      'Waktu Masuk': g.waktu_masuk ? new Date(g.waktu_masuk).toLocaleString('id-ID') : '-'
     }));
 
     const worksheet = XLSX.utils.json_to_sheet(dataToExport);
@@ -380,12 +317,12 @@ export default function GuestTable({ isAdmin, showSummaryCards = true }) {
           <div className="summary-card card-orange-border">
             <div className="card-header-content">
               <div>
-                <span className="card-title">Sedang Berkunjung</span>
-                <h3 className="card-value">{summaryStats.activeCount}</h3>
+                <span className="card-title">Total Kunjungan</span>
+                <h3 className="card-value">{summaryStats.totalCount}</h3>
               </div>
-              <div className="card-icon-badge bg-badge-yellow">🕒</div>
+              <div className="card-icon-badge bg-badge-yellow">📋</div>
             </div>
-            <div className="card-footer-text text-sub">belum checkout</div>
+            <div className="card-footer-text text-sub">Keseluruhan data</div>
           </div>
 
           <div className="summary-card card-green-border">
@@ -415,7 +352,7 @@ export default function GuestTable({ isAdmin, showSummaryCards = true }) {
 
       <div className="table-card-right table-card-fullwidth">
         <div className="table-card-header">
-          <h2 className="form-title">Daftar Tamu Aktif & Tamu Selesai</h2>
+          <h2 className="form-title">Daftar Riwayat Kunjungan Tamu</h2>
           {isAdmin && (
             <button className="btn-export-excel-small" onClick={handleExportExcel}>
               Export Excel ({filteredGuests.length} Data)
@@ -434,11 +371,6 @@ export default function GuestTable({ isAdmin, showSummaryCards = true }) {
               onChange={(e) => setSearchTerm(e.target.value)}
               style={{ flex: '1 1 200px' }}
             />
-            <select className="filter-select-right" value={statusFilter} onChange={(e) => setStatusFilter(e.target.value)}>
-              <option value="all">Semua Status</option>
-              <option value="active">Berkunjung</option>
-              <option value="completed">Selesai</option>
-            </select>
           </div>
 
           <div className="filter-row-middle" style={{ display: 'flex', gap: '10px', alignItems: 'center', marginTop: '10px', flexWrap: 'wrap' }}>
@@ -491,15 +423,14 @@ export default function GuestTable({ isAdmin, showSummaryCards = true }) {
                 <th>Nama & Kontak</th>
                 <th>Instansi Asal</th>
                 <th>Tujuan & Perihal</th>
-                <th>Waktu Kunjungan</th>
-                <th>Status</th>
+                <th>Waktu Masuk</th>
                 <th>Aksi</th>
               </tr>
             </thead>
             <tbody>
               {currentItems.length === 0 ? (
                 <tr>
-                  <td colSpan="7" className="empty-state-cell">
+                  <td colSpan="6" className="empty-state-cell">
                     <div className="empty-state-container">
                       <div className="empty-state-icon">
                         {isFiltered ? '🔍' : '📖'}
@@ -545,22 +476,10 @@ export default function GuestTable({ isAdmin, showSummaryCards = true }) {
                           <div className="time-item">
                             <strong>Masuk:</strong> {guest.waktu_masuk ? new Date(guest.waktu_masuk).toLocaleString('id-ID', { dateStyle: 'short', timeStyle: 'short' }) : '-'} WIB
                           </div>
-                          {guest.waktu_keluar && (
-                            <div className="time-item time-out-text">
-                              <strong>Keluar:</strong> {new Date(guest.waktu_keluar).toLocaleString('id-ID', { dateStyle: 'short', timeStyle: 'short' })} WIB
-                            </div>
-                          )}
-                          {guest.status === 'BERKUNJUNG' && guest.waktu_masuk && (
-                            <span className="duration-badge">
-                              ⏱ Durasi: {formatDuration(now - new Date(guest.waktu_masuk).getTime())}
-                            </span>
-                          )}
                         </div>
                       </td>
-                      <td><span className={`status-pill ${guest.status?.toLowerCase()}`}>{guest.status === 'BERKUNJUNG' ? 'Berkunjung' : 'Selesai'}</span></td>
                       <td>
                         <div className="action-buttons-cell">
-                          {guest.status === 'BERKUNJUNG' && <button className="btn-checkout-table" onClick={() => handleCheckout(guest)}>Check-Out</button>}
                           <button className="btn-edit-table" onClick={() => handleOpenEdit(guest)}>Edit</button>
                           {isAdmin && <button className="btn-delete-table" onClick={() => handleDelete(guest)}>Hapus</button>}
                         </div>
@@ -599,7 +518,7 @@ export default function GuestTable({ isAdmin, showSummaryCards = true }) {
               const fullPhotoUrl = getImageUrl(guest.foto_url);
               return (
                 <div className="guest-mobile-card" key={`mobile-${guest.id}`}>
-                  {/* Bagian Atas Kartu: Identitas, Kontak & Status */}
+                  {/* Bagian Atas Kartu: Identitas & Kontak */}
                   <div className="gmc-header">
                     <div className="gmc-identity">
                       {guest.foto_url ? (
@@ -617,9 +536,6 @@ export default function GuestTable({ isAdmin, showSummaryCards = true }) {
                         <span className="gmc-phone">📞 {guest.no_hp}</span>
                       </div>
                     </div>
-                    <span className={`status-pill ${guest.status?.toLowerCase()}`}>
-                      {guest.status === 'BERKUNJUNG' ? 'Berkunjung' : 'Selesai'}
-                    </span>
                   </div>
 
                   {/* Bagian Badan Kartu: Detail Informasi Kunjungan */}
@@ -637,28 +553,15 @@ export default function GuestTable({ isAdmin, showSummaryCards = true }) {
                       <span className="gmc-value">{guest.perihal}</span>
                     </div>
                     <div className="gmc-info-row gmc-time-row">
-                      <span className="gmc-label">Waktu:</span>
+                      <span className="gmc-label">Waktu Masuk:</span>
                       <div className="gmc-time-val">
-                        <span>🟢 Masuk: {guest.waktu_masuk ? new Date(guest.waktu_masuk).toLocaleString('id-ID', { dateStyle: 'short', timeStyle: 'short' }) : '-'} WIB</span>
-                        {guest.waktu_keluar && (
-                          <span className="text-red">🔴 Keluar: {new Date(guest.waktu_keluar).toLocaleString('id-ID', { dateStyle: 'short', timeStyle: 'short' })} WIB</span>
-                        )}
-                        {guest.status === 'BERKUNJUNG' && guest.waktu_masuk && (
-                          <span className="duration-badge">
-                            ⏱ Durasi: {formatDuration(now - new Date(guest.waktu_masuk).getTime())}
-                          </span>
-                        )}
+                        <span>🟢 {guest.waktu_masuk ? new Date(guest.waktu_masuk).toLocaleString('id-ID', { dateStyle: 'short', timeStyle: 'short' }) : '-'} WIB</span>
                       </div>
                     </div>
                   </div>
 
                   {/* Bagian Bawah Kartu: Tombol Aksi Touch-Friendly */}
                   <div className="gmc-footer">
-                    {guest.status === 'BERKUNJUNG' && (
-                      <button className="btn-checkout-table gmc-btn" onClick={() => handleCheckout(guest)}>
-                        ✓ Check-Out
-                      </button>
-                    )}
                     <button className="btn-edit-table gmc-btn" onClick={() => handleOpenEdit(guest)}>
                       ✎ Edit
                     </button>

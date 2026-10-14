@@ -771,10 +771,6 @@
   transition: all 0.2s ease !important;
 }
 
-.gmc-footer:has(.btn-checkout-table) .btn-delete-table {
-  flex: 1 1 100%;
-}
-
 .empty-state-cell {
   padding: 48px 16px !important;
   text-align: center !important;

@@ -12,12 +12,12 @@ html, body, #root {
   max-width: 100% !important;
   overflow-x: hidden !important; /* Mencegah layar bisa digeser ke samping */
   font-family: 'Plus Jakarta Sans', sans-serif;
-  background-color: #f8fafc;
+  background-color: #f1f5f9;
   color: #0f172a;
 }
 
 body {
-  background: linear-gradient(135deg, #E8EDF9 50%, #FFFFFF 100%);
+  background-color: #f1f5f9;
   min-height: 100vh;
   margin: 0;
 }
