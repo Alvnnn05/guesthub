@@ -159,9 +159,8 @@ export default function App() {
       {/* KONTEN UTAMA */}
       <main className="main-content">
         {activeTab === 'form' && (
-          <div className="form-input-container">
-            <FormGuest onSuccess={() => {}} />
-            <GuestTable isAdmin={isAdmin} showSummaryCards={false} />
+          <div className="form-single-wrapper">
+            <FormGuest isCentered={true} onSuccess={() => setActiveTab('dashboard')} />
           </div>
         )}
 

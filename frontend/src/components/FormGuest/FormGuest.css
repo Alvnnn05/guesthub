@@ -12,8 +12,11 @@
 }
 
 .form-card-centered {
-  max-width: 580px !important;
+  max-width: 660px !important;
   width: 100% !important;
+  padding: 32px 36px !important;
+  box-shadow: 0 10px 25px -5px rgba(15, 23, 42, 0.08), 0 8px 10px -6px rgba(15, 23, 42, 0.04) !important;
+  margin: 0 auto !important;
 }
 
 .form-title {

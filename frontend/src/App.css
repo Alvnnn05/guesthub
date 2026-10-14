@@ -294,6 +294,14 @@ body {
   box-sizing: border-box;
 }
 
+.form-single-wrapper {
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  width: 100%;
+  padding: 8px 0 24px 0;
+}
+
 /* ==========================================
    MAIN CONTENT AREA
    ========================================== */
