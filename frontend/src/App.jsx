@@ -108,19 +108,41 @@ export default function App() {
         </div>
       </header>
 
+      {/* PAGE HEADER / BANNER SAPAAN RESMI */}
+      <div className="page-header-wrapper">
+        <div className="page-header-container">
+          <div className="ph-left">
+            <h2 className="ph-title">
+              {activeTab === 'form' && 'Pencatatan Tamu Baru'}
+              {activeTab === 'dashboard' && 'Dashboard & Riwayat Kunjungan Tamu'}
+              {activeTab === 'users' && 'Manajemen Pengguna & Hak Akses'}
+            </h2>
+            <p className="ph-subtitle">
+              Selamat datang, <strong>{userName}</strong> • {new Date().toLocaleDateString('id-ID', { weekday: 'long', day: 'numeric', month: 'long', year: 'numeric' })} • Dishub Ponorogo
+            </p>
+          </div>
+          <div className="ph-right">
+            <span className="ph-status-badge">
+              <span className="ph-status-dot"></span>
+              Layanan Digital Aktif
+            </span>
+          </div>
+        </div>
+      </div>
+
       {/* TAB NAVIGASI */}
       <nav className="tab-navigation">
         <button 
           className={`tab-button ${activeTab === 'form' ? 'active' : ''}`}
           onClick={() => setActiveTab('form')}
         >
-          Input Buku Tamu
+          📝 Input Buku Tamu
         </button>
         <button 
           className={`tab-button ${activeTab === 'dashboard' ? 'active' : ''}`}
           onClick={() => setActiveTab('dashboard')}
         >
-          Dashboard & Riwayat Tamu
+          📊 Dashboard & Riwayat Tamu
         </button>
 
         {/* TAB KHUSUS ADMIN UNTUK KELOLA USER */}
@@ -129,16 +151,17 @@ export default function App() {
             className={`tab-button ${activeTab === 'users' ? 'active' : ''}`}
             onClick={() => setActiveTab('users')}
           >
-            Kelola User
+            👥 Kelola User
           </button>
         )}
       </nav>
 
       {/* KONTEN UTAMA */}
-      <main className="main-content" style={{ maxWidth: '1400px', margin: '0 auto', padding: '24px' }}>
+      <main className="main-content">
         {activeTab === 'form' && (
-          <div style={{ display: 'flex', justifyContent: 'center' }}>
-            <FormGuest isCentered={true} onSuccess={() => setActiveTab('dashboard')} />
+          <div className="form-input-container">
+            <FormGuest onSuccess={() => {}} />
+            <GuestTable isAdmin={isAdmin} showSummaryCards={false} />
           </div>
         )}
 

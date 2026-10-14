@@ -64,12 +64,17 @@ export default function Login({ onLoginSuccess }) {
   return (
     <div className="login-container">
       <div className="login-card">
-        <div className="login-header-icon">
-          <img src={logoDishub} alt="Logo Dishub" className="login-logo-img" />
-        </div>
+        <div className="login-card-accent"></div>
+        <div className="login-card-content">
+          <div className="login-header-icon">
+            <img src={logoDishub} alt="Logo Dishub" className="login-logo-img" />
+          </div>
 
-        <h2 className="login-title">GuestHub</h2>
-        <p className="login-subtitle">Sistem Buku Tamu Digital Dinas Perhubungan</p>
+          <h2 className="login-title">GuestHub</h2>
+          <p className="login-subtitle">Sistem Buku Tamu Digital Dinas Perhubungan</p>
+          <div className="login-security-badge">
+            🔒 Portal Resmi Pelayanan Tamu Terenkripsi
+          </div>
 
         <form onSubmit={handleLogin} className="login-form">
           <div className="form-group-login">
@@ -98,10 +103,11 @@ export default function Login({ onLoginSuccess }) {
             {loading ? 'Memproses...' : 'Masuk ke Sistem'}
           </button>
         </form>
+        </div>
       </div>
 
       <div className="login-footer-text">
-        © {new Date().getFullYear()}  GuestHub - Dishub Ponorogo
+        © {new Date().getFullYear()} GuestHub • Dinas Perhubungan
       </div>
     </div>
   );
