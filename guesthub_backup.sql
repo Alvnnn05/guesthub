@@ -39,8 +39,7 @@ CREATE TABLE public.tamu (
     perihal text NOT NULL,
     foto_url text,
     status character varying(20) DEFAULT 'BERKUNJUNG'::character varying,
-    waktu_masuk timestamp without time zone DEFAULT CURRENT_TIMESTAMP,
-    waktu_keluar timestamp without time zone
+    waktu_masuk timestamp without time zone DEFAULT CURRENT_TIMESTAMP
 );
 
 
@@ -135,7 +134,7 @@ ALTER TABLE ONLY public.users ALTER COLUMN id SET DEFAULT nextval('public.users_
 -- Data for Name: tamu; Type: TABLE DATA; Schema: public; Owner: postgres
 --
 
-COPY public.tamu (id, nama_tamu, instansi_asal, no_hp, tujuan_bidang, perihal, foto_url, status, waktu_masuk, waktu_keluar) FROM stdin;
+COPY public.tamu (id, nama_tamu, instansi_asal, no_hp, tujuan_bidang, perihal, foto_url, status, waktu_masuk) FROM stdin;
 \.
 
 

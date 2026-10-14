@@ -47,7 +47,7 @@ const updateStatusTamu = async (req, res) => {
   try {
     const result = await db.query(
       `UPDATE tamu 
-       SET status = $1, waktu_keluar = CURRENT_TIMESTAMP 
+       SET status = $1 
        WHERE id = $2 
        RETURNING *`,
       [status || 'SELESAI', id]
