@@ -1,991 +1,1459 @@
 /* ==========================================
-   1. SUMMARY CARDS
+   DASHBOARD & RIWAYAT KUNJUNGAN (DESKTOP & MOBILE)
    ========================================== */
-.summary-cards-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-  gap: 16px;
-  margin-bottom: 24px;
+
+.dashboard-view-wrapper {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
 }
 
-.summary-card {
+/* ==========================================
+   1. EMPAT KARTU METRIK STATISTIK (TOP ROW)
+   ========================================== */
+.dash-metrics-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr) minmax(0, 1fr) minmax(0, 1.45fr);
+  gap: 14px;
+  width: 100%;
+}
+
+.dash-metric-card {
   background: #ffffff;
-  padding: 18px 22px;
-  border-radius: 12px;
-  border: 1px solid #e2e8f0;
-  border-left-width: 5px;
-  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 2px 4px -2px rgba(0, 0, 0, 0.05);
+  border-radius: 18px;
+  border: 1px solid rgba(226, 232, 240, 0.85);
+  padding: 18px 16px;
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  box-shadow: 0 1px 3px rgba(15, 23, 42, 0.02), 0 4px 12px -2px rgba(15, 23, 42, 0.03);
   transition: transform 0.2s ease, box-shadow 0.2s ease;
 }
 
-.summary-card:hover {
+.dash-metric-card:hover {
   transform: translateY(-2px);
-  box-shadow: 0 10px 15px -3px rgba(15, 23, 42, 0.08), 0 4px 6px -4px rgba(15, 23, 42, 0.04);
+  box-shadow: 0 8px 18px -4px rgba(15, 23, 42, 0.08);
 }
 
-.card-yellow-border { border-left-color: #f59e0b; }
-.card-orange-border { border-left-color: #f97316; }
-.card-green-border { border-left-color: #10b981; }
-.card-blue-border { border-left-color: #3b82f6; }
-
-.card-header-content {
+.dmc-content {
   display: flex;
-  justify-content: space-between;
+  flex-direction: column;
   align-items: center;
+  text-align: center;
+  min-width: 0;
+  flex: 1;
 }
 
-.card-title {
-  font-size: 0.8rem;
+.dmc-label {
+  font-size: 0.84rem;
+  font-weight: 600;
   color: #64748b;
+  margin-bottom: 2px;
+  white-space: nowrap;
+}
+
+.mobile-only-label {
+  display: none;
+}
+
+.dmc-value {
+  font-size: 2rem;
+  font-weight: 800;
+  color: #0f172a;
+  line-height: 1.15;
+  letter-spacing: -0.025em;
+  margin-bottom: 2px;
+}
+
+.dmc-value-unit {
+  font-size: 1.05rem;
+  font-weight: 800;
+  color: #0f172a;
+  line-height: 1.25;
+  margin-bottom: 2px;
+  text-align: center;
+  word-break: break-word;
+  max-width: 100%;
+}
+
+.dmc-subtext {
+  font-size: 0.8rem;
+  font-weight: 500;
+  color: #94a3b8;
+  line-height: 1.2;
+  white-space: nowrap;
+}
+
+.dmc-subtext-green {
+  color: #10b981;
   font-weight: 600;
 }
 
-.card-value {
-  font-size: 1.6rem;
-  font-weight: 800;
-  color: #0f172a;
-  margin: 4px 0 0 0;
-}
-
-.card-icon-badge {
-  width: 44px;
-  height: 44px;
-  border-radius: 10px;
+/* Badge Icon */
+.dmc-icon-badge {
+  width: 48px;
+  height: 48px;
+  min-width: 48px;
+  border-radius: 50%;
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 1.3rem;
+  flex-shrink: 0;
 }
 
-.bg-badge-orange { background: #fef3c7; }
-.bg-badge-yellow { background: #ffedd5; }
-.bg-badge-blue { background: #dbeafe; }
+.badge-amber {
+  background-color: #fef3c7;
+  color: #d97706;
+}
+
+.badge-blue {
+  background-color: #dbeafe;
+  color: #2563eb;
+}
+
+.badge-emerald {
+  background-color: #dcfce7;
+  color: #16a34a;
+}
+
+.badge-purple {
+  background-color: #f3e8ff;
+  color: #9333ea;
+}
 
 /* ==========================================
-   WIDGET DISTRIBUSI KUNJUNGAN PER BIDANG
+   2. DUA KARTU GRAFIK & ANALITIK (DESKTOP)
    ========================================== */
-.bidang-distribution-card {
+.dash-charts-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1.25fr);
+  gap: 16px;
+  width: 100%;
+}
+
+.dash-chart-card {
   background: #ffffff;
+  border-radius: 14px;
   border: 1px solid #e2e8f0;
-  border-radius: 12px;
-  padding: 18px 24px;
-  margin-bottom: 24px;
-  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 2px 4px -2px rgba(0, 0, 0, 0.05);
-}
-
-.bdc-header {
+  padding: 22px 24px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.02);
   display: flex;
-  justify-content: space-between;
-  align-items: center;
-  flex-wrap: wrap;
-  gap: 10px;
-  margin-bottom: 16px;
-  padding-bottom: 12px;
-  border-bottom: 1px solid #f1f5f9;
+  flex-direction: column;
+  position: relative;
+  min-width: 0;
 }
 
-.bdc-title {
-  font-size: 1rem;
+.chart-card-title {
+  font-size: 0.95rem;
   font-weight: 700;
   color: #0f172a;
-  margin: 0 0 2px 0;
+  margin: 0 0 18px 0;
+  letter-spacing: -0.1px;
 }
 
-.bdc-subtitle {
-  font-size: 0.8rem;
-  color: #64748b;
-  margin: 0;
-}
-
-.bdc-total-badge {
-  background-color: #eff6ff;
-  color: #1e3a8a;
-  border: 1px solid #bfdbfe;
-  padding: 4px 12px;
-  border-radius: 50px;
-  font-size: 0.8rem;
-  font-weight: 700;
-}
-
-.bdc-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
-  gap: 16px;
-}
-
-.bdc-item {
-  background: #f8fafc;
-  padding: 12px 14px;
-  border-radius: 8px;
-  border: 1px solid #e2e8f0;
-}
-
-.bdc-item-top {
+/* Grafik 7 Hari Terakhir (Vertical Bar) */
+.barchart-container {
   display: flex;
   justify-content: space-between;
-  align-items: center;
-  margin-bottom: 8px;
-  font-size: 0.82rem;
+  align-items: flex-end;
+  height: 150px;
+  padding: 8px 10px 0 10px;
+  border-bottom: 1px solid #f1f5f9;
+  gap: 10px;
 }
 
-.bdc-name {
+.barchart-col {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  height: 100%;
+}
+
+.barchart-bar-slot {
+  flex: 1;
+  width: 100%;
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  position: relative;
+}
+
+.barchart-bar-fill {
+  width: 34px;
+  max-width: 85%;
+  background-color: #f1f5f9;
+  border-radius: 6px 6px 0 0;
+  transition: height 0.3s cubic-bezier(0.4, 0, 0.2, 1), background-color 0.2s;
+  position: relative;
+}
+
+.barchart-bar-fill.has-data {
+  background-color: #1a44b7;
+  cursor: pointer;
+}
+
+.barchart-bar-fill.has-data:hover {
+  background-color: #2256df;
+  box-shadow: 0 0 10px rgba(26, 68, 183, 0.25);
+}
+
+.bar-hover-counter {
+  display: none;
+  position: absolute;
+  top: -26px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: #0f172a;
+  color: #ffffff;
+  font-size: 0.72rem;
+  font-weight: 700;
+  padding: 2px 7px;
+  border-radius: 4px;
+  pointer-events: none;
+  white-space: nowrap;
+}
+
+.barchart-bar-fill:hover .bar-hover-counter {
+  display: block;
+}
+
+.barchart-day-label {
+  margin-top: 10px;
+  font-size: 0.78rem;
   font-weight: 600;
-  color: #1e293b;
+  color: #64748b;
+}
+
+/* Grafik Pie Chart Per Bidang Tujuan (Donut) */
+.piechart-layout {
+  display: flex;
+  align-items: center;
+  gap: 18px;
+  flex: 1;
+  min-width: 0;
+  padding: 8px 0;
+}
+
+.piechart-svg-wrap {
+  width: 140px;
+  min-width: 140px;
+  height: 140px;
+  flex-shrink: 0;
+}
+
+.piechart-svg {
+  width: 100%;
+  height: 100%;
+  transform: rotate(-90deg);
+  overflow: visible;
+}
+
+.piechart-segment {
+  transition: opacity 0.2s ease, filter 0.2s ease;
+  cursor: pointer;
+}
+
+.piechart-segment:hover {
+  filter: drop-shadow(0 2px 8px rgba(0,0,0,0.22));
+}
+
+.piechart-center-value {
+  font-size: 1.5rem;
+  font-weight: 800;
+  fill: #0f172a;
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  /* counter-rotate text since SVG is rotated -90deg */
+  transform: rotate(90deg);
+  transform-origin: 60px 60px;
+}
+
+.piechart-center-label {
+  font-size: 0.6rem;
+  font-weight: 600;
+  fill: #94a3b8;
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  transform: rotate(90deg);
+  transform-origin: 60px 60px;
+}
+
+.piechart-legend {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  flex: 1;
+  min-width: 0;
+  max-height: 175px;
+  overflow-y: auto;
+  overflow-x: hidden;
+  padding-right: 6px;
+}
+
+.piechart-legend::-webkit-scrollbar {
+  width: 4px;
+}
+
+.piechart-legend::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.piechart-legend::-webkit-scrollbar-thumb {
+  background: #cbd5e1;
+  border-radius: 4px;
+}
+
+.piechart-legend::-webkit-scrollbar-thumb:hover {
+  background: #94a3b8;
+}
+
+.piechart-legend-item {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 0.82rem;
+  font-weight: 500;
+  color: #334155;
+  padding: 3px 6px;
+  border-radius: 6px;
+  transition: background-color 0.15s ease, color 0.15s ease;
+  cursor: pointer;
+  min-width: 0;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.piechart-legend-item:hover,
+.piechart-legend-item.is-active {
+  background-color: #f1f5f9;
+  color: #0f172a;
+}
+
+.piechart-legend-dot {
+  width: 9px;
+  height: 9px;
+  min-width: 9px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+
+.piechart-legend-name {
+  flex: 1 1 0%;
+  min-width: 0;
+  display: block;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
-  max-width: 170px;
+  font-size: 0.82rem;
+  color: #334155;
 }
 
-.bdc-count {
-  color: #64748b;
-  font-size: 0.8rem;
-}
-
-.bdc-count strong {
+.piechart-legend-count {
+  font-weight: 700;
   color: #0f172a;
+  font-size: 0.82rem;
+  flex-shrink: 0;
+  margin-left: auto;
+  padding-left: 8px;
 }
 
-.bdc-bar-bg {
-  width: 100%;
+/* Floating Tooltip Gelap Elegan untuk Pie Chart */
+.pie-floating-tooltip {
+  position: absolute;
+  pointer-events: none;
+  z-index: 100;
+  background: rgba(15, 23, 42, 0.95);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  color: #ffffff;
+  padding: 8px 12px;
+  border-radius: 8px;
+  box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.35), 0 8px 10px -6px rgba(0, 0, 0, 0.25);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  width: max-content;
+  max-width: 260px;
+  text-align: left;
+  transform: translate(-50%, -100%) translateY(-10px);
+  transition: opacity 0.12s ease;
+}
+
+.pie-tooltip-title {
+  font-size: 0.78rem;
+  font-weight: 600;
+  color: #f8fafc;
+  line-height: 1.3;
+  word-break: break-word;
+}
+
+.pie-tooltip-info {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 0.76rem;
+}
+
+.pie-tooltip-badge {
+  width: 7px;
   height: 7px;
-  background-color: #e2e8f0;
-  border-radius: 10px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+
+.pie-tooltip-count {
+  font-weight: 700;
+  color: #ffffff;
+}
+
+.pie-tooltip-pct {
+  color: #94a3b8;
+  font-weight: 500;
+}
+
+.piechart-legend-dot {
+  width: 10px;
+  height: 10px;
+  min-width: 10px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+
+.piechart-legend-name {
+  flex: 1;
+  white-space: nowrap;
   overflow: hidden;
+  text-overflow: ellipsis;
+  min-width: 0;
 }
 
-.bdc-bar-fill {
-  height: 100%;
-  border-radius: 10px;
-  transition: width 0.5s ease-in-out;
+.piechart-legend-count {
+  font-weight: 700;
+  color: #0f172a;
+  flex-shrink: 0;
 }
-
-.bdc-bar-fill.fill-0 { background: #2563eb; }
-.bdc-bar-fill.fill-1 { background: #10b981; }
-.bdc-bar-fill.fill-2 { background: #f59e0b; }
-.bdc-bar-fill.fill-3 { background: #8b5cf6; }
 
 /* ==========================================
-   2. TABEL CONTAINER & FILTER
+   3. KARTU TABEL RIWAYAT KUNJUNGAN TAMU (DESKTOP)
    ========================================== */
-.table-card-right {
+.dash-table-card {
   background: #ffffff;
-  padding: 24px;
-  border-radius: 12px;
+  border-radius: 14px;
   border: 1px solid #e2e8f0;
-  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 2px 4px -2px rgba(0, 0, 0, 0.05);
+  padding: 24px 28px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.02);
   width: 100%;
+  box-sizing: border-box;
 }
 
-.table-card-fullwidth {
-  width: 100% !important;
-}
-
-.table-card-header {
+.table-top-bar {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-bottom: 16px;
+  margin-bottom: 20px;
 }
 
-.btn-export-excel-small {
-  background: #10b981;
-  color: white;
+.table-main-title {
+  font-size: 1.15rem;
+  font-weight: 800;
+  color: #0f172a;
+  letter-spacing: -0.2px;
+  margin: 0;
+}
+
+/* Tombol Export Excel Navy Dishub */
+.btn-dash-export-excel {
+  background-color: #1a44b7;
+  color: #ffffff;
   border: none;
   padding: 8px 16px;
   border-radius: 8px;
-  font-weight: 600;
   font-size: 0.85rem;
+  font-weight: 600;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
   cursor: pointer;
-  transition: all 0.2s ease;
-  box-shadow: 0 2px 4px rgba(16, 185, 129, 0.2);
-}
-
-.btn-export-excel-small:hover {
-  background: #059669;
-  transform: translateY(-1px);
-}
-
-.filter-container-wrapper {
-  display: flex;
-  flex-direction: column;
-  gap: 12px;
-  margin-bottom: 20px;
-  background: #f8fafc;
-  padding: 14px 16px;
-  border-radius: 10px;
-  border: 1px solid #e2e8f0;
-}
-
-.filter-row-top, .filter-row-bottom {
-  display: flex;
-  gap: 10px;
-}
-
-.search-input-right, .filter-select-right, .filter-date-right, .filter-select-bidang-full {
-  padding: 9px 14px;
-  border: 1px solid #cbd5e1;
-  border-radius: 8px;
-  font-size: 0.88rem;
-  outline: none;
-  background: #ffffff;
-  transition: border-color 0.2s, box-shadow 0.2s;
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
   font-family: inherit;
+  box-shadow: 0 2px 4px rgba(26, 68, 183, 0.2);
 }
 
-.search-input-right:focus, .filter-select-right:focus, .filter-date-right:focus, .filter-select-bidang-full:focus {
-  border-color: #1e3a8a;
-  box-shadow: 0 0 0 3px rgba(30, 58, 138, 0.12);
+.btn-dash-export-excel:hover {
+  background-color: #2256df;
+  transform: translateY(-1px);
+  box-shadow: 0 4px 10px rgba(26, 68, 183, 0.3);
 }
 
-.search-input-right { flex: 2; }
-.filter-select-bidang-full { flex: 1; }
+.btn-dash-export-excel:active {
+  transform: translateY(1px) scale(0.98);
+}
 
-.btn-reset-filter {
-  background: #64748b;
-  color: white;
-  border: none;
-  padding: 9px 18px;
+/* Toolbar Filter Sebaris Desktop */
+.dash-filter-toolbar {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 22px;
+  flex-wrap: wrap;
+}
+
+.filter-input-wrap {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.search-flex {
+  flex: 1.6;
+  min-width: 200px;
+}
+
+.select-flex {
+  flex: 1.3;
+  min-width: 170px;
+}
+
+.filter-icon {
+  position: absolute;
+  left: 12px;
+  color: #94a3b8;
+  pointer-events: none;
+  display: flex;
+  align-items: center;
+}
+
+.filter-control {
+  width: 100%;
+  height: 38px;
+  padding: 0 12px;
   border-radius: 8px;
-  font-weight: 600;
+  border: 1px solid #cbd5e1;
   font-size: 0.85rem;
-  cursor: pointer;
-  transition: background 0.2s;
+  color: #1e293b;
+  background-color: #ffffff;
+  outline: none;
+  font-family: inherit;
+  transition: border-color 0.15s, box-shadow 0.15s;
+  box-sizing: border-box;
 }
 
-.btn-reset-filter:hover {
-  background: #475569;
+.filter-control.search-input {
+  padding-left: 36px;
+}
+
+.filter-control:focus {
+  border-color: #1a44b7;
+  box-shadow: 0 0 0 3px rgba(26, 68, 183, 0.12);
+}
+
+.btn-filter-reset {
+  height: 38px;
+  padding: 0 16px;
+  border-radius: 8px;
+  border: 1px solid #cbd5e1;
+  background-color: #ffffff;
+  color: #475569;
+  font-size: 0.85rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.15s;
+  font-family: inherit;
+  white-space: nowrap;
+}
+
+.btn-filter-reset:hover {
+  background-color: #f8fafc;
+  border-color: #94a3b8;
+  color: #0f172a;
 }
 
 /* ==========================================
-   3. TABEL GUEST
+   TABEL DESKTOP MODERN
    ========================================== */
-.table-responsive-right {
+.dash-table-container {
   overflow-x: auto;
-  border: 1px solid #e2e8f0;
-  border-radius: 8px;
+  width: 100%;
 }
 
-.guest-table-right {
+.dash-table {
   width: 100%;
   border-collapse: collapse;
-  font-size: 0.875rem;
+  text-align: left;
 }
 
-.guest-table-right th, .guest-table-right td {
-  padding: 13px 14px;
+.dash-table th {
+  padding: 12px 14px;
+  font-size: 0.74rem;
+  font-weight: 700;
+  color: #64748b;
+  letter-spacing: 0.05em;
+  border-bottom: 1.5px solid #e2e8f0;
+  background: transparent;
+  text-transform: uppercase;
+}
+
+.dash-table td {
+  padding: 14px 14px;
   border-bottom: 1px solid #f1f5f9;
-  text-align: left;
   vertical-align: middle;
 }
 
-.guest-table-right th {
-  background: #1e3a8a;
-  color: #ffffff;
-  font-weight: 700;
-  font-size: 0.85rem;
-  letter-spacing: 0.3px;
-}
-
-.guest-table-right tbody tr {
+.dash-table-row {
   transition: background-color 0.15s ease;
 }
 
-.guest-table-right tbody tr:hover {
+.dash-table-row:hover {
   background-color: #f8fafc;
 }
 
-.table-avatar {
-  width: 44px;
-  height: 44px;
+/* Kolom Tamu: Avatar + Teks */
+.cell-guest-profile {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.cell-avatar-img {
+  width: 38px;
+  height: 38px;
   border-radius: 50%;
   object-fit: cover;
+  flex-shrink: 0;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.06);
   cursor: pointer;
   transition: transform 0.2s;
 }
 
-.table-avatar:hover {
-  transform: scale(1.08);
+.cell-avatar-img:hover {
+  transform: scale(1.1);
 }
 
-/* Base Style Badge Status (Bentuk Kapsul / Rounded Pill) */
-.status-pill {
-  display: inline-block;
-  padding: 6px 16px;
-  font-size: 0.875rem;
+.cell-avatar-initial {
+  width: 38px;
+  height: 38px;
+  border-radius: 50%;
+  background-color: #dbeafe;
+  color: #1e40af;
   font-weight: 700;
-  border-radius: 9999px; /* Membuat sudut sangat melengkung berbentuk kapsul */
-  text-align: center;
+  font-size: 0.85rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.04);
+}
+
+.cell-guest-texts {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.guest-name-text {
+  font-weight: 700;
+  font-size: 0.88rem;
+  color: #0f172a;
+}
+
+.guest-phone-text {
+  font-size: 0.78rem;
+  color: #64748b;
+  font-weight: 500;
+}
+
+.cell-instansi-text {
+  font-size: 0.85rem;
+  color: #334155;
+  font-weight: 500;
+}
+
+/* Kolom Tujuan: Pill Badge + Perihal */
+.cell-tujuan-wrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 4px;
+}
+
+.bidang-pill-badge {
+  display: inline-block;
+  padding: 3px 11px;
+  border-radius: 999px;
+  font-size: 0.76rem;
+  font-weight: 600;
+  line-height: 1.35;
   white-space: nowrap;
-  line-height: 1.2;
+  background-color: #eff6ff;
+  color: #1e40af;
+  border: 1px solid #bfdbfe;
 }
 
-/* Status: Berkunjung / Active */
-.status-pill.berkunjung,
-.status-pill.active {
-  background-color: #f59e0b; 
-  color: #ffffff;            
+.guest-perihal-text {
+  font-size: 0.78rem;
+  color: #64748b;
+  max-width: 260px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
-.status-pill.selesai,
-.status-pill.completed {
-  background-color: #07a842;
-  color: #ffffff;            
-}
-
-/* FIX TAMPILAN WAKTU KUNJUNGAN */
-.time-details {
-  display: flex !important;
-  flex-direction: column !important;
-  gap: 4px !important;
-  font-size: 0.825rem !important;
-  line-height: 1.4 !important;
-}
-
-.time-item {
-  color: #1e293b !important;
-  white-space: nowrap !important;
-}
-
-.time-out-text {
-  color: #059669 !important;
-}
-
-/* BADGE DURASI REALTIME */
-.duration-badge {
-  display: inline-flex !important;
-  align-items: center !important;
-  gap: 4px !important;
-  margin-top: 4px !important;
-  padding: 2px 8px !important;
-  background: linear-gradient(135deg, #fef3c7, #fde68a) !important;
-  color: #92400e !important;
-  border: 1px solid #f59e0b !important;
-  border-radius: 999px !important;
-  font-size: 0.75rem !important;
-  font-weight: 600 !important;
-  white-space: nowrap !important;
-  animation: badge-pulse 2.5s ease-in-out infinite !important;
-}
-
-@keyframes badge-pulse {
-  0%, 100% { box-shadow: 0 0 0 0 rgba(245, 158, 11, 0.3); }
-  50%       { box-shadow: 0 0 0 4px rgba(245, 158, 11, 0); }
-}
-
-/* FIX TOMBOL AKSI TABEL */
-.action-buttons-cell {
-  display: flex !important;
-  align-items: center !important;
-  gap: 6px !important;
-}
-
-.btn-checkout-table,
-.btn-edit-table,
-.btn-delete-table {
-  display: inline-flex !important;
-  align-items: center !important;
-  justify-content: center !important;
-  height: 32px !important;
-  padding: 0 12px !important;
-  border-radius: 6px !important;
-  font-size: 0.8rem !important;
-  font-weight: 600 !important;
-  border: none !important;
-  cursor: pointer !important;
-  white-space: nowrap !important;
-  transition: opacity 0.2s ease !important;
-}
-
-.btn-checkout-table { background: #10b981; color: white; }
-.btn-edit-table { background: #f59e0b; color: white; }
-.btn-delete-table { background: #ef4444; color: white; }
-
-.btn-checkout-table:hover,
-.btn-edit-table:hover,
-.btn-delete-table:hover {
-  opacity: 0.88;
-}
-
-/* Pagination */
-.pagination-container-right {
+/* Kolom Waktu Masuk Desktop: Stacked */
+.cell-waktu-wrapper {
   display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-top: 16px;
+  flex-direction: column;
+  gap: 2px;
 }
 
-.pagination-buttons-right {
+.waktu-date-text {
+  font-size: 0.85rem;
+  font-weight: 700;
+  color: #0f172a;
+}
+
+.waktu-time-text {
+  font-size: 0.76rem;
+  color: #64748b;
+}
+
+/* Kolom Aksi */
+.cell-actions-icons {
   display: flex;
-  gap: 8px;
   align-items: center;
+  justify-content: center;
+  gap: 6px;
 }
 
-.pagination-buttons-right button {
-  padding: 6px 12px;
-  border: 1px solid #cbd5e1;
-  background: white;
+.btn-table-action {
+  width: 32px;
+  height: 32px;
   border-radius: 6px;
+  border: none;
+  background: transparent;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.15s;
+  color: #94a3b8;
+}
+
+.btn-table-action.action-edit:hover {
+  background-color: #eff6ff;
+  color: #2563eb;
+}
+
+.btn-table-action.action-delete:hover {
+  background-color: #fef2f2;
+  color: #dc2626;
+}
+
+/* State Kosong */
+.dash-empty-cell {
+  padding: 48px 20px !important;
+  text-align: center;
+}
+
+.dash-empty-state {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+}
+
+.empty-main-text {
+  font-size: 0.95rem;
+  font-weight: 700;
+  color: #334155;
+  margin: 0;
+}
+
+.empty-sub-text {
+  font-size: 0.82rem;
+  color: #94a3b8;
+  margin: 0;
+}
+
+.btn-clear-filters-mini {
+  margin-top: 10px;
+  padding: 6px 14px;
+  border-radius: 6px;
+  border: 1px solid #cbd5e1;
+  background: #ffffff;
+  color: #1a44b7;
+  font-weight: 600;
+  font-size: 0.8rem;
   cursor: pointer;
 }
 
-/* ==========================================
-   4. MODALS (OVERLAY, EDIT, DELETE, PREVIEW, SUKSES)
-   ========================================== */
-
-/* Background Overlay Hitam Transparan */
-.modal-overlay {
-  position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background: rgba(15, 23, 42, 0.75) !important;
-  backdrop-filter: blur(4px);
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  z-index: 9999 !important;
-  padding: 20px;
-}
-
-/* Card Modal Base (Hapus & Sukses) */
-.delete-modal-card,
-.success-modal-card {
-  background: #ffffff !important;
-  color: #1e293b !important;
-  padding: 24px;
-  border-radius: 12px;
-  width: 100%;
-  max-width: 460px;
-  box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.25);
-  box-sizing: border-box;
-}
-
-/* Card Modal Edit */
-.edit-modal-card {
-  background: #ffffff !important;
-  color: #1e293b !important;
-  padding: 24px !important;
-  border-radius: 12px !important;
-  width: 100% !important;
-  max-width: 540px !important;
-  box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.25) !important;
-  position: relative !important;
-  max-height: 85vh !important;
-  overflow-y: auto !important;
-  box-sizing: border-box !important;
-}
-
-.edit-modal-header {
+/* Footer Tabel */
+.dash-table-footer {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-bottom: 16px;
+  padding-top: 18px;
+  margin-top: 8px;
+  font-size: 0.82rem;
+  color: #64748b;
+  border-top: 1px solid #f1f5f9;
+}
+
+.table-pagination-nav {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.btn-page-nav {
+  width: 28px;
+  height: 28px;
+  border-radius: 6px;
+  border: 1px solid #cbd5e1;
+  background-color: #ffffff;
+  color: #334155;
+  font-size: 1.1rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.15s;
+}
+
+.btn-page-nav:hover:not(:disabled) {
+  border-color: #1a44b7;
+  color: #1a44b7;
+}
+
+.btn-page-nav:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+
+.page-current-indicator {
+  font-size: 0.8rem;
+  font-weight: 500;
+  color: #475569;
+}
+
+/* ==========================================
+   4. TAMPILAN KHUSUS MOBILE (SESUAI SCREENSHOT)
+   ========================================== */
+.mobile-search-filter-container {
+  display: none;
+}
+
+.dash-mobile-cards-list {
+  display: none;
+}
+
+/* ==========================================
+   MODAL EDIT DATA TAMU
+   ========================================== */
+.edit-modal-card {
+  background: #ffffff;
+  border-radius: 14px;
+  width: 100%;
+  max-width: 480px;
+  overflow: hidden;
+  box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.2);
+  display: flex;
+  flex-direction: column;
+}
+
+.edit-modal-header {
+  padding: 16px 20px;
   border-bottom: 1px solid #e2e8f0;
-  padding-bottom: 12px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 }
 
 .edit-modal-header h3 {
-  margin: 0;
-  color: #1e3a8a;
-  font-size: 1.2rem;
+  font-size: 1.1rem;
   font-weight: 700;
+  color: #0f172a;
+  margin: 0;
 }
 
 .edit-modal-close {
-  background: transparent;
+  background: none;
   border: none;
-  font-size: 1.5rem;
+  font-size: 1.4rem;
   color: #64748b;
   cursor: pointer;
   line-height: 1;
 }
 
-/* Form Isolasi Dalam Modal Edit */
-.edit-modal-card .guest-form {
-  display: flex !important;
-  flex-direction: column !important;
-  gap: 12px !important;
-  width: 100% !important;
-}
-
-.edit-modal-card .form-group {
-  display: flex !important;
-  flex-direction: column !important;
-  margin-bottom: 12px !important;
-  width: 100% !important;
-}
-
-.edit-modal-card label {
-  font-size: 0.85rem !important;
-  font-weight: 600 !important;
-  color: #334155 !important;
-  margin-bottom: 4px !important;
-}
-
-.edit-modal-card input[type="text"],
-.edit-modal-card select,
-.edit-modal-card textarea {
-  width: 100% !important;
-  padding: 10px 12px !important;
-  border: 1px solid #cbd5e1 !important;
-  border-radius: 8px !important;
-  font-size: 0.9rem !important;
-  box-sizing: border-box !important;
-  background: #ffffff !important;
-  color: #0f172a !important;
-}
-
-.edit-modal-card .image-preview-container {
-  margin-top: 10px !important;
-  max-width: 100% !important;
-  max-height: 180px !important;
-  overflow: hidden !important;
-  border-radius: 8px !important;
-}
-
-.edit-modal-card .image-preview {
-  width: 100% !important;
-  height: 180px !important;
-  object-fit: cover !important;
-  border-radius: 8px !important;
-}
-
-/* Tombol Aksi Modal */
-.delete-modal-actions,
-.success-modal-actions {
-  display: flex !important;
-  justify-content: flex-end !important;
-  align-items: center !important;
-  gap: 10px !important;
-  margin-top: 20px !important;
-}
-
-.btn-cancel {
-  background: #e2e8f0;
-  color: #334155;
-  border: none;
-  padding: 10px 18px;
-  border-radius: 8px;
-  font-weight: 600;
-  font-size: 0.9rem;
-  cursor: pointer;
-  transition: background 0.2s;
-}
-
-.btn-cancel:hover {
-  background: #cbd5e1;
-}
-
-.btn-confirm-delete {
-  background: #ef4444;
-  color: #ffffff;
-  border: none;
-  padding: 10px 18px;
-  border-radius: 8px;
-  font-weight: 600;
-  font-size: 0.9rem;
-  cursor: pointer;
-  transition: background 0.2s;
-}
-
-.btn-confirm-delete:hover {
-  background: #dc2626;
-}
-
-.btn-success-close {
-  background: #10b981 !important;
-  color: #ffffff !important;
-  border: none !important;
-  padding: 10px 22px !important;
-  border-radius: 8px !important;
-  font-weight: 700 !important;
-  font-size: 0.9rem !important;
-  cursor: pointer !important;
-  transition: background 0.2s ease !important;
-}
-
-.btn-success-close:hover {
-  background: #059669 !important;
-}
-
-/* Modal Preview Gambar Fullscreen */
-.image-preview-overlay {
-  position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background: rgba(0, 0, 0, 0.85);
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  z-index: 10000;
+.edit-modal-body {
   padding: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  max-height: 80vh;
+  overflow-y: auto;
 }
 
-.image-preview-content {
+.em-field {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+.em-field label {
+  font-size: 0.82rem;
+  font-weight: 600;
+  color: #334155;
+}
+
+.em-field input[type="text"],
+.em-field select,
+.em-field textarea {
+  padding: 8px 12px;
+  border: 1px solid #cbd5e1;
+  border-radius: 8px;
+  font-size: 0.85rem;
+  font-family: inherit;
+  outline: none;
+}
+
+.em-field input:focus,
+.em-field select:focus,
+.em-field textarea:focus {
+  border-color: #1e3a8a;
+}
+
+.em-photo-preview {
+  margin-top: 8px;
+}
+
+.em-photo-preview img {
+  width: 90px;
+  height: 90px;
+  border-radius: 8px;
+  object-fit: cover;
+  border: 1px solid #e2e8f0;
+}
+
+.em-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+  padding-top: 14px;
+  border-top: 1px solid #f1f5f9;
+}
+
+.btn-em-cancel {
+  padding: 8px 16px;
+  border-radius: 8px;
+  border: 1.5px solid #cbd5e1;
+  background: #ffffff;
+  color: #475569;
+  font-weight: 600;
+  font-size: 0.85rem;
+  cursor: pointer;
+}
+
+.btn-em-save {
+  padding: 8px 18px;
+  border-radius: 8px;
+  border: none;
+  background: #1a44b7;
+  color: #ffffff;
+  font-weight: 700;
+  font-size: 0.85rem;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.btn-em-save:hover {
+  background: #2256df;
+}
+
+/* ==========================================
+   MODAL PREVIEW FOTO FULL
+   ========================================== */
+.photo-preview-card {
   position: relative;
+  background: #0f172a;
+  border-radius: 12px;
+  overflow: hidden;
   max-width: 90vw;
   max-height: 90vh;
   display: flex;
-  justify-content: center;
   align-items: center;
+  justify-content: center;
 }
 
-.preview-full-img {
-  max-width: 100%;
-  max-height: 85vh;
-  object-fit: contain;
-  border-radius: 8px;
-  box-shadow: 0 10px 30px rgba(0,0,0,0.5);
-}
-
-.preview-close-btn {
+.btn-preview-close {
   position: absolute;
-  top: -40px;
-  right: 0;
-  background: white;
-  color: #000;
+  top: 12px;
+  right: 12px;
+  background: rgba(0, 0, 0, 0.6);
   border: none;
+  color: #ffffff;
   width: 32px;
   height: 32px;
   border-radius: 50%;
-  font-size: 1.2rem;
-  font-weight: bold;
+  font-size: 1.3rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   cursor: pointer;
+  z-index: 10;
+}
+
+.img-full-preview {
+  max-width: 80vw;
+  max-height: 80vh;
+  object-fit: contain;
+  display: block;
 }
 
 /* ==========================================
-   RESPONSIF MOBILE (GUESTTABLE)
+   5. RESPONSIVE MOBILE VIEW (MAX-WIDTH: 768px)
+   SESUAI PERSIS DENGAN SCREENSHOT USER
    ========================================== */
+@media (max-width: 1080px) {
+  .dash-metrics-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .dash-charts-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
 @media (max-width: 768px) {
-  /* Card Container */
-  .table-card-right {
-    padding: 16px !important;
+  .dashboard-view-wrapper {
+    gap: 14px;
   }
 
-  .table-card-header {
-    flex-direction: column !important;
-    align-items: flex-start !important;
-    gap: 12px !important;
+  /* 1. TOP 4 METRIC CARDS 2x2 SEPERTI DI SCREENSHOT */
+  .dash-metrics-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 12px;
   }
 
-  .btn-export-excel-small {
-    width: 100% !important;
-    text-align: center !important;
+  .dash-metric-card {
+    flex-direction: column;
+    align-items: flex-start;
+    padding: 16px 16px 14px 16px;
+    border-radius: 16px;
+    gap: 10px;
   }
 
-  /* Fix Filter Container agar Stack Rapi ke Bawah */
-  .filter-container-wrapper {
-    padding: 10px !important;
+  .dash-metric-card .dmc-icon-badge {
+    width: 36px;
+    height: 36px;
   }
 
-  .filter-row-top, 
-  .filter-row-bottom {
-    flex-direction: column !important;
-    width: 100% !important;
-    gap: 8px !important;
+  .dash-metric-card .dmc-content {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    text-align: left;
+    width: 100%;
   }
 
-  .search-input-right, 
-  .filter-select-right, 
-  .filter-date-right, 
-  .filter-select-bidang-full,
-  .btn-reset-filter {
-    width: 100% !important;
-    flex: none !important;
-    box-sizing: border-box !important;
+  .dash-metric-card .desktop-only-label,
+  .dash-metric-card .desktop-only-subtext {
+    display: none;
   }
 
-  /* ==========================================
-     SWITCH DESKTOP TABLE KE MOBILE CARD VIEW
-     ========================================== */
-  .desktop-table-view {
-    display: none !important;
+  .dash-metric-card .mobile-only-label {
+    display: block;
+    font-size: 0.8rem;
+    font-weight: 500;
+    color: #64748b;
+    margin: 0;
   }
 
-  .mobile-guest-cards-list {
-    display: flex !important;
-    flex-direction: column !important;
-    gap: 14px !important;
-    margin-top: 14px !important;
-    width: 100% !important;
+  .dash-metric-card .dmc-value {
+    font-size: 1.7rem;
+    font-weight: 800;
+    line-height: 1.1;
+    margin: 0 0 4px 0;
   }
 
-  /* Fix Pagination Stack */
-  .pagination-container-right {
-    flex-direction: column !important;
-    gap: 12px !important;
-    align-items: center !important;
-    text-align: center !important;
-    margin-top: 20px !important;
+  .dash-metric-card .dmc-value-unit {
+    font-size: 1.05rem;
+    line-height: 1.2;
+    margin: 0 0 4px 0;
   }
 
-  .pagination-buttons-right {
-    justify-content: center !important;
-    width: 100% !important;
+  /* 2. SEMBUNYIKAN GRAFIK DI MOBILE SESUAI SCREENSHOT */
+  .dash-charts-grid {
+    display: none;
+  }
+
+  /* 3. SEMBUNYIKAN TABEL DESKTOP DI MOBILE */
+  .desktop-table-card {
+    display: none;
+  }
+
+  /* 4. TAMPILKAN SEARCH & FILTER ROW MOBILE */
+  .mobile-search-filter-container {
+    display: block;
+    margin-top: 4px;
+    margin-bottom: 2px;
+  }
+
+  .mobile-search-filter-row {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+    width: 100%;
+  }
+
+  .mobile-search-box {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    background: #ffffff;
+    border: 1.5px solid #e2e8f0;
+    border-radius: 14px;
+    height: 44px;
+    padding: 0 14px;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.02);
+    transition: border-color 0.2s, box-shadow 0.2s;
+  }
+
+  .mobile-search-box:focus-within {
+    border-color: #1e3a8a;
+    box-shadow: 0 0 0 3px rgba(30, 58, 138, 0.1);
+  }
+
+  .mobile-search-icon {
+    color: #64748b;
+    margin-right: 10px;
+    display: flex;
+    align-items: center;
+    flex-shrink: 0;
+  }
+
+  .mobile-search-input {
+    border: none;
+    outline: none;
+    background: transparent;
+    font-size: 0.88rem;
+    color: #1e293b;
+    width: 100%;
+    font-family: inherit;
+  }
+
+  .mobile-search-input::placeholder {
+    color: #94a3b8;
+  }
+
+  .mobile-filter-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    height: 44px;
+    padding: 0 18px;
+    background: #ffffff;
+    border: 1.5px solid #cbd5e1;
+    border-radius: 14px;
+    font-size: 0.88rem;
+    font-weight: 600;
+    color: #1a44b7;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    white-space: nowrap;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.02);
+    font-family: inherit;
+  }
+
+  .mobile-filter-btn:hover {
+    border-color: #1a44b7;
+    background-color: #f8fafc;
+  }
+
+  .mobile-filter-btn.active {
+    background: #1a44b7;
+    color: #ffffff;
+    border-color: #1a44b7;
+  }
+
+  .mobile-filter-drawer {
+    margin-top: 10px;
+    padding: 16px;
+    background: #ffffff;
+    border: 1px solid #e2e8f0;
+    border-radius: 14px;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.04);
+    animation: drawerFadeIn 0.2s ease;
+  }
+
+  @keyframes drawerFadeIn {
+    from { opacity: 0; transform: translateY(-6px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  .mfd-field {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+  }
+
+  .mfd-field label {
+    font-size: 0.78rem;
+    font-weight: 600;
+    color: #475569;
+  }
+
+  .mfd-field input,
+  .mfd-field select {
+    height: 40px;
+    padding: 0 12px;
+    border: 1px solid #cbd5e1;
+    border-radius: 8px;
+    font-size: 0.85rem;
+    font-family: inherit;
+    background: #ffffff;
+    outline: none;
+  }
+
+  .mfd-field input:focus,
+  .mfd-field select:focus {
+    border-color: #1a44b7;
+  }
+
+  .mfd-actions {
+    display: flex;
+    gap: 10px;
+    justify-content: flex-end;
+    padding-top: 8px;
+    border-top: 1px solid #f1f5f9;
+  }
+
+  .btn-mfd-reset {
+    padding: 8px 14px;
+    border: 1.5px solid #cbd5e1;
+    border-radius: 8px;
+    background: #ffffff;
+    color: #475569;
+    font-weight: 600;
+    font-size: 0.82rem;
+    cursor: pointer;
+  }
+
+  .btn-mfd-export {
+    padding: 8px 16px;
+    border: none;
+    border-radius: 8px;
+    background: #1a44b7;
+    color: #ffffff;
+    font-weight: 600;
+    font-size: 0.82rem;
+    cursor: pointer;
+  }
+
+  /* 5. TAMPILKAN DAFTAR KARTU TAMU MOBILE */
+  .dash-mobile-cards-list {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    width: 100%;
+  }
+
+  .mobile-guest-card {
+    background: #ffffff;
+    border: 1px solid #e2e8f0;
+    border-radius: 16px;
+    padding: 14px 16px;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.02);
+    position: relative;
+    transition: transform 0.15s ease;
+  }
+
+  .mgc-top-row {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+
+  .mgc-avatar-wrap {
+    flex-shrink: 0;
+  }
+
+  .mgc-avatar-initial {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background-color: #dbeafe;
+    color: #1e40af;
+    font-weight: 700;
+    font-size: 0.85rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.04);
+  }
+
+  .mgc-avatar-img {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    object-fit: cover;
+    cursor: pointer;
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.06);
+  }
+
+  .mgc-identity-box {
+    flex: 1;
+    min-width: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+  }
+
+  .mgc-guest-name {
+    font-size: 0.96rem;
+    font-weight: 700;
+    color: #0f172a;
+    margin: 0;
+  }
+
+  .mgc-guest-sub {
+    font-size: 0.78rem;
+    color: #64748b;
+    font-weight: 500;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  /* Tombol Titik Tiga Aksi */
+  .mgc-menu-wrap {
+    position: relative;
+    flex-shrink: 0;
+  }
+
+  .mgc-menu-btn {
+    background: transparent;
+    border: 1px solid #e2e8f0;
+    border-radius: 10px;
+    width: 34px;
+    height: 34px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #64748b;
+    cursor: pointer;
+    transition: all 0.15s;
+  }
+
+  .mgc-menu-btn:hover {
+    background-color: #f8fafc;
+    border-color: #cbd5e1;
+    color: #0f172a;
+  }
+
+  .mgc-dropdown-popover {
+    position: absolute;
+    top: calc(100% + 4px);
+    right: 0;
+    background: #ffffff;
+    border: 1px solid #e2e8f0;
+    border-radius: 10px;
+    box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -4px rgba(0, 0, 0, 0.05);
+    display: flex;
+    flex-direction: column;
+    min-width: 140px;
+    z-index: 50;
+    overflow: hidden;
+    animation: popoverFadeIn 0.15s ease;
+  }
+
+  @keyframes popoverFadeIn {
+    from { opacity: 0; transform: translateY(-4px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  .mgc-popover-item {
+    padding: 10px 14px;
+    background: transparent;
+    border: none;
+    text-align: left;
+    font-size: 0.82rem;
+    font-weight: 600;
+    color: #334155;
+    cursor: pointer;
+    transition: background-color 0.15s;
+    font-family: inherit;
+  }
+
+  .mgc-popover-item:hover {
+    background-color: #f8fafc;
+  }
+
+  .mgc-popover-item.delete {
+    color: #dc2626;
+  }
+
+  .mgc-popover-item.delete:hover {
+    background-color: #fef2f2;
+  }
+
+  /* Baris Bawah: Pill Badge & Waktu */
+  .mgc-bottom-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .mgc-bottom-row .bidang-pill-badge {
+    padding: 4px 12px;
+    font-size: 0.74rem;
+    max-width: 65%;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    background-color: #eff6ff;
+    color: #1e40af;
+    border: 1px solid #bfdbfe;
+  }
+
+  .mgc-time-text {
+    font-size: 0.76rem;
+    font-weight: 500;
+    color: #64748b;
+    white-space: nowrap;
+  }
+
+  .mobile-empty-card {
+    background: #ffffff;
+    border: 1px solid #e2e8f0;
+    border-radius: 16px;
+    padding: 32px 20px;
+    text-align: center;
+  }
+
+  .mec-title {
+    font-size: 0.95rem;
+    font-weight: 700;
+    color: #334155;
+    margin: 0 0 4px 0;
+  }
+
+  .mec-desc {
+    font-size: 0.8rem;
+    color: #94a3b8;
+    margin: 0;
+  }
+
+  /* Footer Tabel Mobile */
+  .dash-table-footer {
+    padding: 12px 6px;
+    font-size: 0.78rem;
   }
 }
-
-/* ==========================================
-   STYLE MOBILE CARD VIEW (< 768px)
-   ========================================== */
-.mobile-guest-cards-list {
-  display: none; /* Default di Desktop: Tersembunyi */
-}
-
-.guest-mobile-card {
-  background: #ffffff;
-  border-radius: 14px;
-  border: 1px solid #e2e8f0;
-  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.04);
-  padding: 16px;
-  display: flex;
-  flex-direction: column;
-  gap: 12px;
-  transition: transform 0.2s ease, box-shadow 0.2s ease;
-  width: 100%;
-  box-sizing: border-box;
-}
-
-.guest-mobile-card:hover {
-  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.08);
-}
-
-/* Header Kartu Mobile */
-.gmc-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: flex-start;
-  gap: 10px;
-  border-bottom: 1px solid #f1f5f9;
-  padding-bottom: 12px;
-}
-
-.gmc-identity {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-  min-width: 0;
-  flex: 1;
-}
-
-.gmc-avatar {
-  width: 52px;
-  height: 52px;
-  border-radius: 10px;
-  object-fit: cover;
-  border: 2px solid #e2e8f0;
-  cursor: pointer;
-  flex-shrink: 0;
-  transition: transform 0.2s;
-}
-
-.gmc-avatar:hover {
-  transform: scale(1.05);
-}
-
-.gmc-no-avatar {
-  width: 52px;
-  height: 52px;
-  border-radius: 10px;
-  background: #f1f5f9;
-  color: #94a3b8;
-  font-size: 0.75rem;
-  font-weight: 700;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  border: 2px dashed #cbd5e1;
-  flex-shrink: 0;
-}
-
-.gmc-name-box {
-  display: flex;
-  flex-direction: column;
-  gap: 2px;
-  min-width: 0;
-}
-
-.gmc-name {
-  font-size: 1.05rem;
-  font-weight: 800;
-  color: #0f172a;
-  margin: 0;
-  line-height: 1.25;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-}
-
-.gmc-phone {
-  font-size: 0.82rem;
-  color: #64748b;
-  font-weight: 600;
-}
-
-/* Badan Kartu Mobile */
-.gmc-body {
-  display: flex;
-  flex-direction: column;
-  gap: 8px;
-  font-size: 0.88rem;
-}
-
-.gmc-info-row {
-  display: flex;
-  justify-content: space-between;
-  align-items: flex-start;
-  gap: 12px;
-}
-
-.gmc-label {
-  color: #64748b;
-  font-weight: 600;
-  font-size: 0.82rem;
-  min-width: 95px;
-  flex-shrink: 0;
-}
-
-.gmc-value {
-  color: #1e293b;
-  text-align: right;
-  word-break: break-word;
-  font-weight: 500;
-}
-
-.gmc-value.font-semibold {
-  font-weight: 700;
-  color: #1d4ed8;
-}
-
-.gmc-time-row {
-  background: #f8fafc;
-  padding: 10px 12px;
-  border-radius: 8px;
-  margin-top: 4px;
-  border: 1px solid #f1f5f9;
-}
-
-.gmc-time-val {
-  display: flex;
-  flex-direction: column;
-  align-items: flex-end;
-  gap: 3px;
-  font-size: 0.8rem;
-  font-weight: 600;
-  color: #334155;
-}
-
-.gmc-time-val .text-red {
-  color: #dc2626;
-}
-
-/* Footer Kartu Mobile & Tombol Aksi */
-.gmc-footer {
-  display: flex;
-  gap: 8px;
-  margin-top: 4px;
-  padding-top: 12px;
-  border-top: 1px solid #f1f5f9;
-  flex-wrap: wrap;
-}
-
-.gmc-btn {
-  flex: 1 1 calc(50% - 4px);
-  min-height: 38px;
-  font-size: 0.85rem !important;
-  font-weight: 700 !important;
-  border-radius: 8px !important;
-  display: inline-flex !important;
-  align-items: center !important;
-  justify-content: center !important;
-  gap: 6px !important;
-  border: none !important;
-  cursor: pointer !important;
-  transition: all 0.2s ease !important;
-}
-
-.empty-state-cell {
-  padding: 48px 16px !important;
-  text-align: center !important;
-  background: #f8fafc;
-}
-
-.empty-state-container {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  gap: 10px;
-  max-width: 440px;
-  margin: 0 auto;
-}
-
-.empty-state-icon {
-  width: 64px;
-  height: 64px;
-  border-radius: 50%;
-  background: #e2e8f0;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 2rem;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
-  margin-bottom: 4px;
-}
-
-.empty-state-title {
-  font-size: 1.15rem;
-  font-weight: 800;
-  color: #1e293b;
-  margin: 0;
-}
-
-.empty-state-desc {
-  font-size: 0.88rem;
-  color: #64748b;
-  margin: 0;
-  line-height: 1.5;
-}
-
-.btn-empty-reset {
-  margin-top: 8px;
-  display: inline-flex;
-  align-items: center;
-  gap: 6px;
-  background: #2563eb;
-  color: #ffffff;
-  border: none;
-  padding: 9px 18px;
-  border-radius: 8px;
-  font-weight: 700;
-  font-size: 0.88rem;
-  cursor: pointer;
-  transition: all 0.2s ease;
-  box-shadow: 0 2px 6px rgba(37, 99, 235, 0.25);
-}
-
-.btn-empty-reset:hover {
-  background: #1d4ed8;
-  transform: translateY(-1px);
-  box-shadow: 0 4px 10px rgba(37, 99, 235, 0.35);
-}
-
-.empty-card-mobile {
-  background: #ffffff;
-  border: 2px dashed #cbd5e1;
-  border-radius: 14px;
-  padding: 36px 16px;
-  text-align: center;
-  color: #64748b;
-  font-weight: 600;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 10px;
-  width: 100%;
-  box-sizing: border-box;
-}

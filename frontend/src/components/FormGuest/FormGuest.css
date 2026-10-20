@@ -1,395 +1,557 @@
-/* Container Form */
-.form-card {
+/* ==========================================
+   FORM BUKU TAMU CARD
+   ========================================== */
+
+.form-guest-card-container {
   background: #ffffff;
-  padding: 24px;
-  border-radius: 12px;
+  border-radius: 14px;
   border: 1px solid #e2e8f0;
-  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 2px 4px -2px rgba(0, 0, 0, 0.05);
-  width: 100% !important;
-  max-width: 100% !important;
-  box-sizing: border-box !important;
-  overflow: hidden !important; /* Mencegah elemen internal mendorong kartu ke kanan */
+  padding: 34px 40px;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.04), 0 2px 4px -2px rgba(0, 0, 0, 0.02);
+  width: 100%;
+  max-width: 100%;
+  box-sizing: border-box;
 }
 
-.form-card-centered {
-  max-width: 660px !important;
-  width: 100% !important;
-  padding: 32px 36px !important;
-  box-shadow: 0 10px 25px -5px rgba(15, 23, 42, 0.08), 0 8px 10px -6px rgba(15, 23, 42, 0.04) !important;
-  margin: 0 auto !important;
-}
-
-.form-title {
+.form-card-main-title {
   font-size: 1.25rem;
-  font-weight: 700;
-  color: #1e3a8a;
-  margin-bottom: 20px;
+  font-weight: 800;
+  color: #0f172a;
+  margin: 0 0 24px 0;
+  letter-spacing: -0.2px;
 }
 
-.guest-form .form-group {
-  margin-bottom: 16px;
+/* LAYOUT 2 KOLOM */
+.form-guest-layout {
+  display: grid;
+  grid-template-columns: minmax(0, 1.4fr) minmax(360px, 460px);
+  gap: 40px;
+  width: 100%;
+  align-items: start;
+}
+
+/* ==========================================
+   KOLOM KIRI: INPUT DATA TAMU
+   ========================================== */
+.fg-left-col {
   display: flex;
   flex-direction: column;
-  width: 100% !important;
-  box-sizing: border-box !important;
 }
 
-/* PERBAIKAN: Gunakan :not(.custom-file-upload) agar label tombol upload tidak kena margin-bottom 6px */
-.guest-form label:not(.custom-file-upload) {
-  font-size: 0.875rem;
+/* Baris Ganda: Nama Lengkap & Instansi Asal */
+.fg-dual-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+  width: 100%;
+}
+
+.fg-field-group {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  margin-bottom: 18px;
+  width: 100%;
+}
+
+.fg-field-group label {
+  font-size: 0.84rem;
+  font-weight: 600;
+  color: #334155;
+}
+
+/* Input Wrapper dengan Leading Icon */
+.fg-input-wrap {
+  position: relative;
+  display: flex;
+  align-items: center;
+  width: 100%;
+}
+
+.fg-input-icon {
+  position: absolute;
+  left: 12px;
+  color: #94a3b8;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  pointer-events: none;
+}
+
+.fg-input-wrap input {
+  width: 100%;
+  padding: 10px 14px 10px 38px;
+  border: 1.5px solid #cbd5e1;
+  border-radius: 8px;
+  font-size: 0.88rem;
+  color: #0f172a;
+  outline: none;
+  background-color: #ffffff;
+  font-family: inherit;
+  box-sizing: border-box;
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.fg-input-wrap input:hover:not(:focus) {
+  border-color: #94a3b8;
+  background-color: #fbfcfe;
+}
+
+.fg-input-wrap input:focus {
+  border-color: #2563eb;
+  background-color: #ffffff;
+  box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.12), 0 1px 2px rgba(0, 0, 0, 0.05);
+}
+
+.fg-input-wrap input::placeholder {
+  color: #94a3b8;
+  font-size: 0.86rem;
+}
+
+.fg-helper-text {
+  font-size: 0.76rem;
+  color: #64748b;
+  margin-top: 3px;
+  font-weight: 500;
+}
+
+/* Dropdown Pemilihan Bidang */
+.fg-select-wrap {
+  width: 100%;
+}
+
+.fg-select-field {
+  width: 100%;
+  padding: 10px 14px;
+  border: 1.5px solid #cbd5e1;
+  border-radius: 8px;
+  font-size: 0.88rem;
+  color: #0f172a;
+  outline: none;
+  background-color: #ffffff;
+  font-family: inherit;
+  box-sizing: border-box;
+  cursor: pointer;
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+  appearance: none;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='%2364748b' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 14px center;
+  background-size: 16px;
+  padding-right: 40px;
+}
+
+.fg-select-field:hover {
+  border-color: #94a3b8;
+  background-color: #fbfcfe;
+}
+
+.fg-select-field:focus {
+  border-color: #2563eb;
+  background-color: #ffffff;
+  box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.12), 0 1px 2px rgba(0, 0, 0, 0.05);
+}
+
+/* Textarea Perihal */
+.fg-field-group textarea {
+  width: 100%;
+  padding: 10px 14px;
+  border: 1.5px solid #cbd5e1;
+  border-radius: 8px;
+  font-size: 0.88rem;
+  color: #0f172a;
+  outline: none;
+  background-color: #ffffff;
+  font-family: inherit;
+  resize: vertical;
+  min-height: 105px;
+  box-sizing: border-box;
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.fg-field-group textarea:hover:not(:focus) {
+  border-color: #94a3b8;
+  background-color: #fbfcfe;
+}
+
+.fg-field-group textarea:focus {
+  border-color: #2563eb;
+  background-color: #ffffff;
+  box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.12), 0 1px 2px rgba(0, 0, 0, 0.05);
+}
+
+.fg-field-group textarea::placeholder {
+  color: #94a3b8;
+  font-size: 0.86rem;
+}
+
+/* ==========================================
+   KOLOM KANAN: PRATINJAU FOTO & AKSI FOTO
+   ========================================== */
+.fg-right-col {
+  display: flex;
+  flex-direction: column;
+}
+
+.fg-photo-label {
+  font-size: 0.84rem;
   font-weight: 600;
   color: #334155;
   margin-bottom: 6px;
 }
 
-.guest-form input,
-.guest-form select,
-.guest-form textarea {
-  width: 100% !important;
-  max-width: 100% !important;
-  min-width: 0 !important; /* Mengizinkan input mengecil presisi selayar HP */
-  padding: 10px 12px;
-  border: 1px solid #cbd5e1;
-  border-radius: 8px;
-  font-size: 0.9rem;
-  outline: none;
-  box-sizing: border-box !important;
-  transition: border-color 0.2s;
-  font-family: inherit;
-}
-
-.guest-form input:focus,
-.guest-form select:focus,
-.guest-form textarea:focus {
-  border-color: #2563eb;
-}
-
-/* Opsi Input Foto */
-.photo-input-options {
+/* Kotak Dashed Preview Foto */
+.fg-photo-box {
+  width: 100%;
+  height: 245px;
+  border: 2px dashed #cbd5e1;
+  border-radius: 12px;
+  background-color: #fbfcfe;
   display: flex;
   align-items: center;
-  gap: 10px;
-  width: 100% !important;
-  box-sizing: border-box !important;
+  justify-content: center;
+  position: relative;
+  overflow: hidden;
+  margin-bottom: 14px;
+  transition: border-color 0.2s ease;
 }
 
-.btn-webcam-trigger,
-.custom-file-upload {
+.fg-photo-box:hover {
+  border-color: #94a3b8;
+}
+
+.photo-empty-state {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  color: #94a3b8;
+}
+
+.photo-camera-placeholder-icon {
+  color: #94a3b8;
+}
+
+.photo-placeholder-text {
+  font-size: 0.86rem;
+  font-weight: 600;
+  color: #94a3b8;
+}
+
+.photo-filled-state {
+  width: 100%;
+  height: 100%;
+  position: relative;
+}
+
+.photo-actual-preview {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.photo-remove-badge {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  background: rgba(220, 38, 38, 0.9);
+  color: #ffffff;
+  border: none;
+  padding: 5px 10px;
+  border-radius: 6px;
+  font-size: 0.75rem;
+  font-weight: 700;
+  cursor: pointer;
+  backdrop-filter: blur(4px);
+  transition: background 0.15s ease;
+}
+
+.photo-remove-badge:hover {
+  background: #b91c1c;
+}
+
+/* Tombol Aksi Foto */
+.fg-photo-actions-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+  width: 100%;
+}
+
+.btn-fg-camera {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  height: 42px; /* Kunci tinggi presisi sama persis */
-  padding: 0 16px;
-  margin: 0 !important; /* Paksa reset margin agar label tidak terpengaruh */
+  gap: 8px;
+  padding: 10px 14px;
   border-radius: 8px;
+  background-color: #1a44b7;
+  color: #ffffff;
+  border: none;
+  font-size: 0.85rem;
   font-weight: 600;
-  font-size: 0.9rem;
-  line-height: 1;
-  box-sizing: border-box !important;
-  min-width: 0 !important;
   cursor: pointer;
-  transition: all 0.2s ease-in-out;
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+  font-family: inherit;
+  box-shadow: 0 2px 4px rgba(26, 68, 183, 0.2);
+}
+
+.btn-fg-camera:hover {
+  background-color: #2256df;
+  transform: translateY(-1px);
+  box-shadow: 0 4px 10px rgba(26, 68, 183, 0.3);
+}
+
+.btn-fg-camera:active {
+  transform: translateY(1px) scale(0.98);
+}
+
+.btn-fg-upload {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 10px 14px;
+  border-radius: 8px;
+  background-color: #ffffff;
+  color: #334155;
+  border: 1.5px solid #cbd5e1;
+  font-size: 0.85rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+  font-family: inherit;
   user-select: none;
 }
 
-.btn-webcam-trigger {
-  background-color: #2563eb;
-  color: #fff;
-  border: 1px solid #2563eb; /* Samakan ada border 1px agar tinggi identik */
-}
-
-.btn-webcam-trigger:hover {
-  background-color: #1d4ed8;
-  border-color: #1d4ed8;
-  transform: translateY(-1px);
-  box-shadow: 0 4px 10px rgba(37, 99, 235, 0.25);
-}
-
-.btn-webcam-trigger:active {
-  transform: translateY(0);
-}
-
-.custom-file-upload {
-  background-color: #f1f5f9;
-  color: #334155;
-  border: 1px solid #cbd5e1;
-}
-
-.custom-file-upload:hover {
-  background-color: #e2e8f0;
-  color: #1e293b;
+.btn-fg-upload:hover {
+  background-color: #f8fafc;
   border-color: #94a3b8;
   transform: translateY(-1px);
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
 }
 
-.custom-file-upload:active {
-  transform: translateY(0);
+.btn-fg-upload:active {
+  transform: translateY(1px) scale(0.98);
 }
 
 .hidden-file-input {
   display: none;
 }
 
-.photo-preview-box {
-  display: flex !important;
-  align-items: center !important;
-  gap: 12px !important;
-  margin-top: 8px !important;
-}
-
-.form-photo-thumbnail {
-  width: 60px !important;
-  height: 60px !important;
-  object-fit: cover !important;
-  border-radius: 8px !important;
-  border: 1px solid #cbd5e1 !important;
-  flex-shrink: 0 !important;
-}
-
-.photo-status-text {
-  font-size: 0.9rem !important;
-  font-weight: 600 !important;
-  color: #10b981 !important;
-  display: inline-flex !important;
-  align-items: center !important;
-  white-space: nowrap !important;
-}
-
-.btn-remove-photo {
-  background-color: #ef4444 !important;
-  color: #ffffff !important;
-  border: none !important;
-  padding: 8px 14px !important;
-  border-radius: 8px !important;
-  font-weight: 600 !important;
-  font-size: 0.85rem !important;
-  cursor: pointer !important;
-  transition: background-color 0.2s ease !important;
-  margin: 0 !important;
-}
-
-.btn-remove-photo:hover {
-  background-color: #dc2626 !important;
-}
-
-/* Styling Utama Tombol Simpan Data Tamu */
-.btn-submit {
-  width: 100% !important;
-  background-color: #1e3a8a;
-  color: #ffffff;
-  padding: 12px;
-  border: none;
-  border-radius: 8px;
-  font-weight: 700;
-  font-size: 0.95rem;
-  cursor: pointer;
+/* ==========================================
+   FOOTER ACTIONS: BATAL & SIMPAN TAMU
+   ========================================== */
+.fg-bottom-actions {
+  grid-column: 1 / -1;
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  gap: 12px;
+  padding-top: 20px;
   margin-top: 10px;
-  box-sizing: border-box !important;
-  transition: all 0.2s ease-in-out; /* Transisi halus saat kursor diarahkan */
+  border-top: 1px solid #f1f5f9;
 }
 
-/* Efek Hover (Berubah ke warna #f59e0b) */
-.btn-submit:hover:not(:disabled) {
-  background-color: #f59e0b !important; /* Warna Amber/Kuning Emas */
-  color: #ffffff !important;
-  transform: translateY(-1px); /* Tombol sedikit terangkat */
+.btn-fg-batal {
+  padding: 10px 22px;
+  border-radius: 8px;
+  border: 1.5px solid #cbd5e1;
+  background-color: #ffffff;
+  color: #475569;
+  font-size: 0.88rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.15s ease;
+  font-family: inherit;
 }
 
-/* Efek saat tombol diklik */
-.btn-submit:active:not(:disabled) {
-  transform: translateY(0);
-  box-shadow: none;
+.btn-fg-batal:hover:not(:disabled) {
+  background-color: #f8fafc;
+  border-color: #94a3b8;
+  color: #1e293b;
 }
 
-/* Saat Loading (Disabled) */
-.btn-submit:disabled {
-  background-color: #94a3b8;
+.btn-fg-batal:active:not(:disabled) {
+  transform: scale(0.98);
+}
+
+.btn-fg-simpan {
+  padding: 10px 24px;
+  border-radius: 8px;
+  border: none;
+  background-color: #1a44b7;
+  color: #ffffff;
+  font-size: 0.88rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+  font-family: inherit;
+  box-shadow: 0 2px 5px rgba(26, 68, 183, 0.25);
+}
+
+.btn-fg-simpan:hover:not(:disabled) {
+  background-color: #2256df;
+  box-shadow: 0 4px 12px rgba(26, 68, 183, 0.35);
+  transform: translateY(-1px);
+}
+
+.btn-fg-simpan:active:not(:disabled) {
+  transform: translateY(1px) scale(0.98);
+}
+
+.btn-fg-simpan:disabled,
+.btn-fg-batal:disabled {
+  opacity: 0.6;
   cursor: not-allowed;
-  opacity: 0.7;
 }
 
-/* Modal Styling */
+/* ==========================================
+   MODAL KAMERA WEBCAM
+   ========================================== */
 .modal-overlay {
   position: fixed;
   top: 0;
   left: 0;
   right: 0;
   bottom: 0;
-  background: rgba(15, 23, 42, 0.75) !important;
+  width: 100vw;
+  height: 100vh;
+  background: rgba(15, 23, 42, 0.75);
   backdrop-filter: blur(4px);
   display: flex;
   justify-content: center;
   align-items: center;
-  z-index: 9999 !important;
+  z-index: 9999;
   padding: 20px;
+  box-sizing: border-box;
 }
 
 .camera-modal-card {
-  background: #ffffff !important;
-  color: #1e293b !important;
-  padding: 24px !important;
-  border-radius: 12px !important;
-  width: 90% !important;
-  max-width: 480px !important;
-  box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.25) !important;
-  position: relative !important;
-  box-sizing: border-box !important;
+  background: #ffffff;
+  border-radius: 14px;
+  width: 100%;
+  max-width: 500px;
+  overflow: hidden;
+  box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.2);
+  display: flex;
+  flex-direction: column;
 }
 
 .camera-modal-header {
-  display: flex !important;
-  justify-content: space-between !important;
-  align-items: center !important;
-  margin-bottom: 12px !important;
+  padding: 16px 20px;
+  border-bottom: 1px solid #e2e8f0;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 }
 
 .camera-modal-header h3 {
-  margin: 0 !important;
-  font-size: 1.2rem !important;
-  font-weight: 700 !important;
-  color: #1e3a8a !important;
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: #0f172a;
+  margin: 0;
 }
 
 .camera-modal-close {
-  background: transparent !important;
-  border: none !important;
-  font-size: 1.5rem !important;
-  color: #64748b !important;
-  cursor: pointer !important;
-  line-height: 1 !important;
+  background: none;
+  border: none;
+  font-size: 1.25rem;
+  color: #64748b;
+  cursor: pointer;
+  padding: 4px;
+  line-height: 1;
+}
+
+.btn-switch-camera {
+  background: #f1f5f9;
+  border: 1px solid #cbd5e1;
+  padding: 5px 10px;
+  border-radius: 6px;
+  font-size: 0.78rem;
+  font-weight: 600;
+  color: #334155;
+  cursor: pointer;
 }
 
 .camera-viewport-box {
-  width: 100% !important;
-  height: 280px !important;
-  background: #000000 !important;
-  border-radius: 8px !important;
-  overflow: hidden !important;
-  margin: 12px 0 20px 0 !important;
+  width: 100%;
+  height: 340px;
+  background: #0f172a;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  overflow: hidden;
 }
 
-.webcam-live-view, .camera-captured-img {
-  width: 100% !important;
-  height: 100% !important;
-  object-fit: cover !important;
+.webcam-live-view,
+.camera-captured-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
 }
 
 .camera-modal-actions {
-  display: flex !important;
-  justify-content: flex-end !important;
-  align-items: center !important;
-  gap: 10px !important;
+  padding: 16px 20px;
+  display: flex;
+  justify-content: flex-end;
+  gap: 12px;
+  border-top: 1px solid #e2e8f0;
 }
 
-.camera-modal-actions button {
-  padding: 10px 18px !important;
-  border-radius: 8px !important;
-  font-weight: 600 !important;
-  font-size: 0.9rem !important;
-  cursor: pointer !important;
-  border: none !important;
-  transition: all 0.2s ease !important;
+.btn-capture-photo {
+  background: #1a44b7;
+  color: #ffffff;
+  border: none;
+  padding: 9px 18px;
+  border-radius: 8px;
+  font-weight: 700;
+  font-size: 0.88rem;
+  cursor: pointer;
+  transition: background 0.2s;
 }
 
-/* Tombol Batal pada Modal Kamera */
-.camera-modal-actions button:first-child,
-.camera-modal-actions .btn-cancel {
-  background-color: #e2e8f0 !important;
-  color: #334155 !important;
+.btn-capture-photo:hover {
+  background: #2256df;
 }
 
-.camera-modal-actions button:first-child:hover,
-.camera-modal-actions .btn-cancel:hover {
-  background-color: #cbd5e1 !important;
-}
-
-/* Tombol Tangkap Foto pada Modal Kamera */
-.camera-modal-actions button:last-child,
-.camera-modal-actions .btn-capture-photo {
-  background-color: #2563eb !important;
-  color: #ffffff !important;
-  font-weight: 700 !important;
-}
-
-.camera-modal-actions button:last-child:hover,
-.camera-modal-actions .btn-capture-photo:hover {
-  background-color: #1d4ed8 !important;
-}
-
-/* Tombol Switch Kamera Depan/Belakang */
-.btn-switch-camera {
-  background-color: #f1f5f9 !important;
-  color: #1e3a8a !important;
-  border: 1px solid #cbd5e1 !important;
-  padding: 6px 12px !important;
-  border-radius: 6px !important;
-  font-size: 0.8rem !important;
-  font-weight: 600 !important;
-  cursor: pointer !important;
-  display: inline-flex !important;
-  align-items: center !important;
-  gap: 4px !important;
-  transition: all 0.2s ease !important;
-}
-
-.btn-switch-camera:hover {
-  background-color: #e2e8f0 !important;
-  border-color: #94a3b8 !important;
-}
-
-/* Modal Sukses & Tombol Selesai */
-.success-modal-card {
-  background: #ffffff !important;
-  color: #1e293b !important;
-  padding: 24px !important;
-  border-radius: 12px !important;
-  width: 100% !important;
-  max-width: 440px !important;
-  box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.25) !important;
-  box-sizing: border-box !important;
-}
-
-.success-modal-actions {
-  display: flex !important;
-  justify-content: flex-end !important;
-  align-items: center !important;
-  margin-top: 20px !important;
-}
-
-.btn-success-close {
-  background-color: #10b981 !important;
-  color: #ffffff !important;
-  border: none !important;
-  padding: 10px 22px !important;
-  border-radius: 8px !important;
-  font-weight: 700 !important;
-  font-size: 0.9rem !important;
-  cursor: pointer !important;
-  transition: background-color 0.2s ease !important;
-}
-
-.btn-success-close:hover {
-  background-color: #059669 !important;
+.btn-cancel {
+  background: #ffffff;
+  color: #475569;
+  border: 1.5px solid #cbd5e1;
+  padding: 9px 16px;
+  border-radius: 8px;
+  font-weight: 600;
+  font-size: 0.88rem;
+  cursor: pointer;
 }
 
 /* ==========================================
-   RESPONSIF TAMPILAN HP (< 768px)
+   RESPONSIF MOBILE / TABLET
    ========================================== */
-@media (max-width: 768px) {
-  .form-card {
-    padding: 16px !important;
+@media (max-width: 900px) {
+  .form-guest-card-container {
+    padding: 24px 18px;
   }
 
-  .photo-input-options {
-    flex-direction: column !important;
-    align-items: stretch !important;
-    gap: 8px !important;
+  .form-guest-layout {
+    grid-template-columns: 1fr;
+    gap: 20px;
   }
 
-  .btn-webcam-trigger,
-  .custom-file-upload {
-    width: 100% !important;
-    text-align: center !important;
+  .fg-dual-row {
+    grid-template-columns: 1fr;
+    gap: 0;
+  }
+
+  .fg-bottom-actions {
+    justify-content: stretch;
+  }
+
+  .btn-fg-batal,
+  .btn-fg-simpan {
+    flex: 1;
+    text-align: center;
   }
 }

@@ -1,267 +1,625 @@
-/* Container Utama */
-.um-container {
+/* ==========================================
+   MANAJEMEN PENGGUNA & HAK AKSES (SESUAI HALAMAN 4)
+   ========================================== */
+
+.um-view-wrapper {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+/* ==========================================
+   1. TIGA KARTU STATISTIK USER (TOP ROW)
+   ========================================== */
+.um-stats-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 16px;
   width: 100%;
 }
 
-/* Statistik Cards Grid */
-.um-stats-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-  gap: 16px;
-  margin-bottom: 24px;
-}
-
 .um-stat-card {
-  background-color: #ffffff;
-  border-radius: 12px;
-  padding: 20px;
+  background: #ffffff;
+  border-radius: 14px;
   border: 1px solid #e2e8f0;
-  border-left-width: 5px;
-  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 2px 4px -2px rgba(0, 0, 0, 0.05);
+  padding: 18px 22px;
   display: flex;
   align-items: center;
-  justify-content: space-between;
+  gap: 16px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.02);
   transition: transform 0.2s ease, box-shadow 0.2s ease;
 }
 
 .um-stat-card:hover {
   transform: translateY(-2px);
-  box-shadow: 0 10px 15px -3px rgba(15, 23, 42, 0.08), 0 4px 6px -4px rgba(15, 23, 42, 0.04);
+  box-shadow: 0 8px 16px -4px rgba(0, 0, 0, 0.06);
 }
 
-.um-stat-card.card-blue {
-  border-left: 5px solid #2563eb;
-}
-
-.um-stat-card.card-green {
-  border-left: 5px solid #10b981;
-}
-
-.um-stat-card.card-orange {
-  border-left: 5px solid #f59e0b;
+.um-stat-content {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  flex: 1;
 }
 
 .um-stat-label {
-  margin: 0;
+  font-size: 0.82rem;
+  font-weight: 600;
   color: #64748b;
-  font-size: 0.875rem;
-  font-weight: bold;
+  margin-bottom: 6px;
+}
+
+.mobile-only-label {
+  display: none;
 }
 
 .um-stat-value {
-  margin: 8px 0 0;
-  font-size: 1.8rem;
-  color: #1e293b;
+  font-size: 1.95rem;
+  font-weight: 800;
+  color: #0f172a;
+  line-height: 1.1;
+  letter-spacing: -0.02em;
+  margin-bottom: 6px;
 }
 
-.um-stat-icon-wrapper {
-  width: 52px;
-  height: 52px;
-  border-radius: 12px;
+.um-stat-subtext {
+  font-size: 0.76rem;
+  font-weight: 500;
+  color: #94a3b8;
+}
+
+/* Badge Icon Top Right */
+.um-stat-icon-badge {
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
   display: flex;
   align-items: center;
   justify-content: center;
   flex-shrink: 0;
 }
 
-.um-stat-img-icon {
-  width: 32px;
-  height: 32px;
-  object-fit: contain;
+.badge-blue {
+  background-color: #dbeafe;
+  color: #2563eb;
 }
 
-.um-stat-text-icon {
-  font-size: 1.6rem;
+.badge-emerald {
+  background-color: #dcfce7;
+  color: #16a34a;
 }
 
-.bg-blue-light {
+.badge-amber {
+  background-color: #fef3c7;
+  color: #d97706;
+}
+
+/* ==========================================
+   2. KARTU TABEL PENGGUNA SISTEM (DESKTOP VIEW)
+   ========================================== */
+.um-table-card {
+  background: #ffffff;
+  border-radius: 14px;
+  border: 1px solid #e2e8f0;
+  padding: 24px 28px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.02);
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.um-card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 22px;
+}
+
+.um-header-info {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.um-table-title {
+  font-size: 1.15rem;
+  font-weight: 800;
+  color: #0f172a;
+  margin: 0;
+  letter-spacing: -0.2px;
+}
+
+.um-table-subtitle {
+  font-size: 0.85rem;
+  color: #64748b;
+  margin: 0;
+  font-weight: 500;
+}
+
+/* Tombol Tambah User Dishub Navy */
+.btn-um-add {
+  background-color: #1a44b7;
+  color: #ffffff;
+  border: none;
+  padding: 9px 18px;
+  border-radius: 8px;
+  font-size: 0.88rem;
+  font-weight: 600;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  cursor: pointer;
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+  box-shadow: 0 2px 4px rgba(26, 68, 183, 0.2);
+  font-family: inherit;
+  white-space: nowrap;
+}
+
+.btn-um-add:hover {
+  background-color: #2256df;
+  transform: translateY(-1px);
+  box-shadow: 0 4px 10px rgba(26, 68, 183, 0.3);
+}
+
+.btn-um-add:active {
+  transform: translateY(1px) scale(0.98);
+}
+
+/* Header Actions: Search Input & Add Button */
+.um-header-actions {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.um-search-box {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background: #f8fafc;
+  border: 1px solid #e2e8f0;
+  border-radius: 8px;
+  padding: 0 12px;
+  height: 38px;
+  width: 260px;
+  transition: all 0.2s ease;
+}
+
+.um-search-box:focus-within {
+  background: #ffffff;
+  border-color: #1a44b7;
+  box-shadow: 0 0 0 3px rgba(26, 68, 183, 0.12);
+}
+
+.um-search-icon {
+  color: #94a3b8;
+  display: flex;
+  align-items: center;
+  flex-shrink: 0;
+}
+
+.um-search-input {
+  border: none;
+  outline: none;
+  background: transparent;
+  font-size: 0.86rem;
+  color: #0f172a;
+  width: 100%;
+  font-family: inherit;
+}
+
+.um-clear-search {
+  background: none;
+  border: none;
+  color: #94a3b8;
+  cursor: pointer;
+  font-size: 0.8rem;
+  padding: 0;
+  line-height: 1;
+}
+
+/* ==========================================
+   DAFTAR KARTU PENGGUNA
+   ========================================== */
+.um-cards-list {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  width: 100%;
+}
+
+.um-user-card {
+  background: #ffffff;
+  border: 1px solid #e2e8f0;
+  border-radius: 16px;
+  padding: 14px 18px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.02);
+  transition: border-color 0.15s ease, box-shadow 0.15s ease;
+}
+
+.um-user-card:hover {
+  border-color: #cbd5e1;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.04);
+}
+
+.umc-top-row {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.umc-avatar-wrap {
+  flex-shrink: 0;
+}
+
+.user-avatar-circle {
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.user-avatar-circle.avatar-admin {
+  background-color: #f1f5f9;
+  color: #0f172a;
+}
+
+.user-avatar-circle.avatar-receptionist {
+  background-color: #f8fafc;
+  color: #0f172a;
+}
+
+.umc-identity-box {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.umc-guest-name {
+  font-size: 0.98rem;
+  font-weight: 700;
+  color: #0f172a;
+  margin: 0;
+  letter-spacing: -0.2px;
+}
+
+.umc-guest-sub {
+  font-size: 0.8rem;
+  color: #64748b;
+  font-weight: 500;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* Tombol Titik Tiga Aksi */
+.umc-menu-wrap {
+  position: relative;
+  flex-shrink: 0;
+}
+
+.umc-menu-btn {
+  background: transparent;
+  border: 1px solid #e2e8f0;
+  border-radius: 10px;
+  width: 36px;
+  height: 36px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #64748b;
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+
+.umc-menu-btn:hover {
+  background-color: #f8fafc;
+  border-color: #cbd5e1;
+  color: #0f172a;
+}
+
+.umc-dropdown-popover {
+  position: absolute;
+  top: calc(100% + 6px);
+  right: 0;
+  background: #ffffff;
+  border: 1px solid #e2e8f0;
+  border-radius: 12px;
+  box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1), 0 8px 10px -6px rgba(0, 0, 0, 0.05);
+  display: flex;
+  flex-direction: column;
+  min-width: 165px;
+  z-index: 50;
+  overflow: hidden;
+  animation: popoverFadeIn 0.15s ease;
+}
+
+@keyframes popoverFadeIn {
+  from { opacity: 0; transform: translateY(-4px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.umc-popover-item {
+  padding: 10px 14px;
+  background: transparent;
+  border: none;
+  text-align: left;
+  font-size: 0.82rem;
+  font-weight: 600;
+  color: #334155;
+  cursor: pointer;
+  transition: background-color 0.15s;
+  font-family: inherit;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.umc-popover-item:hover {
+  background-color: #f8fafc;
+}
+
+.umc-popover-item.reset:hover {
+  color: #2563eb;
   background-color: #eff6ff;
 }
 
-.bg-green-light {
-  background-color: #ecfdf5;
+.umc-popover-item.delete {
+  color: #dc2626;
 }
 
-.bg-orange-light {
-  background-color: #fffbeb;
+.umc-popover-item.delete:hover {
+  background-color: #fef2f2;
 }
 
-/* Header Card & Tombol Tambah */
-.um-table-card {
-  border-radius: 12px;
-  padding: 24px;
+/* Baris Bawah: Role Badge & Tanggal Pembuatan */
+.umc-bottom-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 8px;
 }
 
-.um-header-wrapper {
+.umc-role-pill {
+  display: inline-flex;
+  align-items: center;
+  padding: 4px 14px;
+  background-color: #eff6ff;
+  border: 1px solid #bfdbfe;
+  color: #1d4ed8;
+  border-radius: 9999px;
+  font-size: 0.78rem;
+  font-weight: 600;
+  letter-spacing: 0.01em;
+  line-height: 1.4;
+}
+
+.umc-time-text {
+  font-size: 0.8rem;
+  font-weight: 500;
+  color: #64748b;
+  white-space: nowrap;
+}
+
+.um-empty-state-card {
+  background: #ffffff;
+  border: 1px dashed #cbd5e1;
+  border-radius: 16px;
+  padding: 36px 20px;
+  text-align: center;
+}
+
+.um-mec-title {
+  font-size: 0.95rem;
+  font-weight: 700;
+  color: #334155;
+  margin: 0 0 4px 0;
+}
+
+.um-mec-desc {
+  font-size: 0.8rem;
+  color: #94a3b8;
+  margin: 0;
+}
+
+/* ==========================================
+   MODAL TAMBAH USER BARU
+   ========================================== */
+.um-modal-card {
+  background: #ffffff;
+  border-radius: 14px;
+  width: 100%;
+  max-width: 460px;
+  overflow: hidden;
+  box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.2);
+  display: flex;
+  flex-direction: column;
+}
+
+.um-modal-header {
+  padding: 16px 20px;
+  border-bottom: 1px solid #e2e8f0;
   display: flex;
   justify-content: space-between;
   align-items: center;
 }
 
-.um-subtitle {
-  margin: 4px 0 0;
+.um-modal-header h3 {
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: #0f172a;
+  margin: 0;
+}
+
+.um-modal-close {
+  background: none;
+  border: none;
+  font-size: 1.4rem;
   color: #64748b;
-  font-size: 0.875rem;
+  cursor: pointer;
+  line-height: 1;
 }
 
-.um-btn-add {
-  background-color: #10b981;
-  color: #ffffff;
-  border: none;
-  padding: 10px 20px;
+.um-modal-body {
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.um-form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+.um-form-group label {
+  font-size: 0.82rem;
+  font-weight: 600;
+  color: #334155;
+}
+
+.um-form-group input,
+.um-form-group select {
+  height: 40px;
+  padding: 0 12px;
+  border: 1px solid #cbd5e1;
   border-radius: 8px;
-  cursor: pointer;
-  font-weight: bold;
+  font-size: 0.88rem;
+  font-family: inherit;
+  outline: none;
+  background-color: #ffffff;
+  transition: border-color 0.15s, box-shadow 0.15s;
+}
+
+.um-form-group input:focus,
+.um-form-group select:focus {
+  border-color: #1a44b7;
+  box-shadow: 0 0 0 3px rgba(26, 68, 183, 0.12);
+}
+
+.um-modal-actions {
   display: flex;
-  align-items: center;
-  gap: 8px;
-  box-shadow: 0 2px 6px rgba(16, 185, 129, 0.3);
-  transition: background-color 0.2s ease;
+  justify-content: flex-end;
+  gap: 10px;
+  padding-top: 14px;
+  border-top: 1px solid #f1f5f9;
 }
 
-.um-btn-add:hover {
-  background-color: #059669;
-}
-
-/* Alignment Tabel */
-.text-center {
-  text-align: center;
-}
-
-.col-no {
-  width: 60px;
-}
-
-.col-action {
-  width: 220px; /* Diperlebar agar 2 tombol muat sejajar */
-}
-
-.table-margin-top {
-  margin-top: 20px;
-}
-
-/* Tombol Aksi Sejajar & Tanpa Teks Terlipat */
-.um-action-group {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 8px;
-}
-
-.btn-reset-pass {
-  background-color: #f59e0b;
-  color: #ffffff;
-  border: none;
-  padding: 6px 12px;
-  border-radius: 6px;
+.btn-um-cancel {
+  padding: 9px 18px;
+  border-radius: 8px;
+  border: 1.5px solid #cbd5e1;
+  background: #ffffff;
+  color: #475569;
+  font-weight: 600;
+  font-size: 0.85rem;
   cursor: pointer;
-  font-weight: bold;
-  font-size: 0.8rem;
-  white-space: nowrap; /* Mencegah teks terlipat ke bawah */
-  display: inline-flex;
-  align-items: center;
-  gap: 4px;
-  transition: background-color 0.2s ease;
 }
 
-.btn-reset-pass:hover {
-  background-color: #d97706;
-}
-
-.btn-delete-table {
-  background-color: #ef4444;
-  color: #ffffff;
+.btn-um-submit {
+  padding: 9px 20px;
+  border-radius: 8px;
   border: none;
-  padding: 6px 12px;
-  border-radius: 6px;
+  background: #1a44b7;
+  color: #ffffff;
+  font-weight: 700;
+  font-size: 0.85rem;
   cursor: pointer;
-  font-weight: bold;
-  font-size: 0.8rem;
-  white-space: nowrap; /* Mencegah teks terlipat ke bawah */
-  display: inline-flex;
-  align-items: center;
-  gap: 4px;
-  transition: background-color 0.2s ease;
+  transition: background 0.2s;
 }
 
-.btn-delete-table:hover {
-  background-color: #dc2626;
+.btn-um-submit:hover:not(:disabled) {
+  background: #2256df;
 }
 
-/* Paksa SweetAlert2 berada di atas modal overlay */
-.swal2-container {
-  z-index: 99999 !important;
-}
+/* SweetAlert2 Styling */
+/* SweetAlert styles have been centralized to styles/sweetalert.css */
 
-/* Custom Tampilan SweetAlert2 Reset Password */
-.swal-custom-popup {
-  border-radius: 16px !important;
-  padding: 28px 24px !important;
-  font-family: inherit !important;
-  box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04) !important;
-}
+/* ==========================================
+   4. RESPONSIVE MOBILE VIEW (MAX-WIDTH: 768px)
+   ========================================== */
+@media (max-width: 768px) {
+  .um-view-wrapper {
+    gap: 14px;
+  }
 
-.swal-custom-title {
-  font-size: 1.4rem !important;
-  font-weight: 700 !important;
-  color: #1e293b !important;
-  margin-bottom: 4px !important;
-}
+  /* 3 Kartu Metrik di Layar HP: Grid 3 kolom atau 1 kolom */
+  .um-stats-grid {
+    grid-template-columns: repeat(3, 1fr);
+    gap: 10px;
+  }
 
-.swal-custom-input {
-  width: 90% !important;
-  height: 44px !important;
-  border-radius: 8px !important;
-  border: 1px solid #cbd5e1 !important;
-  padding: 0 14px !important;
-  font-size: 0.95rem !important;
-  margin: 16px auto 12px auto !important;
-  transition: all 0.2s ease !important;
-  box-shadow: none !important;
-}
+  .um-stat-card {
+    flex-direction: column;
+    align-items: flex-start;
+    padding: 14px 14px 12px 14px;
+    border-radius: 14px;
+    gap: 8px;
+  }
 
-.swal-custom-input:focus {
-  border-color: #2563eb !important;
-  box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.15) !important;
-  outline: none !important;
-}
+  .um-stat-card .um-stat-icon-badge {
+    width: 34px;
+    height: 34px;
+  }
 
-.swal-custom-confirm {
-  background-color: #2563eb !important;
-  color: #ffffff !important;
-  padding: 10px 22px !important;
-  border-radius: 8px !important;
-  font-weight: 600 !important;
-  font-size: 0.9rem !important;
-  border: none !important;
-  cursor: pointer !important;
-  margin: 8px 4px 0 4px !important;
-  transition: background-color 0.2s ease !important;
-}
+  .um-stat-card .desktop-only-label,
+  .um-stat-card .desktop-only-subtext {
+    display: none;
+  }
 
-.swal-custom-confirm:hover {
-  background-color: #1d4ed8 !important;
-}
+  .um-stat-card .mobile-only-label {
+    display: block;
+    font-size: 0.74rem;
+    font-weight: 500;
+    color: #64748b;
+    margin: 0;
+  }
 
-.swal-custom-cancel {
-  background-color: #64748b !important;
-  color: #ffffff !important;
-  padding: 10px 22px !important;
-  border-radius: 8px !important;
-  font-weight: 600 !important;
-  font-size: 0.9rem !important;
-  border: none !important;
-  cursor: pointer !important;
-  margin: 8px 4px 0 4px !important;
-  transition: background-color 0.2s ease !important;
-}
+  .um-stat-card .um-stat-value {
+    font-size: 1.55rem;
+    font-weight: 800;
+    line-height: 1.1;
+    margin: 0 0 2px 0;
+  }
 
-.swal-custom-cancel:hover {
-  background-color: #475569 !important;
-}
+  /* Penyesuaian Header & Aksi Kartu Pengguna di Layar HP */
+  .um-card-header {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 14px;
+    margin-bottom: 16px;
+  }
 
-/* Mencegah halaman bergeser saat SweetAlert2 muncul */
-body.swal2-shown {
-  overflow-y: auto !important;
-  padding-right: 0 !important;
+  .um-header-actions {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 10px;
+    width: 100%;
+  }
+
+  .um-search-box {
+    width: 100%;
+    height: 42px;
+    box-sizing: border-box;
+  }
+
+  .btn-um-add {
+    width: 100%;
+    height: 42px;
+    justify-content: center;
+    box-sizing: border-box;
+  }
+
+  .um-user-card {
+    padding: 12px 14px;
+  }
 }

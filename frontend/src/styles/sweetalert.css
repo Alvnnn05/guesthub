@@ -1,0 +1,501 @@
+/* ==========================================================================
+   GUESTHUB SWEETALERT2 THEME
+   Berdasarkan Panduan Referensi:
+   - Gaya terang, sudut membulat (24px)
+   - Satu warna per status:
+     * Hijau (#16a34a) untuk Sukses
+     * Merah (#dc2626) untuk Bahaya / Gagal / Hapus
+     * Amber (#d97706) untuk Peringatan / Validasi
+     * Navy (#1a44b7) untuk Aksi Utama
+   ========================================================================== */
+
+/* 1. Backdrop Overlay */
+.swal2-container {
+  z-index: 999999 !important;
+  font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif !important;
+  padding: 16px !important;
+}
+
+.swal2-container.swal2-backdrop-show,
+.swal2-container.swal2-noanimation {
+  background: rgba(15, 23, 42, 0.45) !important;
+  backdrop-filter: blur(4px) !important;
+  -webkit-backdrop-filter: blur(4px) !important;
+}
+
+/* 2. Modal Popup Dialog */
+.swal2-popup {
+  border-radius: 24px !important;
+  padding: 32px 28px 28px !important;
+  background: #ffffff !important;
+  border: none !important;
+  box-shadow: 0 20px 45px -10px rgba(15, 23, 42, 0.16),
+              0 0 0 1px rgba(226, 232, 240, 0.7) !important;
+  font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif !important;
+  color: #0f172a !important;
+  width: 90% !important;
+  max-width: 400px !important;
+  box-sizing: border-box !important;
+  text-align: center !important;
+}
+
+/* Header & Title */
+.swal2-title {
+  font-family: 'Plus Jakarta Sans', sans-serif !important;
+  font-size: 1.25rem !important;
+  font-weight: 800 !important;
+  color: #0f172a !important;
+  line-height: 1.35 !important;
+  letter-spacing: -0.02em !important;
+  padding: 0 !important;
+  margin: 12px 0 6px 0 !important;
+  text-align: center !important;
+}
+
+/* Subtitle / Text Content */
+.swal2-html-container {
+  font-family: 'Plus Jakarta Sans', sans-serif !important;
+  font-size: 0.92rem !important;
+  font-weight: 500 !important;
+  color: #64748b !important;
+  line-height: 1.55 !important;
+  margin: 6px 0 16px 0 !important;
+  padding: 0 !important;
+  text-align: center !important;
+}
+
+.swal2-html-container strong {
+  color: #0f172a !important;
+  font-weight: 700 !important;
+}
+
+/* 3. Action Buttons */
+.swal2-actions {
+  width: 100% !important;
+  margin: 20px 0 0 0 !important;
+  display: flex !important;
+  flex-direction: row !important;
+  justify-content: center !important;
+  align-items: center !important;
+  gap: 12px !important;
+}
+
+/* Base Button Styling (Jangan set display agar SweetAlert bisa menyembunyikan tombol yang tidak aktif) */
+.swal2-styled {
+  font-family: 'Plus Jakarta Sans', sans-serif !important;
+  font-size: 0.9rem !important;
+  font-weight: 700 !important;
+  letter-spacing: 0.01em !important;
+  border-radius: 9px !important;
+  padding: 9px 24px !important;
+  min-height: 42px !important;
+  margin: 0 !important;
+  cursor: pointer !important;
+  border: none !important;
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1) !important;
+  outline: none !important;
+}
+
+/* Posisi Tombol: 'Batal' di Kiri (order: 1), 'Konfirmasi' di Kanan (order: 2) sesuai referensi */
+.swal2-styled.swal2-cancel {
+  order: 1 !important;
+  background-color: #ffffff !important;
+  color: #475569 !important;
+  border: 1.5px solid #cbd5e1 !important;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.04) !important;
+}
+
+.swal2-styled.swal2-cancel:hover {
+  background-color: #f8fafc !important;
+  border-color: #94a3b8 !important;
+  color: #0f172a !important;
+}
+
+.swal2-styled.swal2-confirm {
+  order: 2 !important;
+  background-color: #1a44b7 !important; /* Navy Aksi Utama */
+  color: #ffffff !important;
+  box-shadow: 0 2px 6px rgba(26, 68, 183, 0.25) !important;
+}
+
+.swal2-styled.swal2-confirm:hover {
+  background-color: #153896 !important;
+  box-shadow: 0 4px 10px rgba(26, 68, 183, 0.35) !important;
+}
+
+/* Khusus Tombol Konfirmasi Hapus (Merah Bahaya) */
+.swal2-styled.swal2-confirm[style*="rgb(220, 38, 38)"],
+.swal2-styled.swal2-confirm[style*="#dc2626"],
+.swal2-popup:has(.swal2-icon-warning) .swal2-confirm {
+  background-color: #dc2626 !important;
+  box-shadow: 0 2px 6px rgba(220, 38, 38, 0.25) !important;
+}
+
+.swal2-styled.swal2-confirm[style*="rgb(220, 38, 38)"]:hover,
+.swal2-styled.swal2-confirm[style*="#dc2626"]:hover,
+.swal2-popup:has(.swal2-icon-warning) .swal2-confirm:hover {
+  background-color: #b91c1c !important;
+  box-shadow: 0 4px 10px rgba(220, 38, 38, 0.35) !important;
+}
+
+/* 4. Icon Styling Bersih & Bulat Terang Sesuai Referensi Gambar */
+
+/* Reset dasar semua icon */
+.swal2-icon {
+  width: 56px !important;
+  height: 56px !important;
+  border: none !important;
+  border-radius: 50% !important;
+  margin: 0 auto 12px auto !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  box-sizing: border-box !important;
+}
+
+/* 4A. Icon SUKSES (Lingkaran Hijau Terang + Centang Bersih) */
+.swal2-icon.swal2-success {
+  background-color: #dcfce7 !important;
+  position: relative !important;
+}
+
+/* Sembunyikan elemen animasi kompleks bawaan agar centang tidak bertabrakan/pecah */
+.swal2-icon.swal2-success * {
+  display: none !important;
+}
+
+/* Centang Hijau Bersih Presisi */
+.swal2-icon.swal2-success::after {
+  content: '' !important;
+  display: block !important;
+  width: 10px !important;
+  height: 18px !important;
+  border: solid #16a34a !important;
+  border-width: 0 3px 3px 0 !important;
+  transform: rotate(45deg) translate(-2px, -3px) !important;
+}
+
+/* 4B. Icon GAGAL / ERROR (Lingkaran Merah Terang + Tanda Silang) */
+.swal2-icon.swal2-error {
+  background-color: #fee2e2 !important;
+  position: relative !important;
+}
+
+.swal2-icon.swal2-error * {
+  display: none !important;
+}
+
+.swal2-icon.swal2-error::before,
+.swal2-icon.swal2-error::after {
+  content: '' !important;
+  position: absolute !important;
+  width: 18px !important;
+  height: 2.5px !important;
+  background-color: #dc2626 !important;
+  border-radius: 2px !important;
+}
+
+.swal2-icon.swal2-error::before {
+  transform: rotate(45deg) !important;
+}
+
+.swal2-icon.swal2-error::after {
+  transform: rotate(-45deg) !important;
+}
+
+/* 4C. Icon PERINGATAN / VALIDASI (Lingkaran Amber Terang + Tanda Seru) */
+.swal2-icon.swal2-warning {
+  background-color: #fef3c7 !important;
+  color: #d97706 !important;
+}
+
+.swal2-icon.swal2-warning .swal2-icon-content {
+  font-family: 'Plus Jakarta Sans', sans-serif !important;
+  font-size: 26px !important;
+  font-weight: 800 !important;
+  color: #d97706 !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  line-height: 1 !important;
+}
+
+/* Khusus Konfirmasi Hapus: Tampilkan Icon Sampah Merah (Sesuai Referensi No. 3) */
+.swal2-popup:has(.swal2-confirm[style*="220, 38, 38"]) .swal2-icon.swal2-warning,
+.swal2-popup:has(.swal2-confirm[style*="#dc2626"]) .swal2-icon.swal2-warning {
+  background-color: #fee2e2 !important;
+}
+
+.swal2-popup:has(.swal2-confirm[style*="220, 38, 38"]) .swal2-icon.swal2-warning .swal2-icon-content,
+.swal2-popup:has(.swal2-confirm[style*="#dc2626"]) .swal2-icon.swal2-warning .swal2-icon-content {
+  font-size: 0 !important;
+  width: 24px !important;
+  height: 24px !important;
+  background-color: #dc2626 !important;
+  -webkit-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M3 6h18m-2 0v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2'%3E%3C/path%3E%3Cline x1='10' y1='11' x2='10' y2='17'%3E%3C/line%3E%3Cline x1='14' y1='11' x2='14' y2='17'%3E%3C/line%3E%3C/svg%3E") no-repeat center !important;
+  mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M3 6h18m-2 0v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2'%3E%3C/path%3E%3Cline x1='10' y1='11' x2='10' y2='17'%3E%3C/line%3E%3Cline x1='14' y1='11' x2='14' y2='17'%3E%3C/line%3E%3C/svg%3E") no-repeat center !important;
+  -webkit-mask-size: contain !important;
+  mask-size: contain !important;
+}
+
+/* 4D. Icon INFO & QUESTION */
+.swal2-icon.swal2-info {
+  background-color: #dbeafe !important;
+  color: #1a44b7 !important;
+}
+
+.swal2-icon.swal2-info .swal2-icon-content {
+  font-family: 'Plus Jakarta Sans', sans-serif !important;
+  font-size: 24px !important;
+  font-weight: 800 !important;
+  color: #1a44b7 !important;
+}
+
+.swal2-icon.swal2-question {
+  background-color: #fef3c7 !important;
+  color: #d97706 !important;
+}
+
+.swal2-icon.swal2-question .swal2-icon-content {
+  font-family: 'Plus Jakarta Sans', sans-serif !important;
+  font-size: 24px !important;
+  font-weight: 800 !important;
+  color: #d97706 !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+}
+
+/* 4E. Icon Khusus Kunci / Reset Password (Sesuai Referensi No. 5) */
+.swal2-icon.swal-icon-key,
+.swal2-icon.swal2-icon-key {
+  background-color: #fef3c7 !important;
+  color: #d97706 !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+}
+
+.swal2-icon.swal-icon-key .swal2-icon-content,
+.swal2-icon.swal2-icon-key .swal2-icon-content {
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  font-size: 0 !important;
+  line-height: 0 !important;
+  width: 100% !important;
+  height: 100% !important;
+}
+
+.swal2-icon.swal-icon-key svg,
+.swal2-icon.swal2-icon-key svg {
+  display: block !important;
+  width: 26px !important;
+  height: 26px !important;
+  stroke: #d97706 !important;
+}
+
+/* 5. Timer Progress Bar Sesuai Referensi No. 1 (Hanya muncul jika timerProgressBar aktif) */
+.swal2-timer-progress-bar[style*="display: none"],
+.swal2-timer-progress-bar[style*="display:none"] {
+  display: none !important;
+}
+
+.swal2-popup:not(.swal2-toast) .swal2-timer-progress-bar:not([style*="display: none"]):not([style*="display:none"]) {
+  position: relative !important;
+  bottom: auto !important;
+  left: auto !important;
+  right: auto !important;
+  width: calc(100% - 32px) !important;
+  margin: 18px auto 6px auto !important;
+  height: 6px !important;
+  background-color: #e2e8f0 !important;
+  border-radius: 99px !important;
+  overflow: hidden !important;
+}
+
+.swal2-popup:not(.swal2-toast) .swal2-timer-progress-bar:not([style*="display: none"]):not([style*="display:none"])::after {
+  content: '' !important;
+  position: absolute !important;
+  top: 0 !important;
+  left: 0 !important;
+  bottom: 0 !important;
+  height: 100% !important;
+  background-color: #16a34a !important; /* Batang hijau bergerak mengisi dari kiri ke kanan */
+  border-radius: 99px !important;
+  animation: swalFillProgress 1.5s cubic-bezier(0.2, 0, 0.4, 1) forwards !important;
+}
+
+@keyframes swalFillProgress {
+  0% {
+    width: 0%;
+  }
+  100% {
+    width: 100%;
+  }
+}
+
+/* Timer progress bar khusus Toast (tetap rapi di bagian bawah toast) */
+.swal2-popup.swal2-toast .swal2-timer-progress-bar:not([style*="display: none"]):not([style*="display:none"]) {
+  position: absolute !important;
+  bottom: 0 !important;
+  left: 0 !important;
+  height: 3.5px !important;
+  background-color: #16a34a !important;
+  border-radius: 0 0 14px 14px !important;
+}
+
+.swal2-popup.swal2-toast .swal2-timer-progress-bar::after {
+  display: none !important;
+}
+
+/* 6. Toast Notification Sesuai Referensi No. 4 */
+.swal2-popup.swal2-toast {
+  position: relative !important;
+  display: flex !important;
+  flex-direction: row !important;
+  align-items: center !important;
+  padding: 14px 18px !important;
+  border-radius: 14px !important;
+  background: #ffffff !important;
+  border: 1px solid rgba(226, 232, 240, 0.9) !important;
+  border-left: 5px solid #16a34a !important; /* Indikator Hijau Sukses di Kiri */
+  box-shadow: 0 10px 25px -4px rgba(15, 23, 42, 0.12),
+              0 2px 6px -1px rgba(15, 23, 42, 0.04) !important;
+  width: auto !important;
+  min-width: 290px !important;
+  max-width: 420px !important;
+  text-align: left !important;
+}
+
+.swal2-popup.swal2-toast .swal2-icon {
+  width: 32px !important;
+  height: 32px !important;
+  min-width: 32px !important;
+  margin: 0 12px 0 0 !important;
+}
+
+.swal2-popup.swal2-toast .swal2-icon.swal2-success::after {
+  width: 6px !important;
+  height: 12px !important;
+  border-width: 0 2.5px 2.5px 0 !important;
+  transform: rotate(45deg) translate(-1px, -2px) !important;
+}
+
+.swal2-popup.swal2-toast .swal2-title {
+  font-size: 0.92rem !important;
+  font-weight: 700 !important;
+  color: #0f172a !important;
+  margin: 0 !important;
+  line-height: 1.35 !important;
+  text-align: left !important;
+}
+
+.swal2-popup.swal2-toast .swal2-html-container {
+  font-size: 0.82rem !important;
+  color: #64748b !important;
+  margin: 2px 0 0 0 !important;
+  text-align: left !important;
+}
+
+/* 7. Input Field (Prompt / Reset Password) */
+.swal2-input,
+.swal2-file,
+.swal2-textarea,
+.swal2-select {
+  width: 100% !important;
+  max-width: 100% !important;
+  height: 44px !important;
+  border-radius: 9px !important;
+  border: 1.5px solid #cbd5e1 !important;
+  padding: 0 14px !important;
+  font-family: 'Plus Jakarta Sans', sans-serif !important;
+  font-size: 0.92rem !important;
+  color: #0f172a !important;
+  background-color: #ffffff !important;
+  box-sizing: border-box !important;
+  margin: 12px 0 6px 0 !important;
+  transition: all 0.2s ease !important;
+}
+
+.swal2-input:focus,
+.swal2-file:focus,
+.swal2-textarea:focus,
+.swal2-select:focus {
+  border-color: #1a44b7 !important;
+  box-shadow: 0 0 0 3px rgba(26, 68, 183, 0.12) !important;
+  outline: none !important;
+}
+
+/* Validation Message */
+.swal2-validation-message {
+  background: #fef2f2 !important;
+  color: #dc2626 !important;
+  border: 1px solid #fecaca !important;
+  border-radius: 8px !important;
+  font-size: 0.85rem !important;
+  font-weight: 600 !important;
+  padding: 8px 12px !important;
+  margin-top: 8px !important;
+}
+
+/* 8. Backward Compatibility: Dukungan Kelas Custom .swal-custom-... */
+.swal-custom-popup {
+  border-radius: 24px !important;
+  padding: 32px 28px 28px !important;
+  font-family: 'Plus Jakarta Sans', sans-serif !important;
+  border: none !important;
+  box-shadow: 0 20px 45px -10px rgba(15, 23, 42, 0.16) !important;
+}
+
+.swal-custom-title {
+  font-family: 'Plus Jakarta Sans', sans-serif !important;
+  font-size: 1.25rem !important;
+  font-weight: 800 !important;
+  color: #0f172a !important;
+  letter-spacing: -0.02em !important;
+  margin-bottom: 6px !important;
+}
+
+.swal-custom-input {
+  width: 100% !important;
+  height: 44px !important;
+  border-radius: 9px !important;
+  border: 1.5px solid #cbd5e1 !important;
+  background-color: #ffffff !important;
+  padding: 0 14px !important;
+  font-size: 0.92rem !important;
+  font-family: 'Plus Jakarta Sans', sans-serif !important;
+  box-sizing: border-box !important;
+  margin: 14px auto 10px auto !important;
+  transition: all 0.2s ease !important;
+}
+
+.swal-custom-input:focus {
+  border-color: #1a44b7 !important;
+  box-shadow: 0 0 0 3px rgba(26, 68, 183, 0.12) !important;
+  outline: none !important;
+}
+
+.swal-custom-confirm {
+  background-color: #1a44b7 !important;
+  color: #ffffff !important;
+  padding: 9px 24px !important;
+  border-radius: 9px !important;
+  font-weight: 700 !important;
+  font-size: 0.9rem !important;
+  border: none !important;
+  cursor: pointer !important;
+  box-shadow: 0 2px 6px rgba(26, 68, 183, 0.25) !important;
+}
+
+.swal-custom-cancel {
+  background-color: #ffffff !important;
+  color: #475569 !important;
+  padding: 9px 22px !important;
+  border-radius: 9px !important;
+  font-weight: 600 !important;
+  font-size: 0.9rem !important;
+  border: 1.5px solid #cbd5e1 !important;
+  cursor: pointer !important;
+}

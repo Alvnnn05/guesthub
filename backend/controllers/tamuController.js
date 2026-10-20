@@ -39,35 +39,7 @@ const getAllTamu = async (req, res) => {
   }
 };
 
-// 3. UPDATE STATUS TAMU / WAKTU KELUAR (CHECK-OUT)
-const updateStatusTamu = async (req, res) => {
-  const { id } = req.params;
-  const { status } = req.body;
-
-  try {
-    const result = await db.query(
-      `UPDATE tamu 
-       SET status = $1 
-       WHERE id = $2 
-       RETURNING *`,
-      [status || 'SELESAI', id]
-    );
-
-    if (result.rows.length === 0) {
-      return res.status(404).json({ error: 'Data tamu tidak ditemukan' });
-    }
-
-    res.json({
-      message: 'Status kunjungan berhasil diperbarui',
-      data: result.rows[0],
-    });
-  } catch (err) {
-    console.error(err);
-    res.status(500).json({ error: 'Terjadi kesalahan pada server' });
-  }
-};
-
-// 4. UPDATE DETAIL DATA TAMU (EDIT FORM)
+// 3. UPDATE DETAIL DATA TAMU (EDIT FORM)
 const updateTamu = async (req, res) => {
   const { id } = req.params;
   const { nama_tamu, instansi_asal, no_hp, tujuan_bidang, perihal, foto_url } = req.body;
@@ -160,4 +132,4 @@ const deleteTamu = async (req, res) => {
   }
 };
 
-module.exports = { createTamu, getAllTamu, updateStatusTamu, updateTamu, deleteTamu };
+module.exports = { createTamu, getAllTamu, updateTamu, deleteTamu };

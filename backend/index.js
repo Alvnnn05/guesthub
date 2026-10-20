@@ -31,14 +31,14 @@ app.use(helmet({
 }));
 
 // 3. WHITELIST CORS (Mencegah Akses Tidak Diotorisasi dari Domain Asing)
-const allowedOrigins = (process.env.ALLOWED_ORIGINS || 'http://localhost:5173,http://127.0.0.1:5173')
+const allowedOrigins = (process.env.ALLOWED_ORIGINS || 'http://localhost:5173,http://127.0.0.1:5173,http://localhost:8085,http://127.0.0.1:8085')
   .split(',')
   .map(origin => origin.trim());
 
 app.use(cors({
   origin: (origin, callback) => {
-    // Izinkan request tanpa origin (seperti tools internal, server-to-server) atau domain yang terdaftar di whitelist
-    if (!origin || allowedOrigins.includes(origin)) {
+    // Izinkan request tanpa origin (seperti tools internal, server-to-server), wildcard '*', atau domain di whitelist
+    if (!origin || allowedOrigins.includes('*') || allowedOrigins.includes(origin)) {
       callback(null, true);
     } else {
       callback(new Error('Akses ditolak: Domain tidak diizinkan oleh kebijakan CORS.'));

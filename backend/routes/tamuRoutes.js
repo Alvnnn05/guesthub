@@ -5,7 +5,6 @@ const path = require('path');
 const {
   createTamu,
   getAllTamu,
-  updateStatusTamu,
   updateTamu,
   deleteTamu,
 } = require('../controllers/tamuController');
@@ -65,7 +64,6 @@ router.post('/upload', verifyToken, (req, res, next) => {
 router.post('/', verifyToken, createTamu);
 router.get('/', verifyToken, getAllTamu);
 router.put('/:id', verifyToken, updateTamu);
-router.patch('/:id/status', verifyToken, updateStatusTamu);
 router.delete('/:id', verifyToken, verifyAdmin, deleteTamu);
 
 module.exports = router;

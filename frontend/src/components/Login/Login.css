@@ -1,178 +1,573 @@
-/* Container Utama Halaman Login */
-.login-container {
+/* ==========================================
+   HALAMAN LOGIN SPLIT-SCREEN (SESUAI REFERENSI)
+   ========================================== */
+
+.login-split-page {
+  display: flex;
   min-height: 100vh;
-  width: 100%;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  background-color: #eef2f6 !important;
-  padding: 20px 16px;
-  box-sizing: border-box;
-}
-
-/* Card Login */
-.login-card {
-  background: #ffffff;
-  border-radius: 16px;
-  padding: 0;
-  width: 100%;
-  max-width: 480px;
-  box-shadow: 0 20px 25px -5px rgba(15, 23, 42, 0.08), 0 8px 10px -6px rgba(15, 23, 42, 0.04);
-  border: 1px solid #e2e8f0;
-  text-align: center;
-  box-sizing: border-box;
+  width: 100vw;
   overflow: hidden;
+  background-color: #ffffff;
+  font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif;
 }
 
-.login-card-accent {
-  height: 6px;
-  width: 100%;
-  background: linear-gradient(90deg, #1e3a8a 0%, #2563eb 65%, #f59e0b 100%);
-}
-
-.login-card-content {
-  padding: 35px 35px;
-}
-
-/* Header & Header Icon di Card */
-.login-header-icon {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  margin-bottom: 12px;
-}
-
-.login-logo-img {
-  width: 120px;          
-  height: auto;          
-  max-height: 90px;      
-  object-fit: contain;
-}
-
-.login-title {
-  color: #1e3a8a;
-  font-size: 1.75rem;
-  font-weight: 800;
-  margin: 0 0 6px 0;
-  letter-spacing: -0.5px;
-}
-
-.login-subtitle {
-  color: #64748b;
-  font-size: 0.95rem;
-  margin-bottom: 10px;
-}
-
-.login-security-badge {
-  display: inline-block;
-  background: #f1f5f9;
-  color: #475569;
-  font-size: 0.78rem;
-  font-weight: 600;
-  padding: 5px 14px;
-  border-radius: 50px;
-  margin-bottom: 22px;
-  border: 1px solid #e2e8f0;
-}
-
-/* Form Styling */
-.login-form {
+/* ==========================================
+   SISI KIRI: HERO BRANDING PANEL (NAVY DISHUB)
+   ========================================== */
+.login-hero-panel {
+  flex: 1.15;
+  background: linear-gradient(155deg, #1a44b7 0%, #1b7286 100%);
+  padding: 56px 64px;
   display: flex;
   flex-direction: column;
-  gap: 16px;
-  text-align: left;
-}
-
-.form-group-login {
-  display: flex;
-  flex-direction: column;
-  gap: 6px;
-}
-
-.form-group-login label {
-  font-size: 0.82rem;
-  font-weight: 600;
-  color: #334155;
-}
-
-.form-group-login input {
-  padding: 12px 16px;
-  border: 1px solid #cbd5e1;
-  border-radius: 8px;
-  font-size: 0.9rem;
-  outline: none;
-  transition: border-color 0.2s, box-shadow 0.2s;
+  justify-content: space-between;
+  color: #ffffff;
+  position: relative;
   box-sizing: border-box;
 }
 
-.form-group-login input:focus {
-  border-color: #1e3a8a;
-  box-shadow: 0 0 0 3px rgba(30, 58, 138, 0.15);
+/* Top: Logo Brand */
+.login-hero-top {
+  display: flex;
+  align-items: center;
 }
 
-/* Tombol Submit */
-.btn-login-submit {
-  background-color: #1e3a8a;
+.brand-logo-box {
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.brand-g-icon-img {
+  width: 42px;
+  height: 42px;
+  object-fit: contain;
+  border-radius: 9px;
+  border: 1.5px solid rgba(255, 255, 255, 0.3);
+  background-color: rgba(255, 255, 255, 0.08);
+  padding: 3px;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15);
+}
+
+.brand-name-text {
+  font-size: 1.35rem;
+  font-weight: 800;
+  color: #ffffff;
+  letter-spacing: -0.4px;
+}
+
+/* Center: Headline & Subheadline (Pas Tengah Vertikal) */
+.login-hero-center {
+  max-width: 540px;
+  margin: auto 0;
+}
+
+.hero-headline {
+  font-size: 2.75rem;
+  font-weight: 800;
+  line-height: 1.22;
+  color: #ffffff;
+  letter-spacing: -0.03em;
+  margin: 0 0 18px 0;
+}
+
+.hero-subheadline {
+  font-size: 1.05rem;
+  font-weight: 400;
+  color: #cbd5e1;
+  line-height: 1.6;
+  margin: 0;
+}
+
+/* Bottom: Copyright */
+.login-hero-bottom {
+  margin-top: 0;
+}
+
+.hero-copyright {
+  font-size: 0.82rem;
+  color: #94a3b8;
+  margin: 0;
+}
+
+/* ==========================================
+   SISI KANAN: FORM LOGIN PANEL (WHITE/LIGHT)
+   ========================================== */
+.login-form-panel {
+  flex: 1;
+  background-color: #ffffff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 48px 32px;
+  box-sizing: border-box;
+}
+
+.login-form-box {
+  width: 100%;
+  max-width: 410px;
+}
+
+.login-header-group {
+  margin-bottom: 28px;
+}
+
+.login-form-title {
+  font-size: 1.95rem;
+  font-weight: 800;
+  color: #1a44b7;
+  letter-spacing: -0.025em;
+  margin: 0 0 6px 0;
+}
+
+.login-form-subtitle {
+  font-size: 0.95rem;
+  color: #64748b;
+  margin: 0;
+}
+
+/* Form Fields */
+.login-inner-form {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.login-field-group {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.login-field-group label {
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: #1e293b;
+}
+
+.login-input-wrapper {
+  position: relative;
+  display: flex;
+  align-items: center;
+  width: 100%;
+}
+
+.input-leading-icon {
+  position: absolute;
+  left: 14px;
+  color: #94a3b8;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  pointer-events: none;
+}
+
+.login-input-wrapper input {
+  width: 100%;
+  padding: 12px 14px 12px 42px;
+  font-size: 0.92rem;
+  color: #0f172a;
+  background-color: #ffffff;
+  border: 1.5px solid #cbd5e1;
+  border-radius: 8px;
+  outline: none;
+  font-family: inherit;
+  box-sizing: border-box;
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.login-input-wrapper input:hover:not(:focus) {
+  border-color: #94a3b8;
+  background-color: #fbfcfe;
+}
+
+.login-input-wrapper input:focus {
+  border-color: #1a44b7;
+  background-color: #ffffff;
+  box-shadow: 0 0 0 3.5px rgba(26, 68, 183, 0.12), 0 1px 2px rgba(0, 0, 0, 0.05);
+}
+
+.login-input-wrapper input::placeholder {
+  color: #94a3b8;
+  font-size: 0.88rem;
+}
+
+/* Tombol Toggle Password (Eye Icon) */
+.btn-toggle-password {
+  position: absolute;
+  right: 12px;
+  background: none;
+  border: none;
+  color: #94a3b8;
+  cursor: pointer;
+  padding: 6px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 6px;
+  transition: color 0.15s ease;
+}
+
+.btn-toggle-password:hover {
+  color: #1a44b7;
+}
+
+/* Tombol Masuk ke Sistem */
+.btn-login-action {
+  width: 100%;
+  background-color: #1a44b7;
   color: #ffffff;
   border: none;
-  padding: 14px;
   border-radius: 8px;
+  padding: 13px 18px;
+  font-size: 0.95rem;
   font-weight: 700;
-  font-size: 1.05rem;
+  letter-spacing: 0.1px;
   cursor: pointer;
-  margin-top: 10px;
-  transition: background-color 0.2s ease, transform 0.1s ease;
+  margin-top: 6px;
+  box-sizing: border-box;
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+  box-shadow: 0 2px 4px rgba(26, 68, 183, 0.2);
 }
 
-.btn-login-submit:hover {
-  background-color: #e59b12;
+.btn-login-action:hover:not(:disabled) {
+  background-color: #2256df;
+  transform: translateY(-1px);
+  box-shadow: 0 4px 10px rgba(26, 68, 183, 0.3);
 }
 
-.btn-login-submit:active {
-  transform: scale(0.98);
+.btn-login-action:active:not(:disabled) {
+  transform: translateY(1px) scale(0.99);
+  box-shadow: 0 1px 2px rgba(26, 54, 93, 0.15);
 }
 
-/* Footer Teks Sederhana di Luar Card */
-.login-footer-text {
-  margin-top: 24px;
-  color: #64748b;
-  font-size: 0.85rem;
-  font-weight: 500;
+.btn-login-action:disabled {
+  background-color: #94a3b8;
+  cursor: not-allowed;
+  opacity: 0.7;
+}
+
+/* Lupa Password Link */
+.login-forgot-pwd {
+  margin-top: 18px;
   text-align: center;
+  font-size: 0.85rem;
+  color: #64748b;
 }
 
-/* MEDIA RESPONSIF UNTUK TAMPILAN HP */
-@media (max-width: 480px) {
-  .login-card {
-    padding: 24px 18px;
+.login-forgot-link {
+  background: none;
+  border: none;
+  color: #475569;
+  font-weight: 600;
+  cursor: pointer;
+  font-size: 0.85rem;
+  font-family: inherit;
+  padding: 0;
+  transition: color 0.15s ease;
+}
+
+.login-forgot-link:hover {
+  color: #1a44b7;
+  text-decoration: underline;
+}
+
+/* Hidden by default on Desktop (> 1024px) */
+.login-mobile-header {
+  display: none;
+}
+
+.login-mobile-footer {
+  display: none;
+}
+
+/* ==========================================
+   RESPONSIF TABLET & MOBILE (<= 1024px)
+   PERSIS SEPERTI DI FILE PDF HALAMAN 1 & 2
+   ========================================== */
+@media (max-width: 1024px) {
+  .login-split-page {
+    flex-direction: column;
+    min-height: 100vh;
+    width: 100vw;
+    background-color: #f1f5f9;
+    overflow-y: auto;
+    overflow-x: hidden;
   }
 
-  .login-logo-img {
-    width: 90px;
-    max-height: 70px;
+  /* Sembunyikan panel hero desktop */
+  .login-hero-panel.desktop-only {
+    display: none !important;
   }
 
-  .login-title {
-    font-size: 1.45rem;
+  /* 1. Header Banner Gradient Top Sesuai File PDF */
+  .login-mobile-header {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    background: linear-gradient(165deg, #1a44b7 0%, #1b7286 100%);
+    padding: 54px 24px 80px 24px;
+    color: #ffffff;
+    width: 100%;
+    box-sizing: border-box;
+    position: relative;
+    border-bottom-left-radius: 36px;
+    border-bottom-right-radius: 36px;
   }
 
-  .login-subtitle {
-    font-size: 0.85rem;
-    margin-bottom: 20px;
+  /* Badge Huruf G Squircle (Rounded Square) Sesuai File PDF */
+  .login-brand-badge {
+    width: 58px;
+    height: 58px;
+    background: rgba(255, 255, 255, 0.22);
+    border: 1.5px solid rgba(255, 255, 255, 0.38);
+    border-radius: 16px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 12px;
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    box-shadow: 0 4px 14px rgba(0, 0, 0, 0.12);
   }
 
-  .form-group-login input {
-    font-size: 1rem; /* Mencegah auto-zoom di browser HP */
-    padding: 11px 14px;
+  .brand-badge-img {
+    width: 36px;
+    height: 36px;
+    object-fit: contain;
+    filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.15));
   }
 
-  .btn-login-submit {
-    padding: 11px 14px;
+  .login-brand-title {
+    font-size: 1.35rem;
+    font-weight: 800;
+    color: #ffffff;
+    letter-spacing: -0.3px;
+    margin-bottom: 22px;
+    display: block;
+  }
+
+  .login-mobile-headline {
+    font-size: 2.15rem;
+    font-weight: 800;
+    color: #ffffff;
+    line-height: 1.25;
+    letter-spacing: -0.025em;
+    margin: 0 0 14px 0;
+    text-align: center;
+  }
+
+  .login-mobile-subheadline {
     font-size: 0.95rem;
+    color: rgba(255, 255, 255, 0.88);
+    line-height: 1.55;
+    margin: 0 auto;
+    max-width: 320px;
+    font-weight: 400;
+    text-align: center;
   }
 
-  .login-footer-text {
-    font-size: 0.75rem;
+  /* 2. Area Form Login */
+  .login-form-panel {
+    flex: 1;
+    background-color: #f1f5f9;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+    padding: 0 20px 32px 20px;
+    box-sizing: border-box;
+    width: 100%;
+  }
+
+  /* Kartu Putih Melengkung */
+  .login-form-box {
+    background: #ffffff;
+    border-radius: 28px;
+    padding: 34px 28px 28px 28px;
+    width: 100%;
+    max-width: 440px;
+    box-shadow: 0 20px 45px -10px rgba(15, 23, 42, 0.1), 0 8px 20px -6px rgba(15, 23, 42, 0.05);
+    margin-top: -50px;
+    position: relative;
+    z-index: 10;
+    box-sizing: border-box;
+  }
+
+  .login-header-group {
+    margin-bottom: 22px;
+  }
+
+  .login-form-title {
+    font-size: 1.5rem;
+    font-weight: 800;
+    color: #0f172a;
+    margin: 0 0 6px 0;
+    letter-spacing: -0.02em;
+  }
+
+  .login-form-subtitle {
+    font-size: 0.88rem;
+    color: #64748b;
+    margin: 0;
+  }
+
+  .login-inner-form {
+    gap: 18px;
+  }
+
+  .login-field-group {
+    gap: 6px;
+  }
+
+  .login-field-group label {
+    font-size: 0.82rem;
+    font-weight: 700;
+    color: #0f172a;
+  }
+
+  .login-input-wrapper input {
+    height: 48px;
+    border-radius: 12px;
+    border: 1.5px solid #cbd5e1;
+    font-size: 0.92rem;
+    padding: 0 44px 0 42px;
+    background-color: #ffffff;
+  }
+
+  .login-input-wrapper input:focus {
+    border-color: #1a44b7;
+    box-shadow: 0 0 0 3px rgba(26, 68, 183, 0.12);
+  }
+
+  .btn-login-action {
+    height: 48px;
+    border-radius: 12px;
+    font-size: 0.95rem;
+    font-weight: 700;
+    margin-top: 8px;
+    padding: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  /* 3. Footer Copyright Mobile & Tablet Sesuai File PDF */
+  .login-mobile-footer {
+    display: block;
+    text-align: center;
+    margin-top: 26px;
+    color: #64748b;
+    font-size: 0.8rem;
+    font-weight: 500;
+    width: 100%;
+  }
+
+  .login-mobile-footer p {
+    margin: 0;
+  }
+
+  .footer-mobile-text {
+    display: block;
+  }
+
+  .footer-tablet-text {
+    display: none;
+  }
+}
+
+/* Penyesuaian Khusus Tablet (641px - 1024px) Sesuai Halaman 2 PDF */
+@media (min-width: 641px) and (max-width: 1024px) {
+  .login-mobile-header {
+    padding: 72px 32px 100px 32px;
+    border-bottom-left-radius: 48px;
+    border-bottom-right-radius: 48px;
+  }
+
+  .login-brand-badge {
+    width: 64px;
+    height: 64px;
+    border-radius: 18px;
+    margin-bottom: 14px;
+  }
+
+  .brand-badge-img {
+    width: 40px;
+    height: 40px;
+  }
+
+  .login-brand-title {
+    font-size: 1.45rem;
+    margin-bottom: 26px;
+  }
+
+  .login-mobile-headline {
+    font-size: 2.65rem;
+  }
+
+  .login-mobile-subheadline {
+    max-width: 460px;
+    font-size: 1.05rem;
+  }
+
+  .login-form-box {
+    max-width: 480px;
+    padding: 42px 36px 34px 36px;
+    border-radius: 32px;
+    margin-top: -64px;
+  }
+
+  .footer-mobile-text {
+    display: none;
+  }
+
+  .footer-tablet-text {
+    display: block;
+  }
+}
+
+/* Penyesuaian Khusus Layar HP Kecil (<= 480px) Sesuai Halaman 1 PDF */
+@media (max-width: 480px) {
+  .login-mobile-header {
+    padding: 44px 16px 70px 16px;
+    border-bottom-left-radius: 32px;
+    border-bottom-right-radius: 32px;
+  }
+
+  .login-brand-badge {
+    width: 52px;
+    height: 52px;
+    border-radius: 14px;
+    margin-bottom: 10px;
+  }
+
+  .brand-badge-img {
+    width: 32px;
+    height: 32px;
+  }
+
+  .login-brand-title {
+    font-size: 1.2rem;
+    margin-bottom: 18px;
+  }
+
+  .login-mobile-headline {
+    font-size: 1.95rem;
+  }
+
+  .login-mobile-subheadline {
+    font-size: 0.88rem;
+    max-width: 290px;
+  }
+
+  .login-form-panel {
+    padding: 0 16px 24px 16px;
+  }
+
+  .login-form-box {
+    padding: 28px 20px 22px 20px;
+    border-radius: 24px;
+    margin-top: -46px;
   }
 }

@@ -86,14 +86,6 @@ export const uploadFotoTamu = async (fileFoto) => {
 };
 
 // Action Terproteksi JWT
-export const updateStatusTamu = async (id, status = 'SELESAI') => {
-  const response = await fetch(`${API_BASE_URL}/tamu/${id}/status`, {
-    method: 'PATCH',
-    headers: getAuthHeaders(),
-    body: JSON.stringify({ status }),
-  });
-  return response.json();
-};
 
 export const updateTamuData = async (id, dataTamu) => {
   const response = await fetch(`${API_BASE_URL}/tamu/${id}`, {

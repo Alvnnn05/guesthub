@@ -1,36 +1,56 @@
-/* Container Overlay Hitam Transparan */
+/* ==========================================
+   MODAL PENGATURAN PROFIL AKUN (TEMA DISHUB NAVY)
+   ========================================== */
+
+/* Container Overlay Full Viewport */
 .pm-overlay {
   position: fixed;
   top: 0;
   left: 0;
   right: 0;
   bottom: 0;
-  background-color: rgba(15, 23, 42, 0.75);
+  width: 100vw;
+  height: 100vh;
+  background-color: rgba(15, 23, 42, 0.72);
   backdrop-filter: blur(4px);
   display: flex;
   justify-content: center;
   align-items: center;
   z-index: 99999;
   padding: 16px;
+  box-sizing: border-box;
 }
 
 /* Card Utama Modal */
 .pm-card {
   background-color: #ffffff;
-  border-radius: 12px;
+  border-radius: 14px;
   width: 100%;
   max-width: 480px;
-  box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.3);
+  box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.2), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
   overflow: hidden;
   color: #1e293b;
   box-sizing: border-box;
+  animation: pmCardPop 0.2s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
-/* Header Modal */
+@keyframes pmCardPop {
+  from {
+    opacity: 0;
+    transform: scale(0.96) translateY(6px);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+  }
+}
+
+/* Header Modal Bersih & Modern */
 .pm-header {
-  background-color: #1e3a8a;
-  color: #ffffff;
-  padding: 16px 20px;
+  background-color: #ffffff;
+  color: #0f172a;
+  padding: 18px 22px;
+  border-bottom: 1px solid #e2e8f0;
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -38,106 +58,138 @@
 
 .pm-title {
   margin: 0;
-  font-size: 1.1rem;
-  font-weight: 700;
-  color: #ffffff;
+  font-size: 1.15rem;
+  font-weight: 800;
+  color: #0f172a;
+  letter-spacing: -0.2px;
 }
 
 .pm-close-btn {
   background: transparent;
   border: none;
-  color: #ffffff;
-  font-size: 1.4rem;
+  color: #64748b;
+  font-size: 1.5rem;
   cursor: pointer;
   line-height: 1;
+  padding: 2px;
+  transition: color 0.15s ease;
+}
+
+.pm-close-btn:hover {
+  color: #0f172a;
 }
 
 /* Body Form */
 .pm-form {
-  padding: 20px;
+  padding: 22px;
   box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
 }
 
 .pm-group {
-  margin-bottom: 16px;
   display: flex;
   flex-direction: column;
   gap: 6px;
 }
 
 .pm-label {
-  font-size: 0.85rem;
-  font-weight: 700;
+  font-size: 0.84rem;
+  font-weight: 600;
   color: #334155;
   margin: 0;
 }
 
 .pm-input {
   width: 100%;
-  padding: 10px 12px;
-  border: 1px solid #cbd5e1;
+  height: 42px;
+  padding: 0 14px;
+  border: 1.5px solid #cbd5e1;
   border-radius: 8px;
   font-size: 0.9rem;
   background-color: #ffffff;
   color: #0f172a;
   box-sizing: border-box;
   outline: none;
-  transition: border-color 0.2s;
+  font-family: inherit;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
 }
 
 .pm-input:focus {
-  border-color: #2563eb;
+  border-color: #1a44b7;
+  box-shadow: 0 0 0 3px rgba(26, 68, 183, 0.12);
 }
 
 .pm-input-disabled {
-  background-color: #f1f5f9;
+  background-color: #f8fafc;
   color: #64748b;
+  border-color: #e2e8f0;
   cursor: not-allowed;
 }
 
 .pm-hint {
   color: #64748b;
-  font-size: 0.75rem;
+  font-size: 0.76rem;
+  font-weight: 500;
+  margin-top: 2px;
 }
 
-/* Tombol Aksi */
+/* Tombol Aksi Batal & Simpan */
 .pm-actions {
   display: flex;
   justify-content: flex-end;
   gap: 10px;
-  margin-top: 24px;
+  margin-top: 8px;
+  padding-top: 16px;
+  border-top: 1px solid #f1f5f9;
 }
 
 .pm-btn-cancel {
-  background-color: #e2e8f0;
-  color: #334155;
-  border: none;
-  padding: 10px 18px;
+  background-color: #ffffff;
+  color: #475569;
+  border: 1.5px solid #cbd5e1;
+  padding: 10px 20px;
   border-radius: 8px;
   font-weight: 600;
-  font-size: 0.9rem;
+  font-size: 0.88rem;
   cursor: pointer;
-  transition: background-color 0.2s;
+  transition: all 0.15s ease;
+  font-family: inherit;
 }
 
 .pm-btn-cancel:hover {
-  background-color: #cbd5e1;
+  background-color: #f8fafc;
+  border-color: #94a3b8;
+  color: #0f172a;
+}
+
+.pm-btn-cancel:active {
+  transform: scale(0.98);
 }
 
 .pm-btn-save {
-  background-color: #f59e0b;
+  background-color: #1a44b7;
   color: #ffffff;
   border: none;
-  padding: 10px 18px;
+  padding: 10px 22px;
   border-radius: 8px;
   font-weight: 700;
-  font-size: 0.9rem;
+  font-size: 0.88rem;
   cursor: pointer;
-  transition: background-color 0.2s;
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+  box-shadow: 0 2px 5px rgba(26, 68, 183, 0.25);
+  font-family: inherit;
 }
 
-.pm-btn-save:hover {
-  background-color: #d97706;
+.pm-btn-save:hover:not(:disabled) {
+  background-color: #2256df;
+  box-shadow: 0 4px 12px rgba(26, 68, 183, 0.35);
+  transform: translateY(-1px);
+}
+
+.pm-btn-save:active:not(:disabled) {
+  transform: translateY(1px) scale(0.98);
 }
 
 .pm-btn-save:disabled {
