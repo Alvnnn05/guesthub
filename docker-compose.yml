@@ -10,8 +10,8 @@ services:
       POSTGRES_USER: ${DB_USER:-postgres}
       POSTGRES_PASSWORD: ${DB_PASSWORD:-admguesthub123}
     ports:
-      # Port 5433 diekspos agar tidak bentrok dengan PostgreSQL lokal laptop (port 5432)
-      - "${HOST_DB_PORT:-5433}:5432"
+      # Port 5433 dikunci ke 127.0.0.1 (localhost) agar hanya bisa diakses lokal server, aman dari jaringan luar
+      - "127.0.0.1:${HOST_DB_PORT:-5433}:5432"
     volumes:
       # Data persisten database disimpan di volume ini (tidak hilang saat restart)
       - postgres_data:/var/lib/postgresql/data
@@ -42,6 +42,7 @@ services:
       DB_NAME: ${DB_NAME:-guesthub_db}
       JWT_SECRET: ${JWT_SECRET:-guesthub_36bbea54d781cf3d183583e9d99f0fdc9913091d3e2e5b14d8de606cd519b4f9c456888e93a7d61ef1bc18b3a3779ca6}
       ALLOWED_ORIGINS: "*"
+      TRUST_PROXY: ${TRUST_PROXY:-1}
     volumes:
       # Foto tamu disimpan langsung di folder backend/uploads pada server fisik
       - ./backend/uploads:/app/uploads

@@ -18,6 +18,15 @@ const tamuRoutes = require('./routes/tamuRoutes');
 const app = express();
 const PORT = process.env.PORT || 5000;
 
+// Aktifkan trust proxy agar Express dapat membaca IP asli klien di balik reverse proxy Nginx
+const trustProxyEnv = process.env.TRUST_PROXY;
+app.set(
+  'trust proxy',
+  trustProxyEnv
+    ? (trustProxyEnv === 'true' ? true : (isNaN(trustProxyEnv) ? trustProxyEnv : parseInt(trustProxyEnv, 10)))
+    : 1
+);
+
 // 1. MEMASTIKAN FOLDER UPLOADS TERBUAT OTOMATIS
 const uploadsDir = path.join(__dirname, 'uploads');
 if (!fs.existsSync(uploadsDir)) {
@@ -78,12 +87,13 @@ app.use((req, res) => {
   res.status(404).json({ error: 'Endpoint tidak ditemukan' });
 });
 
-// 3. GLOBAL ERROR HANDLER (MENCEGAH SERVER CRASH)
+// 3. GLOBAL ERROR HANDLER (MENCEGAH SERVER CRASH & KEBOCORAN INFO)
 app.use((err, req, res, next) => {
   console.error('Unhandled Error:', err.stack);
+  const isDev = process.env.NODE_ENV === 'development';
   res.status(500).json({
     error: 'Terjadi kesalahan internal pada server',
-    message: err.message
+    ...(isDev && { message: err.message })
   });
 });
 

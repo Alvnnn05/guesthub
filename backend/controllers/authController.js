@@ -90,7 +90,7 @@ const login = async (req, res) => {
         full_name: user.full_name || 'User' 
       },
       process.env.JWT_SECRET,
-      { expiresIn: '1d' }
+      { expiresIn: '8h' }
     );
 
     res.json({

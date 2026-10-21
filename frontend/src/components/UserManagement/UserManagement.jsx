@@ -98,6 +98,14 @@ export default function UserManagement() {
   };
 
   const handleResetPassword = (user) => {
+    const safeUsername = (user.username || '').replace(/[<>&"']/g, (c) => ({
+      '<': '&lt;',
+      '>': '&gt;',
+      '&': '&amp;',
+      '"': '&quot;',
+      "'": '&#39;'
+    }[c]));
+
     Swal.fire({
       icon: 'question',
       iconHtml: `<svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#d97706" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="7.5" cy="15.5" r="5.5"></circle><path d="m21 2-9.6 9.6"></path><path d="m15.5 7.5 3 3L22 7l-3-3"></path></svg>`,
@@ -105,7 +113,7 @@ export default function UserManagement() {
         icon: 'swal-icon-key'
       },
       title: 'Reset password?',
-      html: `<p style="color: #64748b; margin-top: 4px; font-size: 0.92rem;">Masukkan password baru untuk akun <strong>${user.username}</strong></p>`,
+      html: `<p style="color: #64748b; margin-top: 4px; font-size: 0.92rem;">Masukkan password baru untuk akun <strong>${safeUsername}</strong></p>`,
       input: 'password',
       inputPlaceholder: 'Minimal 6 karakter',
       inputAttributes: {
