@@ -22,6 +22,15 @@ services:
       interval: 5s
       timeout: 5s
       retries: 5
+    deploy:
+      resources:
+        limits:
+          memory: 1G
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "10m"
+        max-file: "3"
 
   # 2. BACKEND API (Express.js)
   backend:
@@ -48,6 +57,15 @@ services:
       - ./backend/uploads:/app/uploads
     expose:
       - "5000"
+    deploy:
+      resources:
+        limits:
+          memory: 512M
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "10m"
+        max-file: "3"
 
   # 3. FRONTEND (React Vite + Nginx Reverse Proxy)
   frontend:
@@ -62,10 +80,17 @@ services:
       - backend
     ports:
       # Aplikasi dapat diakses lewat port 8085 pada IP server CentOS
-      # Tim IT Dishub tinggal mengarahkan subdomain .go.id ke port 8085 ini
+      # staf IT tinggal mengarahkan subdomain .go.id ke port 8085 ini
       - "8085:80"
-    volumes:
-      - ./frontend/nginx.conf:/etc/nginx/conf.d/default.conf:ro
+    deploy:
+      resources:
+        limits:
+          memory: 256M
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "10m"
+        max-file: "3"
 
 volumes:
   postgres_data:

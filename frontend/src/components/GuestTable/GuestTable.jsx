@@ -9,7 +9,7 @@ import {
   uploadFotoTamu,
   getImageUrl
 } from '../../api';
-import * as XLSX from 'xlsx';
+import writeXlsxFile from 'write-excel-file/browser';
 import './GuestTable.css';
 
 const DAFTAR_BIDANG = [
@@ -26,20 +26,34 @@ const DAFTAR_BIDANG = [
   'UPT Pengujian Kendaraan Bermotor'
 ];
 
-const PIE_COLORS = [
-  '#1a44b7', 
-  '#f59e0b', 
-  '#0d9488', 
-  '#8b5cf6', 
-  '#10b981', 
-  '#ec4899', 
-  '#2563eb', 
-  '#f97316', 
-  '#06b6d4', 
-  '#84cc16', 
-  '#6366f1', 
-  '#e11d48'  
-];
+const BIDANG_COLORS = {
+  'Sub Bagian Umum Dan Kepegawaian': '#0d9488', // Teal
+  'Sub Bagian Keuangan Dan Penyusunan Program': '#f59e0b', // Amber / Oranye
+  'Bidang Angkutan': '#2563eb', // Royal Blue
+  'Seksi Angkutan Orang': '#8b5cf6', // Violet / Ungu
+  'Seksi Angkutan Barang': '#10b981', // Emerald / Hijau Segar
+  'Bidang Lalu Lintas, Sarana, Prasarana': '#06b6d4', // Cyan
+  'Seksi Parkir': '#f97316', // Orange Pekat
+  'Seksi Manajemen Rekayasa Lalu Lintas': '#1d4ed8', // Dark Blue
+  'Seksi Penerangan Jalan Umum': '#ec4899', // Pink / Magenta
+  'Bidang Pengendalian Operasional Lalu Lintas Dan Angkutan Jalan': '#6366f1', // Indigo
+  'UPT Pengujian Kendaraan Bermotor': '#84cc16' // Lime / Hijau Terang
+};
+
+// Helper warna bidang permanen (konsisten dan tidak berubah saat input tamu baru)
+const getBidangColor = (bidangName) => {
+  if (!bidangName) return '#64748b';
+  if (BIDANG_COLORS[bidangName]) {
+    return BIDANG_COLORS[bidangName];
+  }
+  // Fallback deterministik berbasis string hash jika ada nama bidang kustom di luar daftar
+  let hash = 0;
+  for (let i = 0; i < bidangName.length; i++) {
+    hash = bidangName.charCodeAt(i) + ((hash << 5) - hash);
+  }
+  const fallbackList = Object.values(BIDANG_COLORS);
+  return fallbackList[Math.abs(hash) % fallbackList.length];
+};
 
 export default function GuestTable({ isAdmin = true, showSummaryCards = true }) {
   const [guests, setGuests] = useState([]);
@@ -329,20 +343,13 @@ export default function GuestTable({ isAdmin = true, showSummaryCards = true }) 
     return name.slice(0, 2).toUpperCase();
   };
 
-  // Helper Warna Badge Bidang: Disamakan dengan warna di Pie Chart (PIE_COLORS)
+  // Helper Warna Badge Bidang: Disamakan 100% permanen dengan warna di Pie Chart
   const getBidangBadgeColor = (bidang) => {
-    const unitIdx = stats?.sortedUnits?.findIndex((u) => u.name === bidang);
-    const color =
-      unitIdx !== -1 && unitIdx !== undefined
-        ? PIE_COLORS[unitIdx % PIE_COLORS.length]
-        : DAFTAR_BIDANG.indexOf(bidang) !== -1
-        ? PIE_COLORS[DAFTAR_BIDANG.indexOf(bidang) % PIE_COLORS.length]
-        : PIE_COLORS[0];
-
+    const color = getBidangColor(bidang);
     return {
-      bg: `${color}14`,
+      bg: `${color}18`, // Opacity background lembut ~10%
       color: color,
-      border: `1px solid ${color}35`
+      border: `1px solid ${color}40` // Border tegas ~25%
     };
   };
 
@@ -453,7 +460,7 @@ export default function GuestTable({ isAdmin = true, showSummaryCards = true }) 
     return value;
   };
 
-  const handleExportExcel = () => {
+  const handleExportExcel = async () => {
     if (filteredGuests.length === 0) {
       return Swal.fire({
         icon: 'info',
@@ -462,28 +469,59 @@ export default function GuestTable({ isAdmin = true, showSummaryCards = true }) 
       });
     }
 
-    const dataToExport = filteredGuests.map((g, idx) => ({
-      No: idx + 1,
-      'Nama Tamu': sanitizeCell(g.nama_tamu),
-      'Instansi Asal': sanitizeCell(g.instansi_asal),
-      'No. HP': sanitizeCell(g.no_hp),
-      'Tujuan Bidang': sanitizeCell(g.tujuan_bidang),
-      'Perihal': sanitizeCell(g.perihal),
-      'Waktu Masuk': g.waktu_masuk
-        ? new Date(g.waktu_masuk).toLocaleString('id-ID')
-        : '-'
-    }));
+    const HEADER_ROW = [
+      { value: 'No', fontWeight: 'bold' },
+      { value: 'Nama Tamu', fontWeight: 'bold' },
+      { value: 'Instansi Asal', fontWeight: 'bold' },
+      { value: 'No. HP', fontWeight: 'bold' },
+      { value: 'Tujuan Bidang', fontWeight: 'bold' },
+      { value: 'Perihal', fontWeight: 'bold' },
+      { value: 'Waktu Masuk', fontWeight: 'bold' }
+    ];
 
-    const worksheet = XLSX.utils.json_to_sheet(dataToExport);
-    const workbook = XLSX.utils.book_new();
-    XLSX.utils.book_append_sheet(workbook, worksheet, 'Laporan Buku Tamu');
+    const dataRows = filteredGuests.map((g, idx) => [
+      { type: Number, value: idx + 1 },
+      { type: String, value: sanitizeCell(g.nama_tamu) },
+      { type: String, value: sanitizeCell(g.instansi_asal) },
+      { type: String, value: sanitizeCell(g.no_hp) },
+      { type: String, value: sanitizeCell(g.tujuan_bidang) },
+      { type: String, value: sanitizeCell(g.perihal) },
+      {
+        type: String,
+        value: g.waktu_masuk
+          ? new Date(g.waktu_masuk).toLocaleString('id-ID')
+          : '-'
+      }
+    ]);
+
+    const columns = [
+      { width: 6 },
+      { width: 25 },
+      { width: 25 },
+      { width: 18 },
+      { width: 28 },
+      { width: 30 },
+      { width: 22 }
+    ];
 
     let periodText = 'Keseluruhan';
     if (startDate && endDate) periodText = `${startDate}_sd_${endDate}`;
     else if (startDate) periodText = `mulai_${startDate}`;
     else if (endDate) periodText = `sampai_${endDate}`;
 
-    XLSX.writeFile(workbook, `Rekapitulasi_Buku_Tamu_Dishub_${periodText}.xlsx`);
+    try {
+      await writeXlsxFile([HEADER_ROW, ...dataRows], {
+        columns,
+        fileName: `Rekapitulasi_Buku_Tamu_Dishub_${periodText}.xlsx`
+      });
+    } catch (err) {
+      console.error('Error saat export Excel:', err);
+      Swal.fire({
+        icon: 'error',
+        title: 'Gagal',
+        text: 'Terjadi kesalahan saat mengekspor file Excel.'
+      });
+    }
   };
 
   // Pagination Slice
@@ -643,7 +681,7 @@ export default function GuestTable({ isAdmin = true, showSummaryCards = true }) 
                           cy={cy}
                           r={radius}
                           fill="none"
-                          stroke={PIE_COLORS[idx % PIE_COLORS.length]}
+                          stroke={getBidangColor(u.name)}
                           strokeWidth="22"
                           strokeDasharray={`${dashLen} ${dashGap}`}
                           strokeDashoffset={offset}
@@ -668,7 +706,7 @@ export default function GuestTable({ isAdmin = true, showSummaryCards = true }) 
                               name: u.name,
                               count: u.count,
                               pct: pctVal,
-                              color: PIE_COLORS[idx % PIE_COLORS.length]
+                              color: getBidangColor(u.name)
                             });
                           }}
                           onMouseMove={(e) => {
@@ -716,7 +754,7 @@ export default function GuestTable({ isAdmin = true, showSummaryCards = true }) 
                     >
                       <span
                         className="piechart-legend-dot"
-                        style={{ backgroundColor: PIE_COLORS[idx % PIE_COLORS.length] }}
+                        style={{ backgroundColor: getBidangColor(u.name) }}
                       ></span>
                       <span className="piechart-legend-name" title={u.name}>{u.name}</span>
                       <span className="piechart-legend-count">{u.count}</span>

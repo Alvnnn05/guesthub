@@ -165,7 +165,7 @@ docker compose up -d --build
 
 > **Apa yang terjadi pada proses ini?**
 >
-> 1. Docker mengunduh base image resmi (PostgreSQL 17, Node.js 20, Nginx Alpine).
+> 1. Docker mengunduh base image resmi (PostgreSQL 17, Node.js 24, Nginx Alpine).
 > 2. Database PostgreSQL dibuat dan `guesthub_backup.sql` otomatis dieksekusi, sehingga struktur tabel dan akun awal langsung terisi.
 > 3. Frontend React di-compile menjadi asset produksi di dalam container Nginx.
 > 4. Opsi `-d` (*detached*) menjalankan aplikasi di latar belakang tanpa mengunci terminal.

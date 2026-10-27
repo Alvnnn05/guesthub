@@ -44,15 +44,13 @@ Sistem Informasi Buku Tamu Digital adalah aplikasi berbasis web yang dirancang u
 
 ## B. Teknologi yang Digunakan
 
-* **Frontend:** [React.js](https://reactjs.org/?utm_source=gemini) (Vite / CRA)
-
-* **Styling:** CSS3 Custom (Responsive Layout, Popups, Cards Dashboard)
+* **Frontend:** [React.js]
 
 * **Backend & Database:** [Supabase](https://supabase.com/?utm_source=gemini) (PostgreSQL, Storage, & Realtime Channels)
 
 * **Utility:**
 
-  * `xlsx` (SheetJS) — Untuk pengolahan ekspor file Excel.
+  * `write-excel-file` — Untuk pengolahan ekspor file Excel yang aman, modern, dan bebas dari celah keamanan.
 
 ## C. Unit Kerja / Tujuan Bidang yang Disediakan Pada Form
 * Sekretariat
