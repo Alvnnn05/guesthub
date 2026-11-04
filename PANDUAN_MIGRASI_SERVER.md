@@ -41,12 +41,13 @@ git commit -m "Siap deploy ke server produksi Dishub"
 git push origin main
 ```
 
-**4. Verifikasi:** buka [https://github.com/Alvnnn05/guesthub](https://github.com/Alvnnn05/guesthub) dan pastikan repository sudah memuat berkas berikut:
+**4. Verifikasi:** buka [https://github.com/Alvnnn05/guesthub](https://github.com/Alvnnn05/guesthub) dan pastikan repository sudah memuat berkas-berkas inti berikut:
 
 - `docker-compose.yml`
+- `.env.example` (template konfigurasi server)
 - `backend/Dockerfile` dan `backend/index.js`
 - `frontend/Dockerfile` dan `frontend/nginx.conf`
-- `guesthub_backup.sql`
+- `guesthub_backup.sql` (skema tabel `users`, `tamu`, dan `audit_logs`)
 
 ---
 
@@ -243,6 +244,8 @@ Contoh: `http://192.168.1.50:8085`
 
 2. Tambahkan 1 data tamu baru beserta foto.
 3. Periksa apakah data muncul di Dashboard dan tabel Riwayat Kunjungan.
+4. **Buka tab Audit Log (khusus akun Admin):**
+   Pastikan riwayat aktivitas login dan penambahan tamu tercatat secara otomatis dan lengkap dengan waktu kejadian, jenis aksi, status hasil, IP pengakses, dan rincian perangkat klien.
 
 > **Penting:** akun dan password di atas hanya untuk uji awal. Ganti semua password default melalui menu **Kelola User** sebelum sistem dipakai secara resmi.
 
@@ -254,26 +257,38 @@ Setelah GuestHub berfungsi normal di port `8085`,  lanjut ke menghubungkan subdo
 
 ### Referensi Konfigurasi Nginx untuk Tim IT
 
-Contoh blok konfigurasi Nginx:
+Contoh blok konfigurasi Nginx reverse-proxy di server host:
 
 ```nginx
 server {
     listen 80;
     server_name bukutamu.dishub.ponorogo.go.id;
 
-    # Rekomendasi: redirect otomatis HTTP ke HTTPS
-    # return 301 https://$host$request_uri;
+    # Batas upload foto (sesuai spesifikasi foto GuestHub maks 15MB)
+    client_max_body_size 15M;
 
     location / {
         proxy_pass http://127.0.0.1:8085;
         proxy_http_version 1.1;
+        proxy_set_header Upgrade $http_upgrade;
+        proxy_set_header Connection 'upgrade';
         proxy_set_header Host $host;
         proxy_set_header X-Real-IP $remote_addr;
         proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
         proxy_set_header X-Forwarded-Proto $scheme;
+        proxy_cache_bypass $http_upgrade;
     }
 }
 ```
+
+> **Wajib Mengaktifkan SSL / HTTPS (Let's Encrypt):**
+> Fitur kamera langsung (Webcam) pada browser HP dan desktop **hanya dapat diakses pada protokol aman (HTTPS)** karena kebijakan keamanan standar peramban modern (*Secure Context*).
+> 
+> Minta Tim IT menjalankan perintah Certbot sekali jalan untuk menerbitkan sertifikat SSL gratis:
+> ```bash
+> sudo certbot --nginx -d bukutamu.dishub.ponorogo.go.id
+> ```
+> Certbot akan otomatis memperbarui konfigurasi Nginx menjadi HTTPS dengan sertifikat SSL resmi.
 
 ---
 
@@ -322,7 +337,7 @@ Karena port database dikunci ke `127.0.0.1` di server demi keamanan, koneksi dar
 
 1. Di panel kiri (**Database Navigator**), klik tanda panah `>` pada nama koneksi yang baru dibuat.
 2. Buka folder berurutan: `Databases` > `guesthub_db` > `Schemas` > `public` > `Tables`.
-3. Klik dua kali tabel **`tamu`** (data buku tamu) atau **`users`** (data akun petugas).
+3. Klik dua kali tabel **`tamu`** (data buku tamu), **`users`** (data akun petugas), atau **`audit_logs`** (rekam jejak forensik keamanan).
 4. Di panel kanan, pilih tab **Data**. Seluruh data akan tampil seperti tabel Excel.
 
 ### 7.4. Catatan Keamanan Port Database (Zero Open Ports)
@@ -359,9 +374,11 @@ docker compose up -d --build
 
 ### 8.3. Perintah Operasional Cepat
 
-| Tujuan                                          | Perintah                 |
-| :---------------------------------------------- | :----------------------- |
-| Melihat log real-time aplikasi (jika ada error) | `docker compose logs -f` |
-| Mematikan sistem sementara                      | `docker compose down`    |
-| Menyalakan kembali sistem                       | `docker compose up -d`   |
-| Melihat penggunaan memori (RAM & CPU)           | `docker stats`           |
+| Tujuan                                          | Perintah                                                                 |
+| :---------------------------------------------- | :----------------------------------------------------------------------- |
+| Melihat log real-time aplikasi (jika ada error) | `docker compose logs -f`                                                 |
+| Mematikan sistem sementara                      | `docker compose down`                                                    |
+| Menyalakan kembali sistem                       | `docker compose up -d`                                                   |
+| Melihat penggunaan memori (RAM & CPU)           | `docker stats`                                                           |
+| Membuat backup database instan (.sql)           | `docker exec -t guesthub_db pg_dump -U postgres guesthub_db > backup_$(date +\%F).sql` |
+| Memulihkan database dari backup                 | `docker exec -i guesthub_db psql -U postgres -d guesthub_db < backup.sql`|
