@@ -14,6 +14,8 @@ if (!process.env.JWT_SECRET) {
 // Import Routes
 const authRoutes = require('./routes/authRoutes');
 const tamuRoutes = require('./routes/tamuRoutes');
+const auditRoutes = require('./routes/auditRoutes');
+const { verifyToken } = require('./middleware/authMiddleware');
 
 const app = express();
 const PORT = process.env.PORT || 5000;
@@ -44,10 +46,32 @@ const allowedOrigins = (process.env.ALLOWED_ORIGINS || 'http://localhost:5173,ht
   .split(',')
   .map(origin => origin.trim());
 
+// Helper validasi origin: Mendukung domain whitelist & rentang IP privat LAN (192.168.x.x, 10.x.x.x, 172.16-31.x.x)
+const isOriginAllowed = (origin) => {
+  if (!origin) return true; // Request internal server-to-server / non-browser
+  if (allowedOrigins.includes('*') || allowedOrigins.includes(origin)) return true;
+
+  try {
+    const { hostname } = new URL(origin);
+    // Otomatis izinkan localhost dan IP private LAN untuk akses HP di Wi-Fi lokal
+    if (
+      hostname === 'localhost' ||
+      hostname === '127.0.0.1' ||
+      /^192\.168\.\d{1,3}\.\d{1,3}$/.test(hostname) ||
+      /^10\.\d{1,3}\.\d{1,3}\.\d{1,3}$/.test(hostname) ||
+      /^172\.(1[6-9]|2\d|3[0-1])\.\d{1,3}\.\d{1,3}$/.test(hostname)
+    ) {
+      return true;
+    }
+  } catch {
+    return false;
+  }
+  return false;
+};
+
 app.use(cors({
   origin: (origin, callback) => {
-    // Izinkan request tanpa origin (seperti tools internal, server-to-server), wildcard '*', atau domain di whitelist
-    if (!origin || allowedOrigins.includes('*') || allowedOrigins.includes(origin)) {
+    if (isOriginAllowed(origin)) {
       callback(null, true);
     } else {
       callback(new Error('Akses ditolak: Domain tidak diizinkan oleh kebijakan CORS.'));
@@ -62,7 +86,7 @@ app.use(express.json({ limit: '10mb' })); // Support data foto berukuran besar/b
 app.use(express.urlencoded({ extended: true, limit: '10mb' }));
 
 // Akses folder uploads secara publik dengan proteksi header keamanan (Anti MIME-sniffing & Stored XSS)
-app.use('/uploads', express.static(uploadsDir, {
+app.use('/uploads', verifyToken, express.static(uploadsDir, {
   setHeaders: (res) => {
     res.setHeader('X-Content-Type-Options', 'nosniff');
     res.setHeader('Content-Security-Policy', "default-src 'none'; img-src 'self'");
@@ -76,6 +100,7 @@ const { generalLimiter } = require('./middleware/rateLimiter');
 app.use('/api', generalLimiter);
 app.use('/api/auth', authRoutes);
 app.use('/api/tamu', tamuRoutes);
+app.use('/api/audit-logs', auditRoutes);
 
 // Route Health Check Utama
 app.get('/', (req, res) => {

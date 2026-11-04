@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import Swal from 'sweetalert2';
 import { loginUser } from '../../api';
-import logoGuestHub from '../../assets/guesthub.png';
+import logoDishub from '../../assets/dishub.png';
 import './Login.css';
 
 export default function Login({ onLoginSuccess }) {
@@ -74,7 +74,7 @@ export default function Login({ onLoginSuccess }) {
           ========================================== */}
       <div className="login-mobile-header">
         <div className="login-brand-badge">
-          <img src={logoGuestHub} alt="Logo GuestHub" className="brand-badge-img" />
+          <img src={logoDishub} alt="Logo Dishub" className="brand-badge-img" />
         </div>
         <span className="login-brand-title">GuestHub</span>
         <h1 className="login-mobile-headline">
@@ -91,7 +91,7 @@ export default function Login({ onLoginSuccess }) {
       <div className="login-hero-panel desktop-only">
         <div className="login-hero-top">
           <div className="brand-logo-box">
-            <img src={logoGuestHub} alt="Logo GuestHub" className="brand-g-icon-img" />
+            <img src={logoDishub} alt="Logo Dishub" className="brand-g-icon-img" />
             <span className="brand-name-text">GuestHub</span>
           </div>
         </div>

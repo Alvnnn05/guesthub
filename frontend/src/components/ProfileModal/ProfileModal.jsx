@@ -16,21 +16,22 @@ export default function ProfileModal({ user, onClose }) {
   const handleUpdateProfile = async (e) => {
     e.preventDefault();
 
-    if (password.trim() !== '' && password.length < 6) {
-      Swal.fire({
-        icon: 'warning',
-        title: 'Password Kurang Panjang',
-        text: 'Password baru minimal harus 6 karakter!',
-        confirmButtonColor: '#1a44b7'
-      });
-      return;
+    if (password.trim() !== '') {
+      if (password.length < 8 || !/[a-zA-Z]/.test(password) || !/[0-9]/.test(password)) {
+        Swal.fire({
+          icon: 'warning',
+          title: 'Password Belum Memenuhi Syarat',
+          text: 'Password baru minimal 8 karakter dan harus mengandung kombinasi huruf dan angka!',
+          confirmButtonColor: '#1a44b7'
+        });
+        return;
+      }
     }
 
     setLoading(true);
 
     try {
       const res = await updateUserProfile({
-        id: currentUser.id,
         full_name: fullName,
         password: password.trim() !== '' ? password : undefined
       });
@@ -114,7 +115,7 @@ export default function ProfileModal({ user, onClose }) {
               className="pm-input"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
-              placeholder="Minimal 6 karakter"
+              placeholder="Minimal 8 karakter (huruf & angka)"
             />
           </div>
 

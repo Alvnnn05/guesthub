@@ -8,6 +8,10 @@
   padding: 0;
 }
 
+html {
+  scrollbar-gutter: stable;
+}
+
 html, body, #root {
   width: 100% !important;
   max-width: 100% !important;

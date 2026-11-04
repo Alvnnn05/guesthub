@@ -115,9 +115,9 @@ export default function UserManagement() {
       title: 'Reset password?',
       html: `<p style="color: #64748b; margin-top: 4px; font-size: 0.92rem;">Masukkan password baru untuk akun <strong>${safeUsername}</strong></p>`,
       input: 'password',
-      inputPlaceholder: 'Minimal 6 karakter',
+      inputPlaceholder: 'Minimal 8 karakter (huruf & angka)',
       inputAttributes: {
-        minlength: 6,
+        minlength: 8,
         autocapitalize: 'off',
         autocorrect: 'off'
       },
@@ -125,8 +125,8 @@ export default function UserManagement() {
       confirmButtonText: 'Simpan Password',
       cancelButtonText: 'Batal',
       preConfirm: (newPassword) => {
-        if (!newPassword || newPassword.length < 6) {
-          Swal.showValidationMessage('Password minimal harus 6 karakter!');
+        if (!newPassword || newPassword.length < 8 || !/[a-zA-Z]/.test(newPassword) || !/[0-9]/.test(newPassword)) {
+          Swal.showValidationMessage('Password minimal 8 karakter dan kombinasi huruf & angka!');
         }
         return newPassword;
       }
@@ -166,11 +166,11 @@ export default function UserManagement() {
   const handleCreateUser = async (e) => {
     e.preventDefault();
 
-    if (password.length < 6) {
+    if (password.length < 8 || !/[a-zA-Z]/.test(password) || !/[0-9]/.test(password)) {
       Swal.fire({
         icon: 'warning',
-        title: 'Password Kurang Panjang',
-        text: 'Password minimal harus 6 karakter!',
+        title: 'Password Belum Memenuhi Syarat',
+        text: 'Password minimal 8 karakter dan harus mengandung kombinasi huruf dan angka!',
         confirmButtonColor: '#1a44b7'
       });
       return;
@@ -511,7 +511,7 @@ export default function UserManagement() {
                     type="password"
                     value={password}
                     onChange={(e) => setPassword(e.target.value)}
-                    placeholder="Minimal 6 karakter"
+                    placeholder="Minimal 8 karakter (huruf & angka)"
                     required
                   />
                 </div>

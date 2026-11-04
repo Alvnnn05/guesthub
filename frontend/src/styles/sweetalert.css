@@ -9,6 +9,27 @@
      * Navy (#1a44b7) untuk Aksi Utama
    ========================================================================== */
 
+/* 0. Mencegah Layout Shift & Guncangan Scrollbar saat Modal Terbuka */
+html {
+  scrollbar-gutter: stable;
+}
+
+body.swal2-shown,
+body[class*="swal2-shown"] {
+  padding-right: 0px !important;
+}
+
+html.swal2-shown:not(.swal2-no-backdrop):not(.swal2-toast-shown),
+body.swal2-shown:not(.swal2-no-backdrop):not(.swal2-toast-shown) {
+  overflow-y: auto !important;
+}
+
+html.swal2-height-auto,
+body.swal2-height-auto {
+  height: 100% !important;
+  min-height: 100vh !important;
+}
+
 /* 1. Backdrop Overlay */
 .swal2-container {
   z-index: 999999 !important;

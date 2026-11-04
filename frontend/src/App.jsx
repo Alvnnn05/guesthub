@@ -4,10 +4,10 @@ import FormGuest from "./components/FormGuest/FormGuest";
 import GuestTable from "./components/GuestTable/GuestTable";
 import ProfileModal from './components/ProfileModal/ProfileModal';
 import UserManagement from './components/UserManagement/UserManagement';
+import AuditLog from './components/AuditLog/AuditLog';
+import { logoutUser } from './api';
 
-import adminIcon from './assets/admin.png';
-import receptionistIcon from './assets/custservice.png';
-import logoApp from './assets/guesthub.png';
+import logoApp from './assets/dishub.png';
 import './App.css';
 
 export default function App() {
@@ -34,7 +34,12 @@ export default function App() {
     let idleTimer;
     const TIMEOUT_DURATION = 20 * 60 * 1000; // 20 Menit
 
-    const executeAutoLogout = () => {
+    const executeAutoLogout = async () => {
+      try {
+        await logoutUser('idle');
+      } catch {
+        // Abaikan error jika server offline
+      }
       localStorage.removeItem('user');
       localStorage.removeItem('token');
       setUser(null);
@@ -57,7 +62,12 @@ export default function App() {
     };
   }, [user]);
 
-  const handleLogout = () => {
+  const handleLogout = async () => {
+    try {
+      await logoutUser('manual');
+    } catch {
+      // Abaikan error jika server offline
+    }
     localStorage.removeItem('user');
     localStorage.removeItem('token');
     setUser(null);
@@ -71,7 +81,7 @@ export default function App() {
     return <Login onLoginSuccess={(loggedUser) => setUser(loggedUser)} />;
   }
 
-  const isAdmin = user.role === 'admin';
+  const isAdmin = user.role === 'admin' || user.role === 'ADMIN';
   const userName = user.full_name || user.username || 'User';
   const userInitial = userName.charAt(0).toUpperCase();
 
@@ -145,6 +155,22 @@ export default function App() {
                 <span>Kelola User</span>
               </button>
             )}
+
+            {isAdmin && (
+              <button
+                className={`sidebar-nav-btn ${activeTab === 'audit' ? 'active' : ''}`}
+                onClick={() => {
+                  setActiveTab('audit');
+                  setMobileMenuOpen(false);
+                }}
+              >
+                <svg className="nav-btn-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                  <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path>
+                  <polyline points="9 12 11 14 15 10"></polyline>
+                </svg>
+                <span>Audit Log</span>
+              </button>
+            )}
           </nav>
         </div>
 
@@ -209,7 +235,18 @@ export default function App() {
                 <span className="mobile-title-text">Dashboard</span>
               </>
             )}
-            {activeTab === 'users' && 'Manajemen Pengguna & Hak Akses'}
+            {activeTab === 'users' && (
+              <>
+                <span className="desktop-title-text">Manajemen Pengguna & Hak Akses</span>
+                <span className="mobile-title-text">Kelola User</span>
+              </>
+            )}
+            {activeTab === 'audit' && (
+              <>
+                <span className="desktop-title-text">Audit Log & Rekam Jejak Sistem</span>
+                <span className="mobile-title-text">Audit Log</span>
+              </>
+            )}
           </h1>
           <p className="canvas-subtitle">
             {new Date().toLocaleDateString('id-ID', { weekday: 'long', day: 'numeric', month: 'long', year: 'numeric' })}
@@ -230,6 +267,10 @@ export default function App() {
 
             {activeTab === 'users' && isAdmin && (
               <UserManagement />
+            )}
+
+            {activeTab === 'audit' && isAdmin && (
+              <AuditLog />
             )}
           </div>
         </main>

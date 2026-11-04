@@ -157,7 +157,29 @@ cd guesthub
 git config --global credential.helper store
 ```
 
-### 4.3. Jalankan Seluruh Sistem dengan Docker Compose
+### 4.3. Siapkan File Konfigurasi Lingkungan (.env) di Server
+
+Salin file template `.env.example` menjadi file `.env` resmi di server:
+
+```bash
+cp .env.example .env
+```
+
+Buka dan sesuaikan kredensial server menggunakan editor teks:
+
+```bash
+nano .env
+```
+
+**Pengaturan wajib di dalam `.env` server:**
+1. **`DB_PASSWORD`**: Masukkan password database baru yang kuat untuk server.
+2. **`JWT_SECRET`**: Buat kunci acak baru di terminal Linux dengan perintah `openssl rand -hex 64`, lalu tempelkan hasilnya.
+3. **`ALLOWED_ORIGINS`**: Tambahkan IP server atau domain resmi Dishub, misalnya:
+   `ALLOWED_ORIGINS=http://IP_SERVER_DISHUB:8085,https://bukutamu.dishub.ponorogo.go.id`
+
+*Tekan `Ctrl + O`, lalu `Enter` untuk menyimpan, lalu `Ctrl + X` untuk keluar dari nano.*
+
+### 4.4. Jalankan Seluruh Sistem dengan Docker Compose
 ketik
 ```bash
 docker compose up -d --build
@@ -280,7 +302,7 @@ Karena port database dikunci ke `127.0.0.1` di server demi keamanan, koneksi dar
    | Port      | `5433` (port luar yang dipetakan Docker, **bukan** `5432`) |
    | Database  | `guesthub_db`                                              |
    | Username  | `postgres`                                                 |
-   | Password  | `admguesthub123` (sesuai `docker-compose.yml`)             |
+   | Password  | Sesuai `DB_PASSWORD` di file `.env` server (di laptop: `admguesthub123`) |
 
 5. Pindah ke tab **SSH** (di samping tab Main), lalu centang **Use SSH Tunnel**:
 

@@ -1,6 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const { 
+  logout,
   register, 
   login, 
   updateProfile, 
@@ -16,6 +17,7 @@ router.post('/login', loginLimiter, login);
 
 // Endpoint Terproteksi (Semua Role Terautentikasi)
 router.put('/update-profile', verifyToken, updateProfile);
+router.post('/logout', verifyToken, logout);
 
 // Endpoint Terproteksi Khusus ADMIN
 router.post('/register', verifyToken, verifyAdmin, register);

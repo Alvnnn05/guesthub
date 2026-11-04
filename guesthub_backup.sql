@@ -32,7 +32,7 @@
         id integer NOT NULL,
         nama_tamu character varying(150) NOT NULL,
         instansi_asal character varying(150) NOT NULL,
-        no_hp character varying(20) NOT NULL,
+        no_hp character varying(20),
         tujuan_bidang character varying(100) NOT NULL,
         perihal text NOT NULL,
         foto_url text,
@@ -201,11 +201,47 @@
         ADD CONSTRAINT users_username_unique UNIQUE (username);
 
 
+    --
+    -- Name: revoked_tokens; Type: TABLE; Schema: public; Owner: postgres
+    --
+
+    CREATE TABLE IF NOT EXISTS public.revoked_tokens (
+        id integer GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
+        token text NOT NULL UNIQUE,
+        revoked_at timestamp without time zone DEFAULT CURRENT_TIMESTAMP,
+        expires_at timestamp without time zone NOT NULL
+    );
+
+    CREATE INDEX IF NOT EXISTS idx_revoked_tokens_token ON public.revoked_tokens (token);
+
+    --
+    -- Name: audit_logs; Type: TABLE; Schema: public; Owner: postgres
+    --
+
+    CREATE TABLE IF NOT EXISTS public.audit_logs (
+        id bigint GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
+        created_at timestamp without time zone DEFAULT CURRENT_TIMESTAMP NOT NULL,
+        user_id integer,
+        role character varying(20),
+        attempted_username character varying(100),
+        action character varying(50) NOT NULL,
+        status character varying(20) NOT NULL,
+        target_resource character varying(50),
+        target_id integer,
+        description text,
+        ip_address character varying(45),
+        user_agent text
+    );
+
+    CREATE INDEX IF NOT EXISTS idx_audit_logs_created_at ON public.audit_logs (created_at DESC);
+    CREATE INDEX IF NOT EXISTS idx_audit_logs_action ON public.audit_logs (action);
+    CREATE INDEX IF NOT EXISTS idx_audit_logs_user_id ON public.audit_logs (user_id);
+
     -- Completed on 2026-10-12 09:50:09
 
     --
     -- PostgreSQL database dump complete
     --
 
-    \unrestrict rnr5kCt1A7iowvggvpWjYCaE9ecaTSGIbjHTloOAhXvX3hFoWKfmZJ0I5HJnipX
+   
 

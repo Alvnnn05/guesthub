@@ -19,6 +19,20 @@ export const loginUser = async (username, password) => {
   return response.json();
 };
 
+export const logoutUser = async (reason = 'manual') => {
+  try {
+    const response = await fetch(`${API_BASE_URL}/auth/logout`, {
+      method: 'POST',
+      headers: getAuthHeaders(),
+      body: JSON.stringify({ reason }),
+    });
+    return response.json();
+  } catch (err) {
+    console.error('Logout error:', err);
+    return { error: 'Network error' };
+  }
+};
+
 export const registerUser = async (userData) => {
   const response = await fetch(`${API_BASE_URL}/auth/register`, {
     method: 'POST',
@@ -118,6 +132,38 @@ export const getImageUrl = (fotoPath) => {
   if (!fotoPath) return '/default-avatar.png';
   if (fotoPath.startsWith('http')) return fotoPath;
 
+  const token = localStorage.getItem('token');
   const baseURL = API_BASE_URL.replace('/api', '');
-  return `${baseURL}${fotoPath}`;
+  return token ? `${baseURL}${fotoPath}?token=${encodeURIComponent(token)}` : `${baseURL}${fotoPath}`;
+};
+
+// 4. Audit Log API (Khusus Admin & Sinyal Export)
+export const getAuditLogs = async (params = {}) => {
+  const query = new URLSearchParams();
+  if (params.page) query.append('page', params.page);
+  if (params.limit) query.append('limit', params.limit);
+  if (params.action && params.action !== 'ALL') query.append('action', params.action);
+  if (params.status && params.status !== 'ALL') query.append('status', params.status);
+  if (params.startDate) query.append('startDate', params.startDate);
+  if (params.endDate) query.append('endDate', params.endDate);
+  if (params.search) query.append('search', params.search);
+
+  const response = await fetch(`${API_BASE_URL}/audit-logs?${query.toString()}`, {
+    method: 'GET',
+    headers: getAuthHeaders(),
+  });
+  return response.json();
+};
+
+export const recordExportSignal = async (filterText) => {
+  try {
+    const response = await fetch(`${API_BASE_URL}/audit-logs/export-signal`, {
+      method: 'POST',
+      headers: getAuthHeaders(),
+      body: JSON.stringify({ filter: filterText }),
+    });
+    return response.json();
+  } catch (err) {
+    console.error('Gagal mengirim sinyal export audit log:', err);
+  }
 };

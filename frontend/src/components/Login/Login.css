@@ -35,18 +35,22 @@
 .brand-logo-box {
   display: inline-flex;
   align-items: center;
-  gap: 12px;
+  gap: 10px;
 }
 
 .brand-g-icon-img {
-  width: 42px;
-  height: 42px;
+  width: 36px;
+  height: 36px;
   object-fit: contain;
-  border-radius: 9px;
-  border: 1.5px solid rgba(255, 255, 255, 0.3);
-  background-color: rgba(255, 255, 255, 0.08);
-  padding: 3px;
-  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15);
+  flex-shrink: 0;
+  background-color: transparent;
+  border: none;
+  padding: 0;
+  box-shadow: none;
+  border-radius: 0;
+  display: block;
+  transform: translateY(-1px);
+  filter: drop-shadow(0 2px 6px rgba(0, 0, 0, 0.25));
 }
 
 .brand-name-text {
@@ -54,6 +58,9 @@
   font-weight: 800;
   color: #ffffff;
   letter-spacing: -0.4px;
+  line-height: 1;
+  display: flex;
+  align-items: center;
 }
 
 /* Center: Headline & Subheadline (Pas Tengah Vertikal) */
@@ -316,27 +323,24 @@
     border-bottom-right-radius: 36px;
   }
 
-  /* Badge Huruf G Squircle (Rounded Square) Sesuai File PDF */
+  /* Badge Logo Dishub di Mobile Header */
   .login-brand-badge {
-    width: 58px;
-    height: 58px;
-    background: rgba(255, 255, 255, 0.22);
-    border: 1.5px solid rgba(255, 255, 255, 0.38);
-    border-radius: 16px;
     display: flex;
     align-items: center;
     justify-content: center;
-    margin-bottom: 12px;
-    backdrop-filter: blur(8px);
-    -webkit-backdrop-filter: blur(8px);
-    box-shadow: 0 4px 14px rgba(0, 0, 0, 0.12);
+    margin-bottom: 14px;
+    background: transparent;
+    border: none;
+    box-shadow: none;
+    width: auto;
+    height: auto;
   }
 
   .brand-badge-img {
-    width: 36px;
-    height: 36px;
+    width: 72px;
+    height: 72px;
     object-fit: contain;
-    filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.15));
+    filter: drop-shadow(0 4px 12px rgba(0, 0, 0, 0.25));
   }
 
   .login-brand-title {
@@ -344,7 +348,7 @@
     font-weight: 800;
     color: #ffffff;
     letter-spacing: -0.3px;
-    margin-bottom: 22px;
+    margin-bottom: 20px;
     display: block;
   }
 
@@ -486,15 +490,19 @@
   }
 
   .login-brand-badge {
-    width: 64px;
-    height: 64px;
-    border-radius: 18px;
-    margin-bottom: 14px;
+    width: auto;
+    height: auto;
+    margin-bottom: 16px;
+    background: transparent;
+    border: none;
+    box-shadow: none;
   }
 
   .brand-badge-img {
-    width: 40px;
-    height: 40px;
+    width: 84px;
+    height: 84px;
+    object-fit: contain;
+    filter: drop-shadow(0 6px 16px rgba(0, 0, 0, 0.25));
   }
 
   .login-brand-title {
@@ -536,15 +544,19 @@
   }
 
   .login-brand-badge {
-    width: 52px;
-    height: 52px;
-    border-radius: 14px;
-    margin-bottom: 10px;
+    width: auto;
+    height: auto;
+    margin-bottom: 12px;
+    background: transparent;
+    border: none;
+    box-shadow: none;
   }
 
   .brand-badge-img {
-    width: 32px;
-    height: 32px;
+    width: 70px;
+    height: 70px;
+    object-fit: contain;
+    filter: drop-shadow(0 4px 12px rgba(0, 0, 0, 0.25));
   }
 
   .login-brand-title {

@@ -138,21 +138,12 @@ export default function FormGuest({ onSuccess }) {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    if (formData.no_hp.length < 10) {
+    if (formData.no_hp && formData.no_hp.length > 0 && formData.no_hp.length < 10) {
       Swal.fire({
         icon: 'warning',
-        title: 'Data belum lengkap',
-        text: 'Nomor telepon minimal 10 digit.',
+        title: 'Nomor Telepon Kurang',
+        text: 'Jika nomor telepon diisi, minimal terdiri dari 10 digit angka.',
         confirmButtonText: 'Mengerti'
-      });
-      return;
-    }
-
-    if (!photoFile) {
-      Swal.fire({
-        icon: 'warning',
-        title: 'Foto Belum Ada!',
-        text: 'Silakan ambil foto via kamera atau upload file foto tamu terlebih dahulu.'
       });
       return;
     }
@@ -160,18 +151,21 @@ export default function FormGuest({ onSuccess }) {
     setLoading(true);
 
     try {
-      const compressedFile = await imageCompression(photoFile, {
-        maxSizeMB: 0.2,
-        maxWidthOrHeight: 1024,
-        useWebWorker: true
-      });
+      let fotoUrl = null;
+      if (photoFile) {
+        const compressedFile = await imageCompression(photoFile, {
+          maxSizeMB: 0.2,
+          maxWidthOrHeight: 1024,
+          useWebWorker: true
+        });
 
-      const uploadRes = await uploadFotoTamu(compressedFile);
-      if (uploadRes.error) {
-        throw new Error(uploadRes.error);
+        const uploadRes = await uploadFotoTamu(compressedFile);
+        if (uploadRes.error) {
+          throw new Error(uploadRes.error);
+        }
+
+        fotoUrl = uploadRes.foto_url;
       }
-
-      const fotoUrl = uploadRes.foto_url;
 
       const result = await createTamu({
         ...formData,
@@ -267,7 +261,7 @@ export default function FormGuest({ onSuccess }) {
 
           {/* BARIS 2: NOMOR TELEPON / WA */}
           <div className="fg-field-group">
-            <label>Nomor telepon / WA *</label>
+            <label>Nomor telepon / WA (opsional)</label>
             <div className="fg-input-wrap">
               <span className="fg-input-icon">
                 <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
@@ -282,11 +276,12 @@ export default function FormGuest({ onSuccess }) {
                 autoComplete="off"
                 placeholder="08123456789"
                 maxLength={15}
-                required
               />
             </div>
             <span className="fg-helper-text">
-              Minimal 10 digit {formData.no_hp.length > 0 && formData.no_hp.length < 10 ? `(${formData.no_hp.length}/10 digit)` : ''}
+              {formData.no_hp.length > 0 && formData.no_hp.length < 10
+                ? `Minimal 10 digit (${formData.no_hp.length}/10 digit)`
+                : 'Opsional (bisa dikosongkan)'}
             </span>
           </div>
 
@@ -326,7 +321,7 @@ export default function FormGuest({ onSuccess }) {
 
         {/* KOLOM KANAN: PRATINJAU FOTO & AKSI FOTO */}
         <div className="fg-right-col">
-          <label className="fg-photo-label">Foto tamu *</label>
+          <label className="fg-photo-label">Foto tamu (opsional)</label>
 
           {/* KOTAK PREVIEW FOTO DASHED */}
           <div className="fg-photo-box">

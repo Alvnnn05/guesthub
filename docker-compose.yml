@@ -8,7 +8,7 @@ services:
     environment:
       POSTGRES_DB: ${DB_NAME:-guesthub_db}
       POSTGRES_USER: ${DB_USER:-postgres}
-      POSTGRES_PASSWORD: ${DB_PASSWORD:-admguesthub123}
+      POSTGRES_PASSWORD: ${DB_PASSWORD}
     ports:
       # Port 5433 dikunci ke 127.0.0.1 (localhost) agar hanya bisa diakses lokal server, aman dari jaringan luar
       - "127.0.0.1:${HOST_DB_PORT:-5433}:5432"
@@ -47,10 +47,10 @@ services:
       DB_HOST: postgres
       DB_PORT: 5432
       DB_USER: ${DB_USER:-postgres}
-      DB_PASSWORD: ${DB_PASSWORD:-admguesthub123}
+      DB_PASSWORD: ${DB_PASSWORD}
       DB_NAME: ${DB_NAME:-guesthub_db}
-      JWT_SECRET: ${JWT_SECRET:-guesthub_36bbea54d781cf3d183583e9d99f0fdc9913091d3e2e5b14d8de606cd519b4f9c456888e93a7d61ef1bc18b3a3779ca6}
-      ALLOWED_ORIGINS: "*"
+      JWT_SECRET: ${JWT_SECRET}
+      ALLOWED_ORIGINS: ${ALLOWED_ORIGINS}
       TRUST_PROXY: ${TRUST_PROXY:-1}
     volumes:
       # Foto tamu disimpan langsung di folder backend/uploads pada server fisik

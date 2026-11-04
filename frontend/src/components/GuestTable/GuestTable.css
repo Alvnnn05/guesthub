@@ -256,7 +256,7 @@
 }
 
 .piechart-segment:hover {
-  filter: drop-shadow(0 2px 8px rgba(0,0,0,0.22));
+  filter: drop-shadow(0 2px 8px rgba(0, 0, 0, 0.22));
 }
 
 .piechart-center-value {
@@ -850,15 +850,34 @@
 /* ==========================================
    MODAL EDIT DATA TAMU
    ========================================== */
+.gt-modal-overlay {
+  position: fixed;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  height: 100dvh;
+  background-color: rgba(15, 23, 42, 0.72);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 99999;
+  padding: 16px;
+  box-sizing: border-box;
+}
+
 .edit-modal-card {
   background: #ffffff;
   border-radius: 14px;
   width: 100%;
   max-width: 480px;
+  max-height: calc(100vh - 40px);
+  max-height: min(620px, calc(100dvh - 24px));
   overflow: hidden;
   box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.2);
   display: flex;
   flex-direction: column;
+  transform: translateZ(0); /* Isolasi GPU layer agar scroll lancar dan tidak patah-patah */
+  box-sizing: border-box;
 }
 
 .edit-modal-header {
@@ -890,8 +909,13 @@
   display: flex;
   flex-direction: column;
   gap: 14px;
-  max-height: 80vh;
   overflow-y: auto;
+  flex: 1;
+  min-height: 0;
+  overscroll-behavior: contain;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: thin;
+  scrollbar-color: #cbd5e1 transparent;
 }
 
 .em-field {
@@ -1082,9 +1106,44 @@
     margin: 0 0 4px 0;
   }
 
-  /* 2. SEMBUNYIKAN GRAFIK DI MOBILE SESUAI SCREENSHOT */
+  /* 2. TAMPILKAN KARTU GRAFIK DI MOBILE (SUSUNAN VERTIKAL) */
   .dash-charts-grid {
-    display: none;
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 12px;
+  }
+
+  .dash-chart-card {
+    padding: 16px 14px;
+    border-radius: 16px;
+  }
+
+  .barchart-container {
+    height: 135px;
+    padding: 6px 4px 0 4px;
+    gap: 6px;
+  }
+
+  .barchart-day-label {
+    font-size: 0.72rem;
+    margin-top: 8px;
+  }
+
+  .piechart-layout {
+    flex-direction: column;
+    align-items: center;
+    gap: 14px;
+  }
+
+  .piechart-svg-wrap {
+    width: 130px;
+    min-width: 130px;
+    height: 130px;
+  }
+
+  .piechart-legend {
+    width: 100%;
+    max-height: 190px;
   }
 
   /* 3. SEMBUNYIKAN TABEL DESKTOP DI MOBILE */
@@ -1191,8 +1250,15 @@
   }
 
   @keyframes drawerFadeIn {
-    from { opacity: 0; transform: translateY(-6px); }
-    to { opacity: 1; transform: translateY(0); }
+    from {
+      opacity: 0;
+      transform: translateY(-6px);
+    }
+
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
   }
 
   .mfd-field {
@@ -1375,8 +1441,15 @@
   }
 
   @keyframes popoverFadeIn {
-    from { opacity: 0; transform: translateY(-4px); }
-    to { opacity: 1; transform: translateY(0); }
+    from {
+      opacity: 0;
+      transform: translateY(-4px);
+    }
+
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
   }
 
   .mgc-popover-item {
@@ -1390,10 +1463,18 @@
     cursor: pointer;
     transition: background-color 0.15s;
     font-family: inherit;
+    display: flex;
+    align-items: center;
+    gap: 8px;
   }
 
   .mgc-popover-item:hover {
     background-color: #f8fafc;
+  }
+
+  .mgc-popover-item.edit:hover {
+    color: #2563eb;
+    background-color: #eff6ff;
   }
 
   .mgc-popover-item.delete {
