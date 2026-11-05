@@ -12,7 +12,7 @@ const { logAction } = require('../utils/auditLogger');
 const getAuditLogs = async (req, res) => {
   try {
     const page = Math.max(1, parseInt(req.query.page, 10) || 1);
-    const limit = Math.min(100, Math.max(5, parseInt(req.query.limit, 10) || 20));
+    const limit = Math.min(100, Math.max(5, parseInt(req.query.limit, 10) || 10));
     const offset = (page - 1) * limit;
 
     const { action, status, startDate, endDate, search } = req.query;

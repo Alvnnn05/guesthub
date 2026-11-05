@@ -394,13 +394,3 @@ Berikut rangkuman perintah praktis untuk pemeliharaan harian sistem di terminal 
 | **Memulihkan database dari file backup**          | `docker exec -i guesthub_db psql -U postgres -d guesthub_db < backup.sql`|
 | **Membersihkan cache & image bekas build**        | `docker system prune -f`                                                 |
 
----
-
-### 8.4. Troubleshooting Kendala Umum Saat Instalasi & Operasional
-
-| Kendala / Pesan Error | Penyebab | Solusi Cepat |
-| :-------------------- | :------- | :----------- |
-| `failed to bind host port ...: address already in use` | Port default (`8085`) sudah terpakai oleh aplikasi lain di server host. | Buka `nano docker-compose.yml`, ganti port frontend (misal `8012:80` atau `8086:80`). Sesuaikan juga port pada baris `ALLOWED_ORIGINS` di file `.env`, lalu jalankan `docker compose up -d`. |
-| `Terlalu banyak percobaan login gagal ... coba lagi setelah 15 menit` | Fitur proteksi *Anti Brute-Force Rate Limiter* aktif karena salah password berkali-kali. | Tidak perlu menunggu 15 menit. Cukup ketik `docker compose restart backend` di terminal server untuk mereset memori limiter secara instan (2 detik). |
-| Akun bawaan tidak bisa login | Lupa username atau password awal. | Gunakan akun default: **Admin** (`admin1` / `admin123`) atau **Resepsionis** (`resepsionis1` / `resepsionis123`). |
-| Database belum terisi akun awal | Migrasi awal belum membaca file seed SQL. | Masukkan akun langsung via terminal: jalankan `docker exec -i guesthub_db psql -U postgres -d guesthub_db < guesthub_backup.sql` atau lakukan insert manual. |
