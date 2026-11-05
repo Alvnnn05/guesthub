@@ -374,11 +374,33 @@ docker compose up -d --build
 
 ### 8.3. Perintah Operasional Cepat
 
-| Tujuan                                          | Perintah                                                                 |
-| :---------------------------------------------- | :----------------------------------------------------------------------- |
-| Melihat log real-time aplikasi (jika ada error) | `docker compose logs -f`                                                 |
-| Mematikan sistem sementara                      | `docker compose down`                                                    |
-| Menyalakan kembali sistem                       | `docker compose up -d`                                                   |
-| Melihat penggunaan memori (RAM & CPU)           | `docker stats`                                                           |
-| Membuat backup database instan (.sql)           | `docker exec -t guesthub_db pg_dump -U postgres guesthub_db > backup_$(date +\%F).sql` |
-| Memulihkan database dari backup                 | `docker exec -i guesthub_db psql -U postgres -d guesthub_db < backup.sql`|
+Berikut rangkuman perintah praktis untuk pemeliharaan harian sistem di terminal server:
+
+| Tujuan                                            | Perintah                                                                 |
+| :------------------------------------------------ | :----------------------------------------------------------------------- |
+| **Mengecek status seluruh kontainer**             | `docker compose ps`                                                     |
+| **Merestart seluruh sistem GuestHub**             | `docker compose restart`                                                 |
+| **Merestart backend saja** (reset limiter login)  | `docker compose restart backend`                                         |
+| **Merestart web frontend/nginx saja**             | `docker compose restart frontend`                                        |
+| **Melihat log real-time semua layanan**           | `docker compose logs -f`                                                 |
+| **Melihat 50 log terakhir backend (API)**         | `docker compose logs backend --tail 50`                                  |
+| **Melihat 50 log terakhir frontend (Nginx)**      | `docker compose logs frontend --tail 50`                                 |
+| **Melihat 50 log terakhir database (Postgres)**   | `docker compose logs postgres --tail 50`                                 |
+| **Memantau penggunaan RAM & CPU kontainer**       | `docker stats`                                                           |
+| **Masuk langsung ke terminal SQL database**       | `docker exec -it guesthub_db psql -U postgres -d guesthub_db`             |
+| **Mematikan sistem sementara**                    | `docker compose down`                                                    |
+| **Menyalakan kembali sistem**                     | `docker compose up -d`                                                   |
+| **Membuat backup database instan (.sql)**         | `docker exec -t guesthub_db pg_dump -U postgres guesthub_db > backup_$(date +\%F).sql` |
+| **Memulihkan database dari file backup**          | `docker exec -i guesthub_db psql -U postgres -d guesthub_db < backup.sql`|
+| **Membersihkan cache & image bekas build**        | `docker system prune -f`                                                 |
+
+---
+
+### 8.4. Troubleshooting Kendala Umum Saat Instalasi & Operasional
+
+| Kendala / Pesan Error | Penyebab | Solusi Cepat |
+| :-------------------- | :------- | :----------- |
+| `failed to bind host port ...: address already in use` | Port default (`8085`) sudah terpakai oleh aplikasi lain di server host. | Buka `nano docker-compose.yml`, ganti port frontend (misal `8012:80` atau `8086:80`). Sesuaikan juga port pada baris `ALLOWED_ORIGINS` di file `.env`, lalu jalankan `docker compose up -d`. |
+| `Terlalu banyak percobaan login gagal ... coba lagi setelah 15 menit` | Fitur proteksi *Anti Brute-Force Rate Limiter* aktif karena salah password berkali-kali. | Tidak perlu menunggu 15 menit. Cukup ketik `docker compose restart backend` di terminal server untuk mereset memori limiter secara instan (2 detik). |
+| Akun bawaan tidak bisa login | Lupa username atau password awal. | Gunakan akun default: **Admin** (`admin1` / `admin123`) atau **Resepsionis** (`resepsionis1` / `resepsionis123`). |
+| Database belum terisi akun awal | Migrasi awal belum membaca file seed SQL. | Masukkan akun langsung via terminal: jalankan `docker exec -i guesthub_db psql -U postgres -d guesthub_db < guesthub_backup.sql` atau lakukan insert manual. |

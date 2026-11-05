@@ -141,10 +141,10 @@
     -- Data for Name: users; Type: TABLE DATA; Schema: public; Owner: postgres
     --
 
-    COPY public.users (id, username, password_hash, full_name, role, created_at) FROM stdin;
-    3	resepsionis1	$2b$10$FxxJthFYHNL4/Mra.3qhMOcWtQxH4px.8gacg1aVPcH5hkN1sEXRa	andrian	resepsionis	2026-10-07 12:15:44.478881
-    4	admin1	$2b$10$eH7QagQOCeI2W9o5TTHGteu5Z2mxR2QEy0FEWqbjwOyJssnYAX7Z.	vin	admin	2026-10-07 12:17:34.891889
-    \.
+    INSERT INTO public.users (id, username, password_hash, full_name, role, created_at) VALUES
+    (1, 'admin1', '$2b$10$eH7QagQOCeI2W9o5TTHGteu5Z2mxR2QEy0FEWqbjwOyJssnYAX7Z.', 'Administrator', 'ADMIN', '2026-10-07 12:17:34.891889'),
+    (2, 'resepsionis1', '$2b$10$FxxJthFYHNL4/Mra.3qhMOcWtQxH4px.8gacg1aVPcH5hkN1sEXRa', 'Resepsionis', 'RESEPSIONIS', '2026-10-07 12:15:44.478881')
+    ON CONFLICT (username) DO NOTHING;
 
 
     --
