@@ -545,10 +545,14 @@ export default function GuestTable({ isAdmin = true, showSummaryCards = true }) 
 
     try {
       await recordExportSignal(periodText);
-      await writeXlsxFile([HEADER_ROW, ...dataRows], {
-        columns,
-        fileName: `Rekapitulasi_Buku_Tamu_Dishub_${periodText}.xlsx`
-      });
+      const fileName = `Rekapitulasi_Buku_Tamu_Dishub_${periodText}.xlsx`;
+
+      const fileWriter = writeXlsxFile([HEADER_ROW, ...dataRows], { columns });
+      if (fileWriter && typeof fileWriter.toFile === 'function') {
+        await fileWriter.toFile(fileName);
+      } else if (fileWriter && typeof fileWriter.then === 'function') {
+        await fileWriter;
+      }
     } catch (err) {
       console.error('Error saat export Excel:', err);
       Swal.fire({
